@@ -1,14 +1,8 @@
-# sea-lab-template
-A template repository for all SEA Lab projects
+# Multidisciplinary Design Optimization for Wave Driven Desalination
 
-Describe your project here
+Used for a (Multidisciplinary Design Optimization) study on Wave Driven Desalination Systems.
 
-Provide a citation to the corresponding paper
+Nate DeGoede: [link]{njd76@cornell.edu}
 
-Provide the authors names and emails
+To intialize WEC-Sim run src/WEC-Sim/addWecSimSource.m
 
-State the license type
-
-Describe the file structure and how to run the code
-
-Include a funding acknowledgement (this is required for most grants, ie NSF has specific template text that must go here)
