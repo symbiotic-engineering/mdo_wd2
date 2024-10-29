@@ -2,7 +2,7 @@
 
 Used for a (Multidisciplinary Design Optimization) study on Wave Driven Desalination Systems.
 
-Nate DeGoede: [link]{njd76@cornell.edu}
+Coresponding Author: [Nate DeGoede](njd76@cornell.edu)
 
 To intialize WEC-Sim run src/WEC-Sim/addWecSimSource.m
 
