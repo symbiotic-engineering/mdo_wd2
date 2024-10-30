@@ -1,5 +1,5 @@
 # DeGoede added
-src/WEC-Sim/
+src/WEC-Sim/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
