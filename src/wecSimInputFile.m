@@ -1,14 +1,15 @@
 %% Simulation Data
 simu = simulationClass();               % Initialize Simulation Class
-simu.simMechanicsFile = 'src/OSWEC.slx';    % Specify Simulink Model File
+simu.simMechanicsFile = 'src/basic_wd2.slx';    % Specify Simulink Model File
 simu.mode = 'normal';                   % Specify Simulation Mode ('normal','accelerator','rapid-accelerator')
-simu.explorer = 'on';                   % Turn SimMechanics Explorer (on/off)
+simu.explorer = 'off';                  % Turn SimMechanics Explorer (on/off)
 simu.startTime = 0;                     % Simulation Start Time [s]
 simu.rampTime = 100;                    % Wave Ramp Time [s]
 simu.endTime = 400;                     % Simulation End Time [s]        
-simu.solver = 'ode4';                   % simu.solver = 'ode4' for fixed step & simu.solver = 'ode45' for variable step 
+simu.solver = 'ode23t';                   % simu.solver = 'ode4' for fixed step & simu.solver = 'ode45' for variable step - that's what WEC-Sim thinks...
 simu.dt = 0.1;                          % Simulation Time-Step [s]
 simu.cicEndTime = 30;                   % Specify CI Time [s]
+simu.saveWorkspace = 0;                 % I don't want WEC-Sim to save my workspace for me, I can do it myself
 
 %% Wave Information
 % % noWaveCIC, no waves with radiation CIC  
@@ -51,11 +52,22 @@ body(2).inertia = [999 999 999];                % Placeholder inertia for a fixe
 
 %% PTO and Constraint Parameters
 % Fixed
-constraint(1)= constraintClass('Constraint1');  % Initialize ConstraintClass for Constraint1
-constraint(1).location = [0 0 -10];             % Constraint Location [m]
+constraint(1)= constraintClass('Constraint1'); % Initialize ConstraintClass 
+constraint(1).location = [0 0 -10];
 
-% Rotational PTO
+% Rotationals
+constraint(2)= constraintClass('Constraint2'); % Initialize ConstraintClass 
+constraint(2).location = [0 0 -8.9];
+
+constraint(3)= constraintClass('Constraint3'); % Initialize ConstraintClass 
+constraint(3).location = [4.7021271782+0.9 0 -8.7];
+
+constraint(4)= constraintClass('Constraint4'); % Initialize ConstraintClass 
+constraint(4).location = [0+0.9 0 -7];
+
+% Translational PTO
 pto(1) = ptoClass('PTO1');                      % Initialize ptoClass for PTO1
-pto(1).stiffness = 0;                           % PTO Stiffness Coeff [Nm/rad]
-pto(1).damping = 12000;                         % PTO Damping Coeff [Nsm/rad]
-pto(1).location = [0 0 -8.9];                   % PTO Location [m]
+pto(1).stiffness = 0;                           % PTO Stiffness Coeff [N/m]
+pto(1).damping = 0;                         % PTO Damping Coeff [Ns/m]
+pto(1).location = [2.35106397378+0.9 0 -7.849998936];   % PTO Global Location [m]
+pto(1).orientation.z = [-4.7021271782/5 0 1.7/5];  % PTO orientation
