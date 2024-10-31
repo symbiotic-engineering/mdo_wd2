@@ -1,6 +1,6 @@
 %% Simulation Data
 simu = simulationClass();               % Initialize Simulation Class
-simu.simMechanicsFile = 'src/basic_wd2.slx';    % Specify Simulink Model File
+simu.simMechanicsFile = 'src/YuJenne.slx';    % Specify Simulink Model File
 simu.mode = 'normal';                   % Specify Simulation Mode ('normal','accelerator','rapid-accelerator')
 simu.explorer = 'off';                  % Turn SimMechanics Explorer (on/off)
 simu.startTime = 0;                     % Simulation Start Time [s]
@@ -10,6 +10,8 @@ simu.solver = 'ode23t';                   % simu.solver = 'ode4' for fixed step 
 simu.dt = 0.1;                          % Simulation Time-Step [s]
 simu.cicEndTime = 30;                   % Specify CI Time [s]
 simu.saveWorkspace = 0;                 % I don't want WEC-Sim to save my workspace for me, I can do it myself
+simu.zeroCross = 'DisableAll';   
+simu.outputDir = 'data/lastrun';
 
 %% Wave Information
 % % noWaveCIC, no waves with radiation CIC  
