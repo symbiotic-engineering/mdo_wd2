@@ -11,6 +11,7 @@ simu.dt = 0.1;                          % Simulation Time-Step [s]
 simu.cicEndTime = 30;                   % Specify CI Time [s]
 simu.saveWorkspace = 0;                 % I don't want WEC-Sim to save my workspace for me, I can do it myself
 simu.zeroCross = 'DisableAll';   
+simu.outputDir = 'data/lastrun';
 
 %% Wave Information
 % % noWaveCIC, no waves with radiation CIC  
