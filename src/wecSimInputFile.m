@@ -1,6 +1,6 @@
 %% Simulation Data
 simu = simulationClass();               % Initialize Simulation Class
-simu.simMechanicsFile = 'src/YuJenne.slx';    % Specify Simulink Model File
+simu.simMechanicsFile = 'src/basic_wd2.slx';    % Specify Simulink Model File
 simu.mode = 'normal';                   % Specify Simulation Mode ('normal','accelerator','rapid-accelerator')
 simu.explorer = 'off';                  % Turn SimMechanics Explorer (on/off)
 simu.startTime = 0;                     % Simulation Start Time [s]
@@ -24,11 +24,11 @@ simu.outputDir = 'data/lastrun';
 
 % Irregular Waves using PM Spectrum with Directionality 
 waves = waveClass('irregular');         % Initialize Wave Class and Specify Type
-waves.height = 2.5;                     % Significant Wave Height [m]
-waves.period = 8;                       % Peak Period [s]
+waves.height = 2.64;                     % Significant Wave Height [m]
+waves.period = 9.86;                       % Peak Period [s]
 waves.spectrumType = 'PM';              % Specify Spectrum Type
-waves.direction = [0,30,90];            % Wave Directionality [deg]
-waves.spread = [0.1,0.2,0.7];           % Wave Directional Spreading [%}
+%waves.direction = [0,30,90];            % Wave Directionality [deg]
+%waves.spread = [0.1,0.2,0.7];           % Wave Directional Spreading [%}
 
 % % Irregular Waves with imported spectrum
 % waves = waveClass('spectrumImport');      % Create the Wave Variable and Specify Type
