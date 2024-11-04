@@ -1,4 +1,7 @@
 clear;clc;close all;
+%% Select Model
+model = 'basic_wd2';
+
 %% Define Parameters
 %  Piston
 piston_area = 0.26;     % [m^2]     Piston Area
@@ -17,4 +20,4 @@ throt_resist = 60.23;   % [MPa*s/m^3]   Throttle Valve Hydraulic Resistance
 
 
 %% Run WEC-Sim
-wecSim
+%wecSim
