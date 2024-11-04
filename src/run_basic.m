@@ -4,7 +4,7 @@ model = 'basic_wd2';
 
 %% Define Parameters
 % Drivetrain
-drivetrain_mass = 1;    % [kg]      Effective Mass of Drivetrain (before fluid)
+drivetrain_mass = 50;   % [kg]      Effective Mass of Drivetrain (before fluid)
 
 %  Piston
 piston_area = 0.26;     % [m^2]     Piston Area
