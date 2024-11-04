@@ -1,6 +1,6 @@
 %% Simulation Data
 simu = simulationClass();               % Initialize Simulation Class
-simu.simMechanicsFile = 'src/YuJenne.slx';    % Specify Simulink Model File
+simu.simMechanicsFile = 'YuJenne.slx';    % Specify Simulink Model File
 simu.mode = 'normal';                   % Specify Simulation Mode ('normal','accelerator','rapid-accelerator')
 simu.explorer = 'off';                  % Turn SimMechanics Explorer (on/off)
 simu.startTime = 0;                     % Simulation Start Time [s]
@@ -11,7 +11,7 @@ simu.dt = 0.1;                          % Simulation Time-Step [s]
 simu.cicEndTime = 30;                   % Specify CI Time [s]
 simu.saveWorkspace = 0;                 % I don't want WEC-Sim to save my workspace for me, I can do it myself
 simu.zeroCross = 'DisableAll';   
-simu.outputDir = 'data/lastrun';
+simu.outputDir = '../data/lastrun';
 
 %% Wave Information
 % % noWaveCIC, no waves with radiation CIC  
@@ -41,14 +41,14 @@ waves.spectrumType = 'PM';              % Specify Spectrum Type
 
 %% Body Data
 % Flap
-body(1) = bodyClass('data/hydroData/oswec.h5');      % Initialize bodyClass for Flap
-body(1).geometryFile = 'data/geometry/flap.stl';     % Geometry File
+body(1) = bodyClass('../data/hydroData/oswec.h5');      % Initialize bodyClass for Flap
+body(1).geometryFile = '../data/geometry/flap.stl';     % Geometry File
 body(1).mass = 127000;                          % User-Defined mass [kg]
 body(1).inertia = [1.85e6 1.85e6 1.85e6];       % Moment of Inertia [kg-m^2]
 
 % Base
-body(2) = bodyClass('data/hydroData/oswec.h5');      % Initialize bodyClass for Base
-body(2).geometryFile = 'data/geometry/base.stl';     % Geometry File
+body(2) = bodyClass('../data/hydroData/oswec.h5');      % Initialize bodyClass for Base
+body(2).geometryFile = '../data/geometry/base.stl';     % Geometry File
 body(2).mass = 999;                             % Placeholder mass for a fixed body
 body(2).inertia = [999 999 999];                % Placeholder inertia for a fixed body
 
