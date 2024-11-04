@@ -18,6 +18,5 @@ mem_pressure_min = 30;  % [bar]         Minimum Required Pressure Across Membran
 %  Brine Disposal
 throt_resist = 60.23;   % [MPa*s/m^3]   Throttle Valve Hydraulic Resistance
 
-
 %% Run WEC-Sim
-%wecSim
+wecSim
