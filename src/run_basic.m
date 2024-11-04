@@ -7,5 +7,9 @@ piston_stroke = 12;     % [m]       Piston Stroke Length
 %  Membrane
 mem_resist = 60.23;     % [MPa*s/m^3]   Membrane Hydraulic Resistance
 mem_pressure_min = 30;  % [bar]         Minimum Required Pressure Across Membrane
+
+%  Brine Disposal
+throt_resist = 60.23;   % [MPa*s/m^3]   Throttle Valve Hydraulic Resistance
+
 %% Run WEC-Sim
 wecSim
