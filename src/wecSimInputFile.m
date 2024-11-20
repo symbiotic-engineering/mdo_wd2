@@ -5,13 +5,20 @@ simu.mode = 'normal';                   % Specify Simulation Mode ('normal','acc
 simu.explorer = 'off';                  % Turn SimMechanics Explorer (on/off)
 simu.startTime = 0;                     % Simulation Start Time [s]
 simu.rampTime = 100;                    % Wave Ramp Time [s]
-simu.endTime = 200;                     % Simulation End Time [s]        
+simu.endTime = 3000;                     % Simulation End Time [s]        
 simu.solver = 'ode23t';                   % simu.solver = 'ode4' for fixed step & simu.solver = 'ode45' for variable step - that's what WEC-Sim thinks...
 simu.dt = 0.1;                          % Simulation Time-Step [s]
 simu.cicEndTime = 30;                   % Specify CI Time [s]
 simu.saveWorkspace = 0;                 % I don't want WEC-Sim to save my workspace for me, I can do it myself
-simu.zeroCross = 'DisableAll';   
 simu.outputDir = '../data/lastrun';
+
+if wave_type == 'YuJenne'
+    simu.startTime = 0;                     % Simulation Start Time [s]
+    simu.rampTime = 100;                    % Wave Ramp Time [s]
+    simu.endTime = 3000;                    % Simulation End Time [s]
+    simu.dt = 0.1;                          % Simulation Time-Step [s]
+    simu.cicEndTime = 30;                   % Specify CI Time [s]
+end
 
 %% Wave Information
 % % noWaveCIC, no waves with radiation CIC  
@@ -21,12 +28,22 @@ simu.outputDir = '../data/lastrun';
 % waves = waveClass('regular');           % Initialize Wave Class and Specify Type                                 
 % waves.height = 2.5;                     % Wave Height [m]
 % waves.period = 8;                       % Wave Period [s]
-
 % Irregular Waves using PM Spectrum with Directionality 
-waves = waveClass('irregular');         % Initialize Wave Class and Specify Type
-waves.height = 2.64;                     % Significant Wave Height [m]
-waves.period = 9.86;                       % Peak Period [s]
-waves.spectrumType = 'PM';              % Specify Spectrum Type
+switch wave_type
+    case 'YuJenne'
+        waves = waveClass('irregular');         % Initialize Wave Class and Specify Type
+        waves.height = 2.64;                     % Significant Wave Height [m]
+        waves.period = 9.86;                       % Peak Period [s]
+        waves.spectrumType = 'PM';              % Specify Spectrum Type
+        waves.bem.option = 'EqualEnergy';
+        waves.bem.count = 250;
+        waves.phaseSeed = 1;
+    otherwise
+        waves = waveClass('irregular');         % Initialize Wave Class and Specify Type
+        waves.height = 2.64;                     % Significant Wave Height [m]
+        waves.period = 9.86;                       % Peak Period [s]
+        waves.spectrumType = 'PM';              % Specify Spectrum Type
+end
 %waves.direction = [0,30,90];            % Wave Directionality [deg]
 %waves.spread = [0.1,0.2,0.7];           % Wave Directional Spreading [%}
 
@@ -45,6 +62,18 @@ body(1) = bodyClass('../data/hydroData/oswec.h5');      % Initialize bodyClass f
 body(1).geometryFile = '../data/geometry/flap.stl';     % Geometry File
 body(1).mass = 127000;                          % User-Defined mass [kg]
 body(1).inertia = [1.85e6 1.85e6 1.85e6];       % Moment of Inertia [kg-m^2]
+
+if wave_type == 'YuJenne'
+    body(1).morisonElement.option = 1;
+    body(1).morisonElement.cd = ones (5,3);
+    body(1).morisonElement.ca = zeros(5,3);
+    body(1).morisonElement.area = zeros(5,3);
+    body(1).morisonElement.area(:,1) = 18*1.8;
+    body(1).morisonElement.area(:,3) = 18*1.8;
+    body(1).morisonElement.VME  = zeros(5,1);
+    body(1).morisonElement.rgME = [0 0 -3; 0 0 -1.2; 0 0 0.6; 0 0 2.4; 0 0 4.2];
+    disp('Using Yu Jenne Morison stuff')
+end
 
 % Base
 body(2) = bodyClass('../data/hydroData/oswec.h5');      % Initialize bodyClass for Base
@@ -72,4 +101,4 @@ pto(1) = ptoClass('PTO1');                      % Initialize ptoClass for PTO1
 pto(1).stiffness = 0;                           % PTO Stiffness Coeff [N/m]
 pto(1).damping = 0;                         % PTO Damping Coeff [Ns/m]
 pto(1).location = [2.35106397378+0.9 0 -7.849998936];   % PTO Global Location [m]
-pto(1).orientation.z = [-4.7021271782/5 0 1.7/5];  % PTO orientation
+pto(1).orientation.z = [-4.7021271782/5 0 1.7/5];  % PTO orientation 
