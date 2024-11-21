@@ -1,12 +1,12 @@
 %% Simulation Data
 simu = simulationClass();               % Initialize Simulation Class
 simu.simMechanicsFile = [model '.slx'];    % Specify Simulink Model File
-simu.mode = 'normal';                   % Specify Simulation Mode ('normal','accelerator','rapid-accelerator')
+%simu.mode = 'normal';                   % Specify Simulation Mode ('normal','accelerator','rapid-accelerator')
 simu.explorer = 'off';                  % Turn SimMechanics Explorer (on/off)
 simu.startTime = 0;                     % Simulation Start Time [s]
 simu.rampTime = 100;                    % Wave Ramp Time [s]
 simu.endTime = 3000;                     % Simulation End Time [s]        
-simu.solver = 'ode23t';                   % simu.solver = 'ode4' for fixed step & simu.solver = 'ode45' for variable step - that's what WEC-Sim thinks...
+simu.solver = 'ode4';                   % simu.solver = 'ode4' for fixed step & simu.solver = 'ode45' for variable step - that's what WEC-Sim thinks...
 simu.dt = 0.1;                          % Simulation Time-Step [s]
 simu.cicEndTime = 30;                   % Specify CI Time [s]
 simu.saveWorkspace = 0;                 % I don't want WEC-Sim to save my workspace for me, I can do it myself
