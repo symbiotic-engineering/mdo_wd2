@@ -12,7 +12,12 @@ brine1 = brine1.Data;
 perm1 = perm1.Data;
 
 % WEC-Sim Applications Results
-load ../../data/validation/wecSimAppsVersion.mat
+% load ../../data/validation/wecSimAppsVersion.mat
+% pressure2 = simout1.signals.values(:,6);
+% brine2 = simout1.signals.values(:,3);
+% perm2 = simout1.signals.values(:,2);
+% time2 = simout1.time;
+load ../../data/validation/WSAVersion.mat
 pressure2 = simout1.signals.values(:,6);
 brine2 = simout1.signals.values(:,3);
 perm2 = simout1.signals.values(:,2);
