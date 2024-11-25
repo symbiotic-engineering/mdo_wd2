@@ -1,6 +1,7 @@
 clear;clc;close all;
 %% Select Model
 model = '../src/YuJenne';
+model = '../src/wecSimApps_converted'
 
 %% Define Parameters
 % Drivetrain
@@ -27,4 +28,4 @@ wave_type = 'YuJenne';
 %% Run WEC-Sim
 wecSim
 
-save('../data/validation/myVersion.mat','output','simout1')
+save('../data/validation/wecSimApps_converted.mat','output','simout1')
