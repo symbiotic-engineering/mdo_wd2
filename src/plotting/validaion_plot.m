@@ -17,7 +17,7 @@ perm1 = perm1.Data;
 % brine2 = simout1.signals.values(:,3);
 % perm2 = simout1.signals.values(:,2);
 % time2 = simout1.time;
-load ../../data/validation/WSAVersion.mat
+load ../../data/validation/wecSimApps_newsolver.mat
 pressure2 = simout1.signals.values(:,6);
 brine2 = simout1.signals.values(:,3);
 perm2 = simout1.signals.values(:,2);
