@@ -2,7 +2,7 @@ clear; clc; close all;
 
 %% Load data
 % My version
-load ../../data/validation/myVersion.mat
+load ../../data/validation/myVersion_smalldt.mat
 pressure1 = simout1.signal1;
 brine1 = simout1.signal3;
 perm1 = simout1.signal2;
