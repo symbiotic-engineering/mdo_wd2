@@ -2,7 +2,7 @@ clear; clc; close all;
 
 %% Load data
 % My version
-load ../../data/validation/myVersion.mat
+load ../../data/validation/myVersion_newSolverBlock.mat
 pressure1 = simout1.signal1;
 brine1 = simout1.signal3;
 perm1 = simout1.signal2;
@@ -12,7 +12,12 @@ brine1 = brine1.Data;
 perm1 = perm1.Data;
 
 % WEC-Sim Applications Results
-load ../../data/validation/wecSimAppsVersion.mat
+% load ../../data/validation/wecSimAppsVersion_converted.mat
+% pressure2 = simout1.signals.values(:,6);
+% brine2 = simout1.signals.values(:,3);
+% perm2 = simout1.signals.values(:,2);
+% time2 = simout1.time;
+load ../../data/validation/wecSimApps_newsolver.mat
 pressure2 = simout1.signals.values(:,6);
 brine2 = simout1.signals.values(:,3);
 perm2 = simout1.signals.values(:,2);
