@@ -28,4 +28,4 @@ wave_type = 'YuJenne';
 %% Run WEC-Sim
 wecSim
 
-save('../data/validation/myVersion_smalldt.mat','output','simout1')
+%save('../data/validation/myVersion_smalldt.mat','output','simout1')
