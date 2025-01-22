@@ -34,7 +34,7 @@ pre_upper   = 0.04874e3*Qf_mean^0.8139;         % [2018USD] Upper bound on pretr
 pre_lower   = 0.05010e3*Qf_mean^0.7877;         % [2018USD] Lower bound on pretreatment membrane
 pretreat    = mean([pre_upper,pre_lower])*1.26; % [2025USD] Total Pretreatment Costs    
 %disp(['total pretreatment   : ',num2str(pretreat)])
-%disp(['unit pretreatment    : ',num2str(pretreat/(365*Qp_mean))])
+disp(['unit pretreatment    : ',num2str(pretreat/(365*Qp_mean))])
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                         %
@@ -45,7 +45,7 @@ RO35        = 0.1969e3*Qp_mean^0.7814;          % [2018USD] SWRO reverse osmosis
 RO46        = 0.2098e3*Qp_mean^0.7922;          % [2018USD] SWRO reverse osmosis costs for 46,000 mg/L TDS
 RO          = interp1([35e3,46e3],[RO35,RO46],feedTDS)*1.26;    % [2025USD] Total Reverse Osmosis Costs 
 %disp(['total RO             : ',num2str(RO)])
-%disp(['Unit RO              : ',num2str(RO/(Qp_mean*365))])
+disp(['Unit RO              : ',num2str(RO/(Qp_mean*365))])
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                         %
@@ -56,7 +56,7 @@ stabilize   = 0.6040e3*Qp_mean^0.5993;          % [2018USD] OPEX attributed to l
 disinfect   = 0.01355e3*Qp_mean^0.7804;         % [2018USD] OPEX attributed to sodium hypochlorite disinfectant
 postpro     = (stabilize+disinfect)*1.26;       % [2025USD] Total Post-processing Costs
 %disp(['total postpro        : ',num2str(postpro)])
-%disp(['unit postpro         : ',num2str(postpro/(Qp_mean*365))])
+disp(['unit postpro         : ',num2str(postpro/(Qp_mean*365))])
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                         %

@@ -89,6 +89,6 @@ proddev     = (admin+envpermit+legal)*1.26;     % [2025USD] Total Product Develo
 %                                  Total                                  %
 %                                                                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%CAPEX = intake+pretreat+RO+postpro+misc_constr+engineering+proddev;
-CAPEX = intake+pretreat+RO+postpro;             % [2025USD] CAPEX
+CAPEX = intake+pretreat+RO+postpro+misc_constr+engineering+proddev;
+%CAPEX = intake+pretreat+RO+postpro;             % [2025USD] CAPEX
 end
