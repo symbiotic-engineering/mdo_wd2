@@ -3,5 +3,5 @@ function [] = initialize()
 run ../src/WEC-Sim/addWecSimSource.m
 addpath ../src/
 addpath ../src/sea-lab-utils/plotutilities
-addpath(genpath('../src/Subsystems'))
+addpath(genpath('../src/systemdynamics'))
 end

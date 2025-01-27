@@ -1,7 +1,8 @@
 clear;clc;close all;
 %% Select Model
-model = '../src/YuJenne';
-%model = '../src/wecSimApps'
+model = '../src/systemdynamics/YuJenne';
+%model = '../src/systemdynamics/wecSimApps';
+%model = '../src/systemdynamics/basic_wd2';
 
 %% Define Parameters
 % Drivetrain
