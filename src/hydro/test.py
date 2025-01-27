@@ -11,7 +11,7 @@ beta = 0
 rho = 1025
 depth = np.inf
 stopwatch = []
-for ii in range(50):
+for ii in range(1):
     start_time = time.time()
     data = hydro.run(w,t,h,draft,cog,omegas,beta,rho,depth)
     end_time = time.time()
