@@ -46,7 +46,8 @@ RO          = interp1([35e3,46e3],[RO35,RO46],feedTDS)*1.26;    % [2025USD] Tota
 %                             Post-processes                              %
 %                                                                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-stabilize   = 6.0711e3*capacity^0.6024;         % [2018USD] CAPEX attributed to lime-CO2 stabilizer
+stabilize   = 3.2145e3*capacity^0.6026;		% [2018USD] CAPEX attributed to calcite-CO2 stabilizer
+%stabilize   = 6.0711e3*capacity^0.6024;         % [2018USD] CAPEX attributed to lime-CO2 stabilizer
 disinfect   = 0.4992e3*capacity^0.6000;         % [2018USD] CAPEX attributed to sodium hypochlorite disinfectant
 postpro     = (stabilize+disinfect)*1.26;       % [2025USD] Total Post-processing Costs
 

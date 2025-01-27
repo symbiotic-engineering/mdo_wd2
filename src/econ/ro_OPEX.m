@@ -52,7 +52,8 @@ disp(['Unit RO              : ',num2str(RO/(Qp_mean*365))])
 %                             Post-processes                              %
 %                                                                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-stabilize   = 0.6040e3*Qp_mean^0.5993;          % [2018USD] OPEX attributed to lime-CO2 stabilizer
+stabilize   = 0.3411e3*Qp_mean^0.5996;		% [2018USD] OPEX attributed to calcite-CO2 stabilizer
+%stabilize   = 0.6040e3*Qp_mean^0.5993;          % [2018USD] OPEX attributed to lime-CO2 stabilizer
 disinfect   = 0.01355e3*Qp_mean^0.7804;         % [2018USD] OPEX attributed to sodium hypochlorite disinfectant
 postpro     = (stabilize+disinfect)*1.26;       % [2025USD] Total Post-processing Costs
 %disp(['total postpro        : ',num2str(postpro)])
