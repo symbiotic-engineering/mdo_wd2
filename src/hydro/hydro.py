@@ -69,8 +69,12 @@ def solve(body,omegas,beta,rho,depth):
     diff_prob = [capy.DiffractionProblem(body=body, wave_direction=beta, omega=omega, rho=rho, water_depth=depth) for omega in omegas]  # diffraction
     diff_result = solver.solve_all(diff_prob,keep_details=(True))
 
+    # Infinite Frequency Radiation Problem
+    inf_prob = capy.RadiationProblem(body=body, omega=np.inf, radiating_dof='Pitch', rho=rho, water_depth=depth)
+    inf_result = solver.solve(inf_prob,keep_details=(True))
+
     # Assemble dataset
-    dataset = capy.assemble_dataset(rad_result + diff_result)
+    dataset = capy.assemble_dataset(rad_result + diff_result + [inf_result])
     return dataset
 
 def run(w,t,h,draft,cog,omegas,beta,rho,depth):
