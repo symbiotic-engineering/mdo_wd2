@@ -21,15 +21,15 @@ def dict2xarray(outputs):
         "body_name": PARAMS["body_name"],  # Name of the floating body
         "water_depth": PARAMS["water_depth"],  # Water depth
         "forward_speed": PARAMS["forward_speed"],  # Speed of the body
-        "omega": PARAMS["omega"],  # Frequency values
-        "wave_direction": PARAMS["wave_direction"],  # Wave direction values
-        "radiating_dof": PARAMS["dof"],  # Degrees of freedom (radiating)
-        "influenced_dof": PARAMS["dof"],  # Degrees of freedom (influenced)
+        "omega": np.append(PARAMS["omega"],np.inf),  # Frequency values
+        "wave_direction": [PARAMS["wave_direction"]],  # Wave direction values
+        "radiating_dof": [PARAMS["dof"]],  # Degrees of freedom (radiating)
+        "influenced_dof":[PARAMS["dof"]],  # Degrees of freedom (influenced)
         
         # Coordinates dependent on omega
-        "period": ("omega", PARAMS["period"]),  
-        "wavenumber": ("omega", PARAMS["wavenumber"]),  
-        "wavelength": ("omega", PARAMS["wavelength"]), 
+        "period": ("omega", np.append(PARAMS["period"],0)),  
+        "wavenumber": ("omega", np.append(PARAMS["wavenumber"],np.inf)),  
+        "wavelength": ("omega", np.append(PARAMS["wavelength"],0)), 
     }
     
     # Define data variables (multi-dimensional arrays)
@@ -70,8 +70,13 @@ def solve(body):
     diff_prob = [capy.DiffractionProblem(body=body, wave_direction=PARAMS["wave_direction"], omega=omega, rho=PARAMS["rho"], water_depth=PARAMS["water_depth"]) for omega in PARAMS["omega"][:-1]]  # diffraction
     diff_result = solver.solve_all(diff_prob,keep_details=(True))
 
+    # Infinite Frequency Radiaiton Problem
+    rad_prob_inf = capy.RadiationProblem(body=body, omega=np.inf, radiating_dof=PARAMS["dof"], rho=PARAMS["rho"], water_depth=np.inf)
+    rad_result_inf = solver.solve(rad_prob_inf)
+
     # Assemble dataset
-    dataset = capy.assemble_dataset(rad_result + diff_result)
+    dataset = capy.assemble_dataset(rad_result + diff_result + [rad_result_inf])
+    print(dataset)
     return dataset
 
 def run(w,t,h,draft,cog,):
@@ -87,14 +92,14 @@ class Hydro(om.ExplicitComponent):
         self.add_input('draft', val=9)
         self.add_input('center_of_gravity', val=-9)
 
-        self.add_output('added_mass', val=np.zeros((1,1,len(PARAMS["omega"]))))
-        self.add_output('radiation_damping', val=np.zeros((1,1,len(PARAMS["omega"]))))
-        self.add_output('sc_re', val=np.zeros((1,1,len(PARAMS["omega"]))))
-        self.add_output('sc_im', val=np.zeros((1,1,len(PARAMS["omega"]))))
-        self.add_output('fk_re', val=np.zeros((1,1,len(PARAMS["omega"]))))
-        self.add_output('fk_im', val=np.zeros((1,1,len(PARAMS["omega"]))))
-        self.add_output('ex_re', val=np.zeros((1,1,len(PARAMS["omega"]))))
-        self.add_output('ex_im', val=np.zeros((1,1,len(PARAMS["omega"]))))
+        self.add_output('added_mass', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
+        self.add_output('radiation_damping', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
+        self.add_output('sc_re', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
+        self.add_output('sc_im', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
+        self.add_output('fk_re', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
+        self.add_output('fk_im', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
+        self.add_output('ex_re', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
+        self.add_output('ex_im', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
         self.add_output('inertia_matrix', val=np.zeros((1,1)))
         self.add_output('hydrostatic_stiffness', val=np.zeros((1,1)))
 
@@ -105,10 +110,13 @@ class Hydro(om.ExplicitComponent):
         draft = inputs['draft']
         cog = inputs['center_of_gravity']
         dataset = run(w,t,h,draft,cog)
-        
+        print(dataset["water_depth"].values)  # Check actual values
+        print(PARAMS["water_depth"])          # Compare with the parameter
         # Convert to dictionary
-        outputs["added_mass"] = dataset['added_mass'].values
-        outputs["radiation_damping"] = dataset['radiation_damping'].values
+        outputs["added_mass"] = dataset['added_mass'].sel(water_depth=PARAMS["water_depth"]).values
+        outputs["added_mass"][-1] = dataset['added_mass'].sel(water_depth=np.inf).values[-1]
+        outputs["radiation_damping"] = dataset['radiation_damping'].sel(water_depth=PARAMS["water_depth"]).values
+        outputs["radiation_damping"][-1] = dataset['radiation_damping'].sel(water_depth=np.inf).values[-1]
         outputs["sc_re"] = np.real(dataset['diffraction_force'].values)
         outputs["sc_im"] = np.imag(dataset['diffraction_force'].values)
         outputs["fk_re"] = np.real(dataset['Froude_Krylov_force'].values)

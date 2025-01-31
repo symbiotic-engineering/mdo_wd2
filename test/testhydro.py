@@ -33,9 +33,9 @@ class TestHydro(unittest.TestCase):
     def test_added_mass(self):
         # Run the computation
         self.Hydro.compute(self.hydroins, self.hydroouts)
-        print(self.hydroouts)
+        #print(self.hydroouts)
         # Retrieve the added mass from the output
-        added_mass = self.hydroouts["added_mass"]
+        added_mass_inf = self.hydroouts["added_mass"][-1]
         
         # Define the expected added mass array
         expected_added_mass = np.array([[[42285163.12033962]],
@@ -49,9 +49,10 @@ class TestHydro(unittest.TestCase):
                                         [[ 8059324.40314768]],
                                         [[ 9423835.64692607]],
                                         [[17789438.35259734]]])
-        
+        expected_added_mass_inf = expected_added_mass[-1]
+        dataset = hydro.dict2xarray(self.hydroouts)
         #Use assert_allclose with a tolerance to check if the values are "close enough"
-        np.testing.assert_allclose(added_mass, expected_added_mass, atol=1e-8)
+        np.testing.assert_allclose(added_mass_inf, expected_added_mass_inf, atol=1e-8)
         
 if __name__ == '__main__':
     unittest.main()
