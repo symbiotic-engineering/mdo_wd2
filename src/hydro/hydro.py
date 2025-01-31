@@ -67,7 +67,7 @@ def solve(body):
     # Create problems and solve
     rad_prob = [capy.RadiationProblem(body=body,omega=omega,radiating_dof=PARAMS["dof"], rho=PARAMS["rho"], water_depth=PARAMS["water_depth"]) for omega in PARAMS["omega"]]     # radiation
     rad_result = solver.solve_all(rad_prob,keep_details=(True))
-    diff_prob = [capy.DiffractionProblem(body=body, wave_direction=PARAMS["wave_direction"], omega=omega, rho=PARAMS["rho"], water_depth=PARAMS["water_depth"]) for omega in PARAMS["omega"][:-1]]  # diffraction
+    diff_prob = [capy.DiffractionProblem(body=body, wave_direction=PARAMS["wave_direction"], omega=omega, rho=PARAMS["rho"], water_depth=PARAMS["water_depth"]) for omega in PARAMS["omega"]]  # diffraction
     diff_result = solver.solve_all(diff_prob,keep_details=(True))
 
     # Infinite Frequency Radiaiton Problem
@@ -76,7 +76,6 @@ def solve(body):
 
     # Assemble dataset
     dataset = capy.assemble_dataset(rad_result + diff_result + [rad_result_inf])
-    print(dataset)
     return dataset
 
 def run(w,t,h,draft,cog,):
@@ -110,8 +109,7 @@ class Hydro(om.ExplicitComponent):
         draft = inputs['draft']
         cog = inputs['center_of_gravity']
         dataset = run(w,t,h,draft,cog)
-        print(dataset["water_depth"].values)  # Check actual values
-        print(PARAMS["water_depth"])          # Compare with the parameter
+
         # Convert to dictionary
         outputs["added_mass"] = dataset['added_mass'].sel(water_depth=PARAMS["water_depth"]).values
         outputs["added_mass"][-1] = dataset['added_mass'].sel(water_depth=np.inf).values[-1]
