@@ -15,14 +15,10 @@ class TestHydro(unittest.TestCase):
         self.h = 10
         self.draft = 9
         self.cog = -0.7 * self.h
-        self.omegas = np.linspace(0.2, 3, 10)
-        self.beta = 0
-        self.rho = 1025
-        self.depth = np.inf
         
         # Create Hydro object and setup
         self.Hydro = hydro.Hydro()
-        self.Hydro.setup(1, 10, 1)
+        self.Hydro.setup()
         
         # Define hydroins for computation
         self.hydroins = {
@@ -31,17 +27,13 @@ class TestHydro(unittest.TestCase):
             "height": self.h,
             "draft": self.draft,
             "center_of_gravity": self.cog,
-            "omegas": self.omegas,
-            "betas": np.zeros(1),
-            "density": self.rho,
-            "depth": np.inf
         }
         self.hydroouts = {}
 
     def test_added_mass(self):
         # Run the computation
         self.Hydro.compute(self.hydroins, self.hydroouts)
-        
+        print(self.hydroouts)
         # Retrieve the added mass from the output
         added_mass = self.hydroouts["added_mass"]
         
