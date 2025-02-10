@@ -1,6 +1,6 @@
 import numpy as np
 
-def ro_CAPEX(feedcap, capacity, pipelength, feedTDS):
+def CAPEX(feedcap, capacity, pipelength, feedTDS):
     """
     Returns the CAPEX attributed to RO plant
     INPUTS:
@@ -98,7 +98,7 @@ def ro_CAPEX(feedcap, capacity, pipelength, feedTDS):
     # CAPEX = intake + pretreat + RO + postpro  # [2025USD] CAPEX
     return CAPEX
 
-def ro_OPEX(Qf_mean, Qp_mean, pipelength, feedTDS):
+def OPEX(Qf_mean, Qp_mean, pipelength, feedTDS):
     """
     Returns the annual OPEX attributed to RO plant
     INPUTS:
