@@ -60,7 +60,7 @@ def get_rectangle(w,t,h,draft,cog):
     print(body.mesh.nb_faces)
     return body
 
-def solve(body):
+def solve(body,add_inf=True):
     solver = capy.BEMSolver()
     hydrostatics = body.compute_hydrostatics()           # solves hydrostatics problem (no waves)
     #[S,D] = capy.Delhommeau().evaluate(body.mesh, body.mesh, free_surface=0.0, water_depth=depth, wavenumber=0.0)
@@ -71,11 +71,15 @@ def solve(body):
     diff_result = solver.solve_all(diff_prob,keep_details=(True))
 
     # Infinite Frequency Radiaiton Problem
-    rad_prob_inf = capy.RadiationProblem(body=body, omega=np.inf, radiating_dof=PARAMS["dof"], rho=PARAMS["rho"], water_depth=np.inf)
-    rad_result_inf = solver.solve(rad_prob_inf)
+    if add_inf:
+        rad_prob_inf = capy.RadiationProblem(body=body, omega=np.inf, radiating_dof=PARAMS["dof"], rho=PARAMS["rho"], water_depth=np.inf)
+        rad_result_inf = solver.solve(rad_prob_inf)
 
     # Assemble dataset
-    dataset = capy.assemble_dataset(rad_result + diff_result + [rad_result_inf])
+    if add_inf:
+        dataset = capy.assemble_dataset(rad_result + diff_result + [rad_result_inf])
+    else:
+        dataset = capy.assemble_dataset(rad_result + diff_result)
     return dataset
 
 def run(w,t,h,draft,cog,):
