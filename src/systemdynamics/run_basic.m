@@ -24,4 +24,4 @@ throt_resist = 60.23;   % [MPa*s/m^3]   Throttle Valve Hydraulic Resistance
 
 %% Run WEC-Sim
 hydro = 6;
-wdds_sim(hydro,model,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,mem_pressure_min,drivetrain_mass)
+[feed,perm,t] = wdds_sim(hydro,model,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,mem_pressure_min,drivetrain_mass)

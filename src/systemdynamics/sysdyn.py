@@ -4,8 +4,9 @@ import openmdao.api as om
 from src.params import PARAMS
 from src.hydro.hydro import dict2xarray
 import src.GILL.src.capy2wecSim as GILL
+import matlab
 
-class SysDyn_basic(om.ExplicitComponent):
+class SysDyn(om.ExplicitComponent):
     def setup(self,engine):
         # Hydrodynamics
         self.add_input('added_mass', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
@@ -16,26 +17,34 @@ class SysDyn_basic(om.ExplicitComponent):
         self.add_input('fk_im', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
         self.add_input('ex_re', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
         self.add_input('ex_im', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
-        self.add_input('inertia_matrix', val=np.zeros((1,1)))
         self.add_input('hydrostatic_stiffness', val=np.zeros((1,1)))
+        
+        # WEC
+        self.add_input('wec_mass', val=1.0)
+        self.add_input('inertia_matrix', val=np.zeros((1,1)))
         self.add_input('Vo', val=0)
         self.add_input('draft', val=0)
         self.add_input('cog', val=0)
 
+
         # Hydraulics and Desal
-        self.add_input('permflow_cap', val=3000.0)
-        self.add_input('accum_volume', val=4.0)
-        self.add_input('accum_precharge', val=30.0)
-        self.add_input('throt_resist', val=0.1)
         self.add_input('piston_area', val=0.26)
         self.add_input('piston_stroke', val=4.0)
+        self.add_input('accum_volume', val=4.0)
+        self.add_input('accum_P0', val=30.0)
+        self.add_input('pressure_relief', val=60.0)
+        self.add_input('throt_resist', val=60.23)
+        self.add_input('mem_resist', val=60.23)
+        self.add_input('mem_pressure_min', val=30.0)
+        self.add_input('drivetrain_mass', val=1.0)
 
         # MATLAB Engine
         self.eng = engine
 
         # Outputs
-        self.add_output('feedflow_bar', val=3000)
-        self.add_output('permflow_bar', val=1500)
+        timesteps = int(PARAMS["wecsimoptions"]["tend"]/PARAMS["wecsimoptions"]["dt"])+1
+        self.add_output('feedflow', val=np.zeros(timesteps))
+        self.add_output('permflow', val=np.zeros(timesteps))
         
     def compute(self,inputs,outputs):
         hydroDct = {
@@ -53,8 +62,8 @@ class SysDyn_basic(om.ExplicitComponent):
 
         # Build MATLAB hydro.struct
         hydroXR = dict2xarray(hydroDct)
-        cb = [0,0,0.5*inputs["draft"]]
-        cg = [0,0,inputs["cog"]]
+        cb = np.array([0.0,0.0,0.5*inputs["draft"]])
+        cg = np.array([0.0,0.0,inputs["cog"]])
         hydro = self.eng.struct()
         hydro = GILL.capy2struct(hydro, hydroXR, inputs['Vo'], cb, cg)
         hydro = self.eng.normalizeBEM(hydro)
@@ -63,7 +72,34 @@ class SysDyn_basic(om.ExplicitComponent):
         self.eng.workspace['hydro'] = hydro
         self.eng.disp(hydro, nargout=0)
 
-        outputs['feedflow_bar'] = inputs['permflow_cap']*2
-        outputs['permflow_bar'] = inputs['permflow_cap']
+        # Initialize an array to hold inertia values
+        wec_inertia_np= np.zeros(3)
+        # Map DOFs to indices
+        dof_indices = {
+            'Roll': 0,
+            'Pitch': 1,
+            'Yaw': 2
+        }
+        # Extract selected indices
+        selected_indices = [dof_indices[dof] for dof in PARAMS["dof"]]
+        # Populate the array with diagonal elements of the inertia matrix
+        for idx_ii,ii in enumerate(selected_indices):
+            inertia_value = inputs["inertia_matrix"][idx_ii,idx_ii]
+            wec_inertia_np[ii] = inertia_value
+        wec_inertia = matlab.double(wec_inertia_np)
+
+        wecSimOptions = GILL.dict2struct(PARAMS["wecsimoptions"],self.eng)
+
+        Qf,Qp,t = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,matlab.double(cg),
+                                    inputs["piston_area"],inputs["piston_stroke"],
+                                    inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
+                                    inputs["throt_resist"],inputs["mem_resist"],inputs["mem_pressure_min"],
+                                    inputs["drivetrain_mass"],
+                                    wecSimOptions, nargout=3)
+        feedflow = np.array(Qf)
+        permflow = np.array(Qp)
+        time = np.array(t)
+        outputs['feedflow'] = feedflow
+        outputs['permflow'] = permflow
 
 

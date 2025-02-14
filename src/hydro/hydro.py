@@ -23,8 +23,8 @@ def dict2xarray(outputs):
         "forward_speed": PARAMS["forward_speed"],  # Speed of the body
         "omega": np.append(PARAMS["omega"],np.inf),  # Frequency values
         "wave_direction": [PARAMS["wave_direction"]],  # Wave direction values
-        "radiating_dof": [PARAMS["dof"]],  # Degrees of freedom (radiating)
-        "influenced_dof":[PARAMS["dof"]],  # Degrees of freedom (influenced)
+        "radiating_dof": PARAMS["dof"],  # Degrees of freedom (radiating)
+        "influenced_dof":PARAMS["dof"],  # Degrees of freedom (influenced)
         
         # Coordinates dependent on omega
         "period": ("omega", np.append(PARAMS["period"],0)),  
@@ -55,9 +55,9 @@ def get_rectangle(w,t,h,draft,cog):
     body.keep_immersed_part()
     body.center_of_mass=np.array([0,0,cog])
     body.rotation_center = (0,0,-draft)
-    body.add_rotation_dof(name=PARAMS["dof"])
+    body.add_all_rigid_body_dofs()
     body.keep_only_dofs(dofs=PARAMS["dof"])
-    print(body.mesh.nb_faces)
+    print(f'Created {body.mesh.nb_faces} panels')
     return body
 
 def solve(body,add_inf=True):
@@ -65,19 +65,19 @@ def solve(body,add_inf=True):
     hydrostatics = body.compute_hydrostatics()           # solves hydrostatics problem (no waves)
     #[S,D] = capy.Delhommeau().evaluate(body.mesh, body.mesh, free_surface=0.0, water_depth=depth, wavenumber=0.0)
     # Create problems and solve
-    rad_prob = [capy.RadiationProblem(body=body,omega=omega,radiating_dof=PARAMS["dof"], rho=PARAMS["rho"], water_depth=PARAMS["water_depth"]) for omega in PARAMS["omega"]]     # radiation
+    rad_prob = [capy.RadiationProblem(body=body, omega=omega, radiating_dof=rad_dof, rho=PARAMS["rho"], water_depth=PARAMS["water_depth"]) for rad_dof in PARAMS["dof"] for omega in PARAMS["omega"]]
     rad_result = solver.solve_all(rad_prob,keep_details=(True))
     diff_prob = [capy.DiffractionProblem(body=body, wave_direction=PARAMS["wave_direction"], omega=omega, rho=PARAMS["rho"], water_depth=PARAMS["water_depth"]) for omega in PARAMS["omega"]]  # diffraction
     diff_result = solver.solve_all(diff_prob,keep_details=(True))
 
     # Infinite Frequency Radiaiton Problem
     if add_inf:
-        rad_prob_inf = capy.RadiationProblem(body=body, omega=np.inf, radiating_dof=PARAMS["dof"], rho=PARAMS["rho"], water_depth=np.inf)
-        rad_result_inf = solver.solve(rad_prob_inf)
+        rad_prob_inf = [capy.RadiationProblem(body=body, omega=np.inf, radiating_dof=rad_dof, rho=PARAMS["rho"], water_depth=np.inf) for rad_dof in PARAMS["dof"]]
+        rad_result_inf = solver.solve_all(rad_prob_inf)
 
     # Assemble dataset
     if add_inf:
-        dataset = capy.assemble_dataset(rad_result + diff_result + [rad_result_inf])
+        dataset = capy.assemble_dataset(rad_result + diff_result + rad_result_inf)
     else:
         dataset = capy.assemble_dataset(rad_result + diff_result)
     return dataset
@@ -103,7 +103,6 @@ class Hydro(om.ExplicitComponent):
         self.add_output('fk_im', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
         self.add_output('ex_re', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
         self.add_output('ex_im', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
-        self.add_output('inertia_matrix', val=np.zeros((1,1)))
         self.add_output('hydrostatic_stiffness', val=np.zeros((1,1)))
 
     def compute(self, inputs, outputs):
@@ -125,7 +124,6 @@ class Hydro(om.ExplicitComponent):
         outputs["fk_im"] = np.imag(dataset['Froude_Krylov_force'].values)
         outputs["ex_re"] = np.real(dataset['excitation_force'].values)
         outputs["ex_im"] = np.imag(dataset['excitation_force'].values)
-        outputs["inertia_matrix"] = dataset['inertia_matrix'].values
         outputs["hydrostatic_stiffness"] = dataset["hydrostatic_stiffness"].values
 
         
