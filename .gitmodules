@@ -4,3 +4,6 @@
 [submodule "src/WEC-Sim"]
 	path = src/WEC-Sim
 	url = https://github.com/WEC-Sim/WEC-Sim
+[submodule "src/GILL"]
+	path = src/GILL
+	url = git@github.com:symbiotic-engineering/GILL.git
