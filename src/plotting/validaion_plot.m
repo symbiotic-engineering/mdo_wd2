@@ -11,14 +11,14 @@ pressure1 = pressure1.Data;
 brine1 = brine1.Data;
 perm1 = perm1.Data;
 
-% load ../../data/validation/myVersion_startSteady.mat
-% pressure2 = simout1.signal1;
-% brine2 = simout1.signal3;
-% perm2 = simout1.signal2;
-% time2 = pressure2.Time;
-% pressure2 = pressure2.Data;
-% brine2 = brine2.Data;
-% perm2 = perm2.Data;
+load ../../data/validation/wecsimupdates.mat
+pressure2 = simout1.signal1;
+brine2 = simout1.signal3;
+perm2 = simout1.signal2;
+time2 = pressure2.Time;
+pressure2 = pressure2.Data;
+brine2 = brine2.Data;
+perm2 = perm2.Data;
 
 % WEC-Sim Applications Results
 % load ../../data/validation/wecSimAppsVersion.mat
@@ -26,11 +26,11 @@ perm1 = perm1.Data;
 % brine1 = simout1.signals.values(:,3);
 % perm1 = simout1.signals.values(:,2);
 % time1 = simout1.time;
-load ../../data/validation/wecSimApps_nolocalnosteady.mat
-pressure2 = simout1.signals.values(:,6);
-brine2 = simout1.signals.values(:,3);
-perm2 = simout1.signals.values(:,2);
-time2 = simout1.time;
+% load ../../data/validation/wecSimApps_nolocalnosteady.mat
+% pressure2 = simout1.signals.values(:,6);
+% brine2 = simout1.signals.values(:,3);
+% perm2 = simout1.signals.values(:,2);
+% time2 = simout1.time;
 
 % Paper
 run ../../data/validation/plot_digitize/read_data.m

@@ -3,6 +3,7 @@ import xarray as xr
 import openmdao.api as om
 from src.params import PARAMS
 from src.hydro.hydro import dict2xarray
+import src.GILL.src.capy2wecSim as GILL
 
 class SysDyn_basic(om.ExplicitComponent):
     def setup(self,engine):
@@ -17,7 +18,10 @@ class SysDyn_basic(om.ExplicitComponent):
         self.add_input('ex_im', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
         self.add_input('inertia_matrix', val=np.zeros((1,1)))
         self.add_input('hydrostatic_stiffness', val=np.zeros((1,1)))
-        
+        self.add_input('Vo', val=0)
+        self.add_input('draft', val=0)
+        self.add_input('cog', val=0)
+
         # Hydraulics and Desal
         self.add_input('permflow_cap', val=3000.0)
         self.add_input('accum_volume', val=4.0)
@@ -27,7 +31,7 @@ class SysDyn_basic(om.ExplicitComponent):
         self.add_input('piston_stroke', val=4.0)
 
         # MATLAB Engine
-        self.engine = engine
+        self.eng = engine
 
         # Outputs
         self.add_output('feedflow_bar', val=3000)
@@ -46,7 +50,20 @@ class SysDyn_basic(om.ExplicitComponent):
             "inertia_matrix": inputs["inertia_matrix"],
             "hydrostatic_stiffness": inputs["hydrostatic_stiffness"],
         }
-        hydroXR = dict2xarray(hydroDct)
 
+        # Build MATLAB hydro.struct
+        hydroXR = dict2xarray(hydroDct)
+        cb = [0,0,0.5*inputs["draft"]]
+        cg = [0,0,inputs["cog"]]
+        hydro = self.eng.struct()
+        hydro = GILL.capy2struct(hydro, hydroXR, inputs['Vo'], cb, cg)
+        hydro = self.eng.normalizeBEM(hydro)
+        hydro = self.eng.solveIRFs(hydro)
         
+        self.eng.workspace['hydro'] = hydro
+        self.eng.disp(hydro, nargout=0)
+
+        outputs['feedflow_bar'] = inputs['permflow_cap']*2
+        outputs['permflow_bar'] = inputs['permflow_cap']
+
 

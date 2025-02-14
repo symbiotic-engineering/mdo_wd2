@@ -1,6 +1,6 @@
 clear;clc;close all;
 %% Select Model
-model = '../src/systemdynamics/YuJenne';
+model = '../../src/systemdynamics/YuJenne';
 %model = '../src/systemdynamics/wecSimApps';
 %model = '../src/systemdynamics/basic_wd2';
 
@@ -29,4 +29,4 @@ wave_type = 'YuJenne';
 %% Run WEC-Sim
 wecSim
 
-%save('../data/validation/myVersion_smalldt.mat','output','simout1')
+save('../../data/validation/wecsimupdates.mat','output','simout1')
