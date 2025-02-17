@@ -10,17 +10,19 @@ import src.systemdynamics.sysdyn as sysdyn
 import src.econ.econ as econ
 from src.params import PARAMS
 import matlab.engine
+import time
 
 print("Starting MATLAB Engine...")
+start_time = time.time()
 future_eng = matlab.engine.start_matlab(background=True)
 eng = future_eng.result()
-print("MATLAB Engine Started.")
-print('---------------------------------')
+end_time = time.time()
+print(f"MATLAB Engine Started in {end_time-start_time} seconds.")
+
 initialization_script_path = "/home/degoede/SEA/mdo_wd2/src/"
 eng.cd(initialization_script_path, nargout=0)
 eng.initializematlab(PARAMS["nworkers"],nargout=0)
 eng.cd('..', nargout=0)
-print('---------------------------------')
 
 w = 18
 t = 1
@@ -38,9 +40,10 @@ hydroouts = {}
 Hydro = hydro.Hydro()
 Hydro.setup()
 print('Starting BEM...')
+start_time = time.time()
 Hydro.compute(hydroins, hydroouts)
-print('BEM Complete.')
-print('---------------------------------')
+end_time = time.time()
+print(f'BEM Completed in {end_time-start_time} seconds.')
 
 sysdynins = {
     "added_mass": hydroouts["added_mass"],
@@ -71,12 +74,13 @@ sysdynins = {
 }
 
 print('Starting System Dynamics...')
+start_time = time.time()
 sysdynouts = {}
 SysDyn = sysdyn.SysDyn()
 SysDyn.setup(eng)
 SysDyn.compute(sysdynins, sysdynouts)
-print('System Dynamics Complete.')
-print('---------------------------------')
+end_time = time.time()
+print(f'System Dynamics Completed in {end_time-start_time} seconds.')
 
 econins = {
     'feedflow_cap': 6000.0,
@@ -86,10 +90,12 @@ econins = {
 }
 
 print('Starting Economics...')
+start_time = time.time()
 econouts = {}
 Econ = econ.Econ()
 Econ.setup()
 Econ.compute(econins, econouts)
-print('Economics Complete.')
+end_time = time.time()
+print(f'Economics Completed in {end_time-start_time} seconds.')
 print('---------------------------------')
 print(f"LCOW: {econouts['LCOW']} $/m^3")
