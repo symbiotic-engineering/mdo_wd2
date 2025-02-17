@@ -5,6 +5,7 @@ from src.params import PARAMS
 from src.hydro.hydro import dict2xarray
 import src.GILL.src.capy2wecSim as GILL
 import matlab
+import random
 
 class SysDyn(om.ExplicitComponent):
     def setup(self,engine):
@@ -90,13 +91,24 @@ class SysDyn(om.ExplicitComponent):
 
         wecSimOptions = GILL.dict2struct(PARAMS["wecsimoptions"],self.eng)
 
+        key = random.randint(0, 10**16 - 1)  # Generate a random 16-digit integer
         simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,matlab.double(cg),
                                     inputs["piston_area"],inputs["piston_stroke"],
                                     inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                     inputs["throt_resist"],inputs["mem_resist"],inputs["mem_pressure_min"],
                                     inputs["drivetrain_mass"],
-                                    wecSimOptions, nargout=1)
-        Qf,Qp,t = self.eng.fetchOutputs(simouts,nargout=3)
+                                    wecSimOptions,key, nargout=1)
+        Qf,Qp,t,keyout = self.eng.fetchOutputs(simouts,nargout=4)
+
+        try:
+            # Check if the 
+            if key != keyout:
+                raise ValueError(f"Key mismatch: key={key}, keyout={keyout}")
+            print("Keys match!")
+        except ValueError as e:
+            # Handle the error if keys do not match
+            print(f"Error: {e}")
+        
         feedflow = np.array(Qf)
         permflow = np.array(Qp)
         time = np.array(t)
