@@ -11,16 +11,17 @@ class Econ(om.ExplicitComponent):
     def setup(self):
         self.add_input('feedflow_cap', val=6000.0)
         self.add_input('permflow_cap', val=3000.0)
-        self.add_input('feedflow_bar', val=3000.0)
-        self.add_input('permflow_bar', val=1500.0)
+        timesteps = int(PARAMS["wecsimoptions"]["tend"]/PARAMS["wecsimoptions"]["dt"])+1
+        self.add_input('feedflow', val=np.zeros(timesteps))
+        self.add_input('permflow', val=np.zeros(timesteps))
 
         self.add_output('LCOW', val=1.0)
 
     def compute(self, inputs, outputs):
         feedflow_cap = inputs['feedflow_cap']
         permflow_cap = inputs['permflow_cap']
-        feedflow_bar = inputs['feedflow_bar']
-        permflow_bar = inputs['permflow_bar']
+        feedflow_bar = np.mean(inputs['feedflow'])*PARAMS["days_in_year"]*24*60*60  # average flow rate in m^3/day
+        permflow_bar = np.mean(inputs['permflow'])*PARAMS["days_in_year"]*24*60*60  # average flow rate in m^3/day
         capex = []
         opex = []
 

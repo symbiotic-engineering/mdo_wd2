@@ -7,6 +7,7 @@ import numpy as np
 import xarray as xr
 import src.hydro.hydro as hydro
 import src.systemdynamics.sysdyn as sysdyn
+import src.econ.econ as econ
 from src.params import PARAMS
 import matlab.engine
 
@@ -30,6 +31,7 @@ Hydro.setup()
 print('Starting BEM...')
 Hydro.compute(hydroins, hydroouts)
 print('BEM Complete.')
+print('---------------------------------')
 
 sysdynins = {
     "added_mass": hydroouts["added_mass"],
@@ -67,3 +69,20 @@ eng.run('/home/degoede/SEA/mdo_wd2/src/initializematlab.m',nargout=0)
 SysDyn.setup(eng)
 SysDyn.compute(sysdynins, sysdynouts)
 print('System Dynamics Complete.')
+print('---------------------------------')
+
+econins = {
+    'feedflow_cap': 6000.0,
+    'permflow_cap': 3000.0,
+    'feedflow': sysdynouts['feedflow'],
+    'permflow': sysdynouts['permflow'],
+}
+
+print('Starting Economics...')
+econouts = {}
+Econ = econ.Econ()
+Econ.setup()
+Econ.compute(econins, econouts)
+print('Economics Complete.')
+print('---------------------------------')
+print(f"LCOW: {econouts['LCOW']} $/m^3")
