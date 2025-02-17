@@ -11,7 +11,16 @@ import src.econ.econ as econ
 from src.params import PARAMS
 import matlab.engine
 
+print("Starting MATLAB Engine...")
 future_eng = matlab.engine.start_matlab(background=True)
+eng = future_eng.result()
+print("MATLAB Engine Started.")
+print('---------------------------------')
+initialization_script_path = "/home/degoede/SEA/mdo_wd2/src/"
+eng.cd(initialization_script_path, nargout=0)
+eng.initializematlab(PARAMS["nworkers"],nargout=0)
+eng.cd('..', nargout=0)
+print('---------------------------------')
 
 w = 18
 t = 1
@@ -64,8 +73,6 @@ sysdynins = {
 print('Starting System Dynamics...')
 sysdynouts = {}
 SysDyn = sysdyn.SysDyn()
-eng = future_eng.result()
-eng.run('/home/degoede/SEA/mdo_wd2/src/initializematlab.m',nargout=0)
 SysDyn.setup(eng)
 SysDyn.compute(sysdynins, sysdynouts)
 print('System Dynamics Complete.')

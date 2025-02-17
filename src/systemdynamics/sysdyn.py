@@ -90,12 +90,13 @@ class SysDyn(om.ExplicitComponent):
 
         wecSimOptions = GILL.dict2struct(PARAMS["wecsimoptions"],self.eng)
 
-        Qf,Qp,t = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,matlab.double(cg),
+        simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,matlab.double(cg),
                                     inputs["piston_area"],inputs["piston_stroke"],
                                     inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                     inputs["throt_resist"],inputs["mem_resist"],inputs["mem_pressure_min"],
                                     inputs["drivetrain_mass"],
-                                    wecSimOptions, nargout=3)
+                                    wecSimOptions, nargout=1)
+        Qf,Qp,t = self.eng.fetchOutputs(simouts,nargout=3)
         feedflow = np.array(Qf)
         permflow = np.array(Qp)
         time = np.array(t)
