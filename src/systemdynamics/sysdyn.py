@@ -69,7 +69,8 @@ class SysDyn(om.ExplicitComponent):
         hydro = GILL.capy2struct(hydro, hydroXR, inputs['Vo'], cb, cg)
         hydro = self.eng.normalizeBEM(hydro)
         hydro = self.eng.solveIRFs(hydro)
-
+        hydro = self.eng.rebuildhydrostruct(hydro)
+        
         # Initialize an array to hold inertia values
         wec_inertia_np= np.zeros(3)
         # Map DOFs to indices
