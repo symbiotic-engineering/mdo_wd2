@@ -5,6 +5,8 @@ from src.params import PARAMS
 from src.hydro.hydro import dict2xarray
 import src.GILL.src.capy2wecSim as GILL
 import matlab
+import random
+import time as timer
 
 class SysDyn(om.ExplicitComponent):
     def setup(self,engine):
@@ -25,7 +27,12 @@ class SysDyn(om.ExplicitComponent):
         self.add_input('Vo', val=0)
         self.add_input('draft', val=0)
         self.add_input('cog', val=0)
+        self.add_input('thickness', val=1.0)
 
+        # Pumping Mechanism
+        self.add_input('hinge_depth', val=8.9)
+        self.add_input('joint_depth', val=7.0)
+        self.add_input('intake_x', val=4.7)
 
         # Hydraulics and Desal
         self.add_input('piston_area', val=0.26)
@@ -68,10 +75,8 @@ class SysDyn(om.ExplicitComponent):
         hydro = GILL.capy2struct(hydro, hydroXR, inputs['Vo'], cb, cg)
         hydro = self.eng.normalizeBEM(hydro)
         hydro = self.eng.solveIRFs(hydro)
+        hydro = self.eng.rebuildhydrostruct(hydro)
         
-        self.eng.workspace['hydro'] = hydro
-        self.eng.disp(hydro, nargout=0)
-
         # Initialize an array to hold inertia values
         wec_inertia_np= np.zeros(3)
         # Map DOFs to indices
@@ -90,12 +95,22 @@ class SysDyn(om.ExplicitComponent):
 
         wecSimOptions = GILL.dict2struct(PARAMS["wecsimoptions"],self.eng)
 
-        Qf,Qp,t = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,matlab.double(cg),
+        key = random.randint(0, 10**16 - 1)  # Generate a random 16-digit integer
+
+        simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,inputs["thickness"],
+                                    inputs["hinge_depth"],inputs["joint_depth"],inputs["intake_x"],
                                     inputs["piston_area"],inputs["piston_stroke"],
                                     inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                     inputs["throt_resist"],inputs["mem_resist"],inputs["mem_pressure_min"],
                                     inputs["drivetrain_mass"],
-                                    wecSimOptions, nargout=3)
+                                    wecSimOptions,key, nargout=1)
+        Qf,Qp,t,keyout = self.eng.fetchOutputs(simouts,nargout=4)
+        try:
+            if key != keyout:
+                raise ValueError(f"wrong output fetched")
+        except ValueError as e:
+            print(f"Parallelization Error: {e}")
+        
         feedflow = np.array(Qf)
         permflow = np.array(Qp)
         time = np.array(t)
