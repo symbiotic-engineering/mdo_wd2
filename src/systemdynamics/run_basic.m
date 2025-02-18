@@ -23,7 +23,11 @@ mem_pressure_min = 30;  % [bar]         Minimum Required Pressure Across Membran
 throt_resist = 60.23;   % [MPa*s/m^3]   Throttle Valve Hydraulic Resistance
 
 load('/home/degoede/SEA/SEAmdo_wd2/degoede_ignore/direct_hydro.mat')
-hydro = rebuildhydrostruct(hydro)
+hydro = rebuildhydrostruct(hydro);
+t = 1;
+hinge_depth = 8.9;
+joint_depth = 7;
+intake_x = 4.7;
 wecSimOptions = struct();
 wecSimOptions.model = model;
 wecSimOptions.dt = 0.1;
@@ -32,4 +36,4 @@ key=3;
 wec_mass = 127000;
 wec_inertia = [1 1 1]*1.86e7;
 cg = 0;
-[feed,perm,t] = wdds_sim(hydro,wec_mass,wec_inertia,cg,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,mem_pressure_min,drivetrain_mass,wecSimOptions,key)
+[feed,perm,t,key] = wdds_sim(hydro,wec_mass,wec_inertia,cg,t,hinge_depth,joint_depth,intake_x,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,mem_pressure_min,drivetrain_mass,wecSimOptions,key)
