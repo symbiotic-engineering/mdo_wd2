@@ -90,21 +90,16 @@ body(2).inertia = [999 999 999];                % Placeholder inertia for a fixe
 % Fixed
 constraint(1)= constraintClass('Constraint1'); % Initialize ConstraintClass 
 constraint(1).location = [0 0 -hydro.simulation_parameters.waterDepth];
-constraint(1).location = [0 0 -12];
 
 % Rotationals
 constraint(2)= constraintClass('Constraint2'); % Initialize ConstraintClass 
 constraint(2).location = [0 0 -hinge_depth];
-constraint(2).location = [0 0 -7];
-
 
 constraint(3)= constraintClass('Constraint3'); % Initialize ConstraintClass 
-constraint(3).location = [intake_x+wec_thickness*1/2 0 -hinge_depth];
-constraint(3).location = [5.5 0 -7];
+constraint(3).location = [intake_x 0 -hinge_depth];
 
 constraint(4)= constraintClass('Constraint4'); % Initialize ConstraintClass 
-constraint(4).location = [wec_thickness*1/2 0 -joint_depth];
-constraint(4).location = [0.5 0 -7];
+constraint(4).location = [0 0 -joint_depth];
 
 % Translational PTO
 pto(1) = ptoClass('PTO1');                      % Initialize ptoClass for PTO1
