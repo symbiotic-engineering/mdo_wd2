@@ -27,6 +27,12 @@ class SysDyn(om.ExplicitComponent):
         self.add_input('Vo', val=0)
         self.add_input('draft', val=0)
         self.add_input('cog', val=0)
+        self.add_input('thickness', val=1.0)
+
+        # Pumping Mechanism
+        self.add_input('hinge_depth', val=8.9)
+        self.add_input('joint_depth', val=7.0)
+        self.add_input('intake_x', val=4.7)
 
         # Hydraulics and Desal
         self.add_input('piston_area', val=0.26)

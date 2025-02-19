@@ -61,6 +61,11 @@ sysdynins = {
     "Vo": w*t*draft,
     "draft": draft,
     "cog": cog,
+    "thickness": t,
+
+    "hinge_depth": 8.9,
+    "joint_depth": 7.0,
+    "intake_x": 4.7,
 
     "piston_area": 0.26,
     "piston_stroke": 12.0,

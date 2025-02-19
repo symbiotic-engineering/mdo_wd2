@@ -1,3 +1,3 @@
-function [result] = wdds_par(hydro,wec_mass,wec_inertia,cg,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,mem_pressure_min,drivetrain_mass,wecSimOptions,key)
-result = parfeval(@wdds_sim, 4, hydro,wec_mass,wec_inertia,cg,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,mem_pressure_min,drivetrain_mass,wecSimOptions,key);
+function [result] = wdds_par(hydro,wec_mass,wec_inertia,wec_thickness,hinge_depth,joint_depth,intake_x,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,mem_pressure_min,drivetrain_mass,wecSimOptions,key)
+result = parfeval(@wdds_sim, 4, hydro,wec_mass,wec_inertia,wec_thickness,hinge_depth,joint_depth,intake_x,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,mem_pressure_min,drivetrain_mass,wecSimOptions,key);
 end
