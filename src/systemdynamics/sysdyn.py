@@ -97,19 +97,24 @@ class SysDyn(om.ExplicitComponent):
 
         key = random.randint(0, 10**16 - 1)  # Generate a random 16-digit integer
 
-        '''simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,matlab.double(cg),
-                                    inputs["piston_area"],inputs["piston_stroke"],
-                                    inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
-                                    inputs["throt_resist"],inputs["mem_resist"],inputs["mem_pressure_min"],
-                                    inputs["drivetrain_mass"],
-                                    wecSimOptions,key, nargout=1)
-        Qf,Qp,t,keyout = self.eng.fetchOutputs(simouts,nargout=4)'''
-        Qf,Qp,t,keyout = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,matlab.double(cg),
-                                    inputs["piston_area"],inputs["piston_stroke"],
-                                    inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
-                                    inputs["throt_resist"],inputs["mem_resist"],inputs["mem_pressure_min"],
-                                    inputs["drivetrain_mass"],
-                                    wecSimOptions,key, nargout=4)
+        if PARAMS["nworkers"] == 0:
+            Qf,Qp,t,keyout = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,inputs["thickness"],
+                                        inputs["hinge_depth"],inputs["joint_depth"],inputs["intake_x"],
+                                        inputs["piston_area"],inputs["piston_stroke"],
+                                        inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
+                                        inputs["throt_resist"],inputs["mem_resist"],inputs["mem_pressure_min"],
+                                        inputs["drivetrain_mass"],
+                                        wecSimOptions,key, nargout=4)
+        else:
+            simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,inputs["thickness"],
+                                        inputs["hinge_depth"],inputs["joint_depth"],inputs["intake_x"],
+                                        inputs["piston_area"],inputs["piston_stroke"],
+                                        inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
+                                        inputs["throt_resist"],inputs["mem_resist"],inputs["mem_pressure_min"],
+                                        inputs["drivetrain_mass"],
+                                        wecSimOptions,key, nargout=1)
+            Qf,Qp,t,keyout = self.eng.fetchOutputs(simouts,nargout=4)
+        
         try:
             if key != keyout:
                 raise ValueError(f"wrong output fetched")
