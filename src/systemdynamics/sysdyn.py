@@ -27,6 +27,12 @@ class SysDyn(om.ExplicitComponent):
         self.add_input('Vo', val=0)
         self.add_input('draft', val=0)
         self.add_input('cog', val=0)
+        self.add_input('thickness', val=1.0)
+
+        # Pumping Mechanism
+        self.add_input('hinge_depth', val=8.9)
+        self.add_input('joint_depth', val=7.0)
+        self.add_input('intake_x', val=4.7)
 
         # Hydraulics and Desal
         self.add_input('piston_area', val=0.26)
@@ -69,7 +75,8 @@ class SysDyn(om.ExplicitComponent):
         hydro = GILL.capy2struct(hydro, hydroXR, inputs['Vo'], cb, cg)
         hydro = self.eng.normalizeBEM(hydro)
         hydro = self.eng.solveIRFs(hydro)
-
+        hydro = self.eng.rebuildhydrostruct(hydro)
+        
         # Initialize an array to hold inertia values
         wec_inertia_np= np.zeros(3)
         # Map DOFs to indices
@@ -90,7 +97,8 @@ class SysDyn(om.ExplicitComponent):
 
         key = random.randint(0, 10**16 - 1)  # Generate a random 16-digit integer
 
-        simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,matlab.double(cg),
+        simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,inputs["thickness"],
+                                    inputs["hinge_depth"],inputs["joint_depth"],inputs["intake_x"],
                                     inputs["piston_area"],inputs["piston_stroke"],
                                     inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                     inputs["throt_resist"],inputs["mem_resist"],inputs["mem_pressure_min"],
