@@ -24,7 +24,7 @@ PARAMS["wecsimoptions"] = {
     'dt'    : 0.1,
     'tend'  : 300.0,
 }
-PARAMS["nworkers"] = 4
+PARAMS["nworkers"] = 0
 
 #   Dependant Params
 PARAMS["period"] = 2*np.pi/PARAMS["omega"]  # wave period
