@@ -87,6 +87,15 @@ SysDyn.compute(sysdynins, sysdynouts)
 end_time = time.time()
 print(f'System Dynamics Completed in {end_time-start_time} seconds.')
 
+print('Starting System Dynamics for the 2nd time...')
+start_time = time.time()
+sysdynouts = {}
+SysDyn = sysdyn.SysDyn()
+SysDyn.setup(eng)
+SysDyn.compute(sysdynins, sysdynouts)
+end_time = time.time()
+print(f'System Dynamics Completed in {end_time-start_time} seconds the 2nd time.')
+
 econins = {
     'feedflow_cap': 6000.0,
     'permflow_cap': 3000.0,
