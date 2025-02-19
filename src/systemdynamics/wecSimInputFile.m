@@ -60,7 +60,7 @@ end
 % Flap
 body(1) = bodyClass(hydro);      % Initialize bodyClass for Flap
 %body(1) = bodyClass('/home/degoede/SEA/mdo_wd2/data/hydroData/oswec.h5');
-body(1).geometryFile = 'data/geometry/flap.stl';     % Geometry File
+body(1).geometryFile = 'None';     % Geometry File
 body(1).mass = wec_mass;                          % User-Defined mass [kg]
 body(1).inertia = wec_inertia;       % Moment of Inertia [kg-m^2]
 
@@ -82,24 +82,24 @@ end
 
 % Base
 body(2) = bodyClass(hydro);     % Initialize bodyClass for Base
-body(2).geometryFile = 'data/geometry/base.stl';     % Geometry File
+body(2).geometryFile = 'None';     % Geometry File
 body(2).mass = 999;                             % Placeholder mass for a fixed body
 body(2).inertia = [999 999 999];                % Placeholder inertia for a fixed body
 
 %% PTO and Constraint Parameters
 % Fixed
 constraint(1)= constraintClass('Constraint1'); % Initialize ConstraintClass 
-constraint(1).location = [0 0 -10];
+constraint(1).location = [0 0 -hydro.simulation_parameters.waterDepth];
 
 % Rotationals
 constraint(2)= constraintClass('Constraint2'); % Initialize ConstraintClass 
-constraint(2).location = [0 0 -8.9];
+constraint(2).location = [0 0 -hinge_depth];
 
 constraint(3)= constraintClass('Constraint3'); % Initialize ConstraintClass 
-constraint(3).location = [4.7021271782+0.9 0 -8.7];
+constraint(3).location = [intake_x 0 -hinge_depth];
 
 constraint(4)= constraintClass('Constraint4'); % Initialize ConstraintClass 
-constraint(4).location = [0+0.9 0 -7];
+constraint(4).location = [0 0 -joint_depth];
 
 % Translational PTO
 pto(1) = ptoClass('PTO1');                      % Initialize ptoClass for PTO1
