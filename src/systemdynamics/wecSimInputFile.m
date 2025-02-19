@@ -105,5 +105,5 @@ constraint(4).location = [0 0 -joint_depth];
 pto(1) = ptoClass('PTO1');                      % Initialize ptoClass for PTO1
 pto(1).stiffness = 0;                           % PTO Stiffness Coeff [N/m]
 pto(1).damping = 0;                         % PTO Damping Coeff [Ns/m]
-pto(1).location = [2.35106397378+0.9 0 -7.849998936];   % PTO Global Location [m]
-pto(1).orientation.z = [-4.7021271782/5 0 1.7/5];  % PTO orientation 
+pto(1).location = [intake_x/2 0 -0.9*hinge_depth];   % PTO Global Location [m]
+pto(1).orientation.z = [-intake_x/5 0 (hinge_depth-joint_depth)/5];  % PTO orientation 
