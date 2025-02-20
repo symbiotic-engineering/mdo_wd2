@@ -66,16 +66,17 @@ sysdynins = {
     "hinge_depth": 8.9,
     "joint_depth": 7.0,
     "intake_x": 4.7,
+    "drivetrain_mass": 50.0,
 
     "piston_area": 0.26,
     "piston_stroke": 12.0,
     "accum_volume": 4.0,
-    "accum_P0": 30.0,
-    "pressure_relief": 60.0,
+    "accum_P0": 3.0,
+    "pressure_relief": 6.0,
     "throt_resist": 60.23,
+    
     "mem_resist": 60.23,
-    "mem_pressure_min": 30.0,
-    "drivetrain_mass": 50.0,
+    "osmotic_pressure": 3.0,
 }
 
 print('Starting System Dynamics...')
