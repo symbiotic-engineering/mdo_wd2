@@ -26,8 +26,8 @@ class Econ(om.ExplicitComponent):
         opex = []
 
         # RO terms
-        capex.append(RO.CAPEX(feedflow_cap,permflow_cap,PARAMS["pipelength"],PARAMS["feedTDS"]))
-        opex.append(RO.OPEX(feedflow_bar,permflow_bar,PARAMS["pipelength"],PARAMS["feedTDS"]))
+        capex.append(RO.CAPEX(feedflow_cap,permflow_cap,PARAMS["distance_to_shore"],PARAMS["feedTDS"]))
+        opex.append(RO.OPEX(feedflow_bar,permflow_bar,PARAMS["distance_to_shore"],PARAMS["feedTDS"]))
 
         # LCOW calculation        
         awp = feedflow_bar*PARAMS["days_in_year"]
