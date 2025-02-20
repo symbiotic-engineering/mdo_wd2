@@ -8,6 +8,7 @@ import xarray as xr
 import src.hydro.hydro as hydro
 import src.systemdynamics.sysdyn as sysdyn
 import src.econ.econ as econ
+import src.desal.desal as desal
 from src.params import PARAMS
 import matlab.engine
 import time
@@ -24,18 +25,40 @@ eng.cd(initialization_script_path, nargout=0)
 eng.initializematlab(PARAMS["nworkers"],nargout=0)
 eng.cd('..', nargout=0)
 
-w = 18
-t = 1
-h = 10
-draft = 9
-cog = -0.7 * h
-hydroins = {    
-    'width': w,
-    'thickness': t,
-    'height': h,
-    'draft': draft,
-    'center_of_gravity': cog
+inputs = {
+    # WEC Params
+    'w' : 18,
+    't' : 1,
+    'h' : 10,
+    'draft' : 9,
+    'cog' : -0.7 * 10,
+    'wec_mass' : 127000.0,
+    'inertia_matrix' : np.array([[1.85e6]]),
+
+    # Mechanism Params
+    'hinge_depth' : 8.9,
+    'joint_depth' : 7.0,
+    'intake_x' : 4.7,
+    'drivetrain_mass' : 50.0,
+
+    # Hydraulic Params
+    'piston_area' : 0.26,
+    'piston_stroke' : 12.0,
+    'accum_volume' : 4.0,
+    'accum_P0' : 3.0,
+
+    # Desal Params
+    'capacity' : 6000,
 }
+
+hydroins = {    
+    'width': inputs["w"],
+    'thickness': inputs["t"],
+    'height': inputs["h"],
+    'draft': inputs["draft"],
+    'center_of_gravity': inputs["cog"],
+}
+
 hydroouts = {}
 Hydro = hydro.Hydro()
 Hydro.setup()
@@ -44,6 +67,19 @@ start_time = time.time()
 Hydro.compute(hydroins, hydroouts)
 end_time = time.time()
 print(f'BEM Completed in {end_time-start_time} seconds.')
+
+desalins = {
+    'capacity': inputs["capacity"]
+}
+
+print('Starting Desal Parameterization...')
+start_time = time.time()
+desalouts = {}
+DesalParams = desal.DesalParams()
+DesalParams.setup()
+DesalParams.compute(desalins, desalouts)
+end_time = time.time()
+print(f'Desal Parameterization Completed in {end_time-start_time} seconds.')
 
 sysdynins = {
     "added_mass": hydroouts["added_mass"],
@@ -56,27 +92,27 @@ sysdynins = {
     "ex_im": hydroouts["ex_im"],
     "hydrostatic_stiffness": hydroouts["hydrostatic_stiffness"],
 
-    "wec_mass": 127000.0,
-    "inertia_matrix": np.array([[1.85e6]]),
-    "Vo": w*t*draft,
-    "draft": draft,
-    "cog": cog,
-    "thickness": t,
+    "wec_mass": inputs["wec_mass"],
+    "inertia_matrix": inputs["inertia_matrix"],
+    "Vo": inputs["w"]*inputs["t"]*inputs["draft"],
+    "draft": inputs["draft"],
+    "cog": inputs["cog"],
+    "thickness": inputs["t"],
 
-    "hinge_depth": 8.9,
-    "joint_depth": 7.0,
-    "intake_x": 4.7,
-    "drivetrain_mass": 50.0,
+    "hinge_depth": inputs["hinge_depth"],
+    "joint_depth": inputs["joint_depth"],
+    "intake_x": inputs["intake_x"],
+    "drivetrain_mass": inputs["drivetrain_mass"],
 
-    "piston_area": 0.26,
-    "piston_stroke": 12.0,
-    "accum_volume": 4.0,
-    "accum_P0": 3.0,
-    "pressure_relief": 6.0,
-    "throt_resist": 60.23,
-    
-    "mem_resist": 60.23,
-    "osmotic_pressure": 3.0,
+    "piston_area": inputs["piston_area"],
+    "piston_stroke": inputs["piston_stroke"],
+    "accum_volume": inputs["accum_volume"],
+    "accum_P0": inputs["accum_P0"],
+    "pressure_relief": desalouts["pressure_relief"],
+    "throt_resist": desalouts["throt_resist"],
+
+    "mem_resist": desalouts["mem_resist"],
+    "osmotic_pressure": desalouts["osmotic_pressure"],
 }
 
 print('Starting System Dynamics...')
@@ -98,8 +134,8 @@ end_time = time.time()
 print(f'System Dynamics Completed in {end_time-start_time} seconds the 2nd time.')
 
 econins = {
-    'feedflow_cap': 6000.0,
-    'permflow_cap': 3000.0,
+    'feedflow_cap': inputs["capacity"]/PARAMS["recovery_ratio"],
+    'permflow_cap': inputs["capacity"],
     'feedflow': sysdynouts['feedflow'],
     'permflow': sysdynouts['permflow'],
 }
