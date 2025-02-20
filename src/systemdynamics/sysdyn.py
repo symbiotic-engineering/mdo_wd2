@@ -33,17 +33,19 @@ class SysDyn(om.ExplicitComponent):
         self.add_input('hinge_depth', val=8.9)
         self.add_input('joint_depth', val=7.0)
         self.add_input('intake_x', val=4.7)
-
-        # Hydraulics and Desal
+        self.add_input('drivetrain_mass', val=1.0)
+        
+        # Hydraulics
         self.add_input('piston_area', val=0.26)
         self.add_input('piston_stroke', val=4.0)
         self.add_input('accum_volume', val=4.0)
-        self.add_input('accum_P0', val=30.0)
-        self.add_input('pressure_relief', val=60.0)
+        self.add_input('accum_P0', val=3.0)
+        self.add_input('pressure_relief', val=6.0)
         self.add_input('throt_resist', val=60.23)
+
+        # RO Membrane
         self.add_input('mem_resist', val=60.23)
-        self.add_input('mem_pressure_min', val=30.0)
-        self.add_input('drivetrain_mass', val=1.0)
+        self.add_input('osmotic_pressure', val=3.0)
 
         # MATLAB Engine
         self.eng = engine
@@ -102,7 +104,7 @@ class SysDyn(om.ExplicitComponent):
                                         inputs["hinge_depth"],inputs["joint_depth"],inputs["intake_x"],
                                         inputs["piston_area"],inputs["piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
-                                        inputs["throt_resist"],inputs["mem_resist"],inputs["mem_pressure_min"],
+                                        inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
                                         inputs["drivetrain_mass"],
                                         wecSimOptions,key, nargout=4)
         else:
@@ -110,7 +112,7 @@ class SysDyn(om.ExplicitComponent):
                                         inputs["hinge_depth"],inputs["joint_depth"],inputs["intake_x"],
                                         inputs["piston_area"],inputs["piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
-                                        inputs["throt_resist"],inputs["mem_resist"],inputs["mem_pressure_min"],
+                                        inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
                                         inputs["drivetrain_mass"],
                                         wecSimOptions,key, nargout=1)
             Qf,Qp,t,keyout = self.eng.fetchOutputs(simouts,nargout=4)
