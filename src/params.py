@@ -15,7 +15,7 @@ PARAMS["body_name"] = 'Flap'    #   [-]         name of the body
 PARAMS["water_depth"] = 12.     #   [m]         depth of the water
 PARAMS["forward_speed"] = 0.    #   [m/s]       forward speed of the body
 PARAMS["wave_direction"] = np.array(0.) #   [deg]   direction of the waves
-PARAMS["omega"] = np.linspace(0.2,3,10) #   [rad/s] wave frequencies
+PARAMS["omega"] = np.linspace(0.2,3,20) #   [rad/s] wave frequencies
 PARAMS["dof"] = ["Pitch"]       #   [-]         degree(s) of freedom
 
 #   RO Params
@@ -26,7 +26,7 @@ PARAMS["M_salt"] = 58.44        #   [g/mol]     molecular weight of salt
 PARAMS["RO_flux"] = 24.6/35     #   [m/day]     nominal flux for SW30HR-380 Dry
 PARAMS["Aw"] = 2.57e-12         #   [m^2]       permeability coefficient
 PARAMS["Bs"] = 2.30e-8          #   [m/s]       solute transport parameter
-PARAMS["recovery_ratio"] = 0.515#   [-]         recovery ratio from wave with nominal params
+PARAMS["recovery_ratio"] = 0.515#   [-]         recovery ratio from WAVE with nominal flow and pressure, note that this is nominal, and not what will always be the recovery ratio, as flow/pressure drops, recovery ratio will drop as well
 
 #   Econ Params
 PARAMS["FCR"] = 0.108  # fixed charge rate

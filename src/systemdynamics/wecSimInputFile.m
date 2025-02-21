@@ -43,6 +43,7 @@ switch wave_type
         waves.height = 2.64;                     % Significant Wave Height [m]
         waves.period = 9.86;                       % Peak Period [s]
         waves.spectrumType = 'PM';              % Specify Spectrum Type
+        waves.phaseSeed = 1;
 end
 %waves.direction = [0,30,90];            % Wave Directionality [deg]
 %waves.spread = [0.1,0.2,0.7];           % Wave Directional Spreading [%}

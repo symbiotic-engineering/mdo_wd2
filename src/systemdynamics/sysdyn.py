@@ -7,6 +7,7 @@ import src.GILL.src.capy2wecSim as GILL
 import matlab
 import random
 import time as timer
+from matplotlib import pyplot as plt
 
 class SysDyn(om.ExplicitComponent):
     def setup(self,engine):
@@ -27,7 +28,6 @@ class SysDyn(om.ExplicitComponent):
         self.add_input('Vo', val=0)
         self.add_input('draft', val=0)
         self.add_input('cog', val=0)
-        self.add_input('thickness', val=1.0)
 
         # Pumping Mechanism
         self.add_input('joint_depth', val=7.0)
@@ -98,26 +98,26 @@ class SysDyn(om.ExplicitComponent):
 
         key = random.randint(0, 10**16 - 1)  # Generate a random 16-digit integer
 
-        hinge_depth = inputs["draft"]
+        hinge_depth = matlab.double(inputs["draft"])
 
         if PARAMS["nworkers"] == 0:
-            Qf,Qp,t,keyout = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,inputs["thickness"],
+            Qf,Qp,t,P,keyout = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,
                                         hinge_depth,inputs["joint_depth"],inputs["intake_x"],
                                         inputs["piston_area"],inputs["piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
                                         inputs["drivetrain_mass"],
-                                        wecSimOptions,key, nargout=4)
+                                        wecSimOptions,key, nargout=5)
         else:
-            simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,inputs["thickness"],
+            simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,
                                         hinge_depth,inputs["joint_depth"],inputs["intake_x"],
                                         inputs["piston_area"],inputs["piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
                                         inputs["drivetrain_mass"],
                                         wecSimOptions,key, nargout=1)
-            Qf,Qp,t,keyout = self.eng.fetchOutputs(simouts,nargout=4)
-        
+            Qf,Qp,t,P,keyout = self.eng.fetchOutputs(simouts,nargout=5)
+
         try:
             if key != keyout:
                 raise ValueError(f"wrong output fetched")

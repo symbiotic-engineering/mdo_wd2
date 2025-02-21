@@ -20,8 +20,8 @@ class Econ(om.ExplicitComponent):
     def compute(self, inputs, outputs):
         feedflow_cap = inputs['feedflow_cap']
         permflow_cap = inputs['permflow_cap']
-        feedflow_bar = np.mean(inputs['feedflow'])*PARAMS["days_in_year"]*24*60*60  # average flow rate in m^3/day
-        permflow_bar = np.mean(inputs['permflow'])*PARAMS["days_in_year"]*24*60*60  # average flow rate in m^3/day
+        feedflow_bar = np.mean(inputs['feedflow'])*24*60*60  # average flow rate in m^3/day
+        permflow_bar = np.mean(inputs['permflow'])*24*60*60  # average flow rate in m^3/day
         capex = []
         opex = []
 
