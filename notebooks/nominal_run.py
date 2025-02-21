@@ -29,14 +29,12 @@ inputs = {
     # WEC Params
     'w' : 18,
     't' : 1,
-    'h' : 10,
     'draft' : 9,
     'cog' : -0.7 * 10,
     'wec_mass' : 127000.0,
     'inertia_matrix' : np.array([[1.85e6]]),
 
     # Mechanism Params
-    'hinge_depth' : 8.9,
     'joint_depth' : 7.0,
     'intake_x' : 4.7,
     'drivetrain_mass' : 50.0,
@@ -54,7 +52,6 @@ inputs = {
 hydroins = {    
     'width': inputs["w"],
     'thickness': inputs["t"],
-    'height': inputs["h"],
     'draft': inputs["draft"],
     'center_of_gravity': inputs["cog"],
 }
@@ -99,7 +96,6 @@ sysdynins = {
     "cog": inputs["cog"],
     "thickness": inputs["t"],
 
-    "hinge_depth": inputs["hinge_depth"],
     "joint_depth": inputs["joint_depth"],
     "intake_x": inputs["intake_x"],
     "drivetrain_mass": inputs["drivetrain_mass"],

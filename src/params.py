@@ -26,7 +26,7 @@ PARAMS["M_salt"] = 58.44        #   [g/mol]     molecular weight of salt
 PARAMS["RO_flux"] = 24.6/35     #   [m/day]     nominal flux for SW30HR-380 Dry
 PARAMS["Aw"] = 2.57e-12         #   [m^2]       permeability coefficient
 PARAMS["Bs"] = 2.30e-8          #   [m/s]       solute transport parameter
-PARAMS["recovery_ratio"] = 0.5  #   [-]         recovery ratio
+PARAMS["recovery_ratio"] = 0.515#   [-]         recovery ratio from wave with nominal params
 
 #   Econ Params
 PARAMS["FCR"] = 0.108  # fixed charge rate

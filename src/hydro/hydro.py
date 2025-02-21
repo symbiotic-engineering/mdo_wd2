@@ -91,7 +91,6 @@ class Hydro(om.ExplicitComponent):
     def setup(self):
         self.add_input('width', val=18)
         self.add_input('thickness', val=1)
-        self.add_input('height', val=10)
         self.add_input('draft', val=9)
         self.add_input('center_of_gravity', val=-9)
 
@@ -108,7 +107,7 @@ class Hydro(om.ExplicitComponent):
     def compute(self, inputs, outputs):
         w = inputs['width']
         t = inputs['thickness']
-        h = inputs['height']
+        h = inputs['draft'] + 0.1
         draft = inputs['draft']
         cog = inputs['center_of_gravity']
         dataset = run(w,t,h,draft,cog)

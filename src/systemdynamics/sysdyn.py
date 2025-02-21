@@ -30,7 +30,6 @@ class SysDyn(om.ExplicitComponent):
         self.add_input('thickness', val=1.0)
 
         # Pumping Mechanism
-        self.add_input('hinge_depth', val=8.9)
         self.add_input('joint_depth', val=7.0)
         self.add_input('intake_x', val=4.7)
         self.add_input('drivetrain_mass', val=1.0)
@@ -99,9 +98,11 @@ class SysDyn(om.ExplicitComponent):
 
         key = random.randint(0, 10**16 - 1)  # Generate a random 16-digit integer
 
+        hinge_depth = inputs["draft"]
+
         if PARAMS["nworkers"] == 0:
             Qf,Qp,t,keyout = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,inputs["thickness"],
-                                        inputs["hinge_depth"],inputs["joint_depth"],inputs["intake_x"],
+                                        hinge_depth,inputs["joint_depth"],inputs["intake_x"],
                                         inputs["piston_area"],inputs["piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
@@ -109,7 +110,7 @@ class SysDyn(om.ExplicitComponent):
                                         wecSimOptions,key, nargout=4)
         else:
             simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,inputs["thickness"],
-                                        inputs["hinge_depth"],inputs["joint_depth"],inputs["intake_x"],
+                                        hinge_depth,inputs["joint_depth"],inputs["intake_x"],
                                         inputs["piston_area"],inputs["piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
