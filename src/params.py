@@ -6,7 +6,7 @@ PARAMS = {}
 PARAMS["g"] = 9.81              #   [m/s^2]     acceleration due to gravity
 PARAMS["rho"] = 1025.           #   [kg/m^3]    density of seawater
 PARAMS["days_in_year"] = 365.0  #   [days/yr]   days in a year
-PARAMS["distance_to_shore"] = 500   #   [m]     distance from WEC to shore, also length of pipe from WEC to SWRO plant
+PARAMS["distance_to_shore"] = 500.0 #   [m]     distance from WEC to shore, also length of pipe from WEC to SWRO plant
 PARAMS["R"] = 8.314             #   [J/K*mol]   ideal gas constant
 PARAMS["temperature"] = 298.15  #   [K]         temperature
 
@@ -28,6 +28,9 @@ PARAMS["Aw"] = 2.57e-12         #   [m^2]       permeability coefficient
 PARAMS["Bs"] = 2.30e-8          #   [m/s]       solute transport parameter
 PARAMS["recovery_ratio"] = 0.515#   [-]         recovery ratio from WAVE with nominal flow and pressure, note that this is nominal, and not what will always be the recovery ratio, as flow/pressure drops, recovery ratio will drop as well
 
+#   System Dynamics Params
+PARAMS["intake_z"] = 0.         #   [m]         z-coordinate of the intake
+
 #   Econ Params
 PARAMS["FCR"] = 0.108  # fixed charge rate
 
@@ -37,6 +40,8 @@ PARAMS["wecsimoptions"] = {
     'dt'    : 0.1,
     'tend'  : 300.0,
 }
+
+# Optimization Params
 PARAMS["nworkers"] = 0
 
 #   Dependant Params

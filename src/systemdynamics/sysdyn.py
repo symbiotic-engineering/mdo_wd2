@@ -102,7 +102,7 @@ class SysDyn(om.ExplicitComponent):
 
         if PARAMS["nworkers"] == 0:
             Qf,Qp,t,P,keyout = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,
-                                        hinge_depth,inputs["joint_depth"],inputs["intake_x"],
+                                        hinge_depth,inputs["joint_depth"],inputs["intake_x"],PARAMS["intake_z"],
                                         inputs["piston_area"],inputs["piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
@@ -110,7 +110,7 @@ class SysDyn(om.ExplicitComponent):
                                         wecSimOptions,key, nargout=5)
         else:
             simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,
-                                        hinge_depth,inputs["joint_depth"],inputs["intake_x"],
+                                        hinge_depth,inputs["joint_depth"],inputs["intake_x"],PARAMS["intake_z"],
                                         inputs["piston_area"],inputs["piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],

@@ -28,7 +28,7 @@ eng.cd('..', nargout=0)
 inputs = {
     # WEC Params
     'w' : 18,
-    't' : 1,
+    't' : 1.0,
     'draft' : 9,
     'cog' : -0.7 * 10,
     'wec_mass' : 127000.0,
@@ -94,7 +94,6 @@ sysdynins = {
     "Vo": inputs["w"]*inputs["t"]*inputs["draft"],
     "draft": inputs["draft"],
     "cog": inputs["cog"],
-    "thickness": inputs["t"],
 
     "joint_depth": inputs["joint_depth"],
     "intake_x": inputs["intake_x"],
@@ -120,14 +119,14 @@ SysDyn.compute(sysdynins, sysdynouts)
 end_time = time.time()
 print(f'System Dynamics Completed in {end_time-start_time} seconds.')
 
-print('Starting System Dynamics for the 2nd time...')
+'''print('Starting System Dynamics for the 2nd time...')
 start_time = time.time()
 sysdynouts = {}
 SysDyn = sysdyn.SysDyn()
 SysDyn.setup(eng)
 SysDyn.compute(sysdynins, sysdynouts)
 end_time = time.time()
-print(f'System Dynamics Completed in {end_time-start_time} seconds the 2nd time.')
+print(f'System Dynamics Completed in {end_time-start_time} seconds the 2nd time.')'''
 
 econins = {
     'feedflow_cap': inputs["capacity"]/PARAMS["recovery_ratio"],
