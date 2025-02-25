@@ -30,6 +30,7 @@ PARAMS["recovery_ratio"] = 0.515#   [-]         recovery ratio from WAVE with no
 
 #   System Dynamics Params
 PARAMS["intake_z"] = 0.         #   [m]         z-coordinate of the intake
+PARAMS["drivetrain_mass"] = 50. #   [kg]        mass of the piston
 
 #   Econ Params
 PARAMS["FCR"] = 0.108  # fixed charge rate

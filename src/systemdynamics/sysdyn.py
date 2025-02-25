@@ -32,7 +32,6 @@ class SysDyn(om.ExplicitComponent):
         # Pumping Mechanism
         self.add_input('joint_depth', val=7.0)
         self.add_input('intake_x', val=4.7)
-        self.add_input('drivetrain_mass', val=1.0)
         
         # Hydraulics
         self.add_input('piston_area', val=0.26)
@@ -106,7 +105,7 @@ class SysDyn(om.ExplicitComponent):
                                         inputs["piston_area"],inputs["piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
-                                        inputs["drivetrain_mass"],
+                                        PARAMS["drivetrain_mass"],
                                         wecSimOptions,key, nargout=5)
         else:
             simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,
@@ -114,7 +113,7 @@ class SysDyn(om.ExplicitComponent):
                                         inputs["piston_area"],inputs["piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
-                                        inputs["drivetrain_mass"],
+                                        PARAMS["drivetrain_mass"],
                                         wecSimOptions,key, nargout=1)
             Qf,Qp,t,P,keyout = self.eng.fetchOutputs(simouts,nargout=5)
 

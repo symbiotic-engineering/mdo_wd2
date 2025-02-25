@@ -37,7 +37,6 @@ inputs = {
     # Mechanism Params
     'joint_depth' : 7.0,
     'intake_x' : 4.7,
-    'drivetrain_mass' : 50.0,
 
     # Hydraulic Params
     'piston_area' : 0.26,
@@ -97,7 +96,6 @@ sysdynins = {
 
     "joint_depth": inputs["joint_depth"],
     "intake_x": inputs["intake_x"],
-    "drivetrain_mass": inputs["drivetrain_mass"],
 
     "piston_area": inputs["piston_area"],
     "piston_stroke": inputs["piston_stroke"],
