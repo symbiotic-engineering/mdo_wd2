@@ -52,6 +52,7 @@ class SysDyn(om.ExplicitComponent):
         timesteps = int(PARAMS["wecsimoptions"]["tend"]/PARAMS["wecsimoptions"]["dt"])+1
         self.add_output('feedflow', val=np.zeros(timesteps))
         self.add_output('permflow', val=np.zeros(timesteps))
+        self.add_output('stroke_length', val=0.0)
         
     def compute(self,inputs,outputs):
         hydroDct = {
@@ -100,13 +101,13 @@ class SysDyn(om.ExplicitComponent):
         hinge_depth = matlab.double(inputs["draft"])
 
         if PARAMS["nworkers"] == 0:
-            Qf,Qp,t,P,keyout = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,
+            Qf,Qp,t,P,stroke,keyout = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,
                                         hinge_depth,inputs["joint_depth"],inputs["intake_x"],PARAMS["intake_z"],
                                         inputs["piston_area"],inputs["max_piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
                                         PARAMS["drivetrain_mass"],
-                                        wecSimOptions,key, nargout=5)
+                                        wecSimOptions,key, nargout=6)
         else:
             simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,
                                         hinge_depth,inputs["joint_depth"],inputs["intake_x"],PARAMS["intake_z"],
@@ -115,7 +116,7 @@ class SysDyn(om.ExplicitComponent):
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
                                         PARAMS["drivetrain_mass"],
                                         wecSimOptions,key, nargout=1)
-            Qf,Qp,t,P,keyout = self.eng.fetchOutputs(simouts,nargout=5)
+            Qf,Qp,t,P,stroke,keyout = self.eng.fetchOutputs(simouts,nargout=6)
 
         try:
             if key != keyout:
@@ -128,5 +129,6 @@ class SysDyn(om.ExplicitComponent):
         time = np.array(t)
         outputs['feedflow'] = feedflow
         outputs['permflow'] = permflow
+        outputs['stroke_length'] = stroke
 
 
