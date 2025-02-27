@@ -50,7 +50,7 @@ def run_sim(inputs,eng):
         "intake_x": PARAMS["intake_x"],
 
         "piston_area": inputs["piston_area"],
-        "piston_stroke": inputs["piston_stroke"],
+        "max_piston_stroke": PARAMS["max_piston_stroke"],
         "accum_volume": inputs["accum_volume"],
         "accum_P0": inputs["accum_P0"],
         "pressure_relief": desalouts["pressure_relief"],

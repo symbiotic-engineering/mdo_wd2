@@ -35,7 +35,7 @@ class SysDyn(om.ExplicitComponent):
         
         # Hydraulics
         self.add_input('piston_area', val=0.26)
-        self.add_input('piston_stroke', val=4.0)
+        self.add_input('max_piston_stroke', val=4.0)
         self.add_input('accum_volume', val=4.0)
         self.add_input('accum_P0', val=3.0)
         self.add_input('pressure_relief', val=6.0)
@@ -102,7 +102,7 @@ class SysDyn(om.ExplicitComponent):
         if PARAMS["nworkers"] == 0:
             Qf,Qp,t,P,keyout = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,
                                         hinge_depth,inputs["joint_depth"],inputs["intake_x"],PARAMS["intake_z"],
-                                        inputs["piston_area"],inputs["piston_stroke"],
+                                        inputs["piston_area"],inputs["max_piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
                                         PARAMS["drivetrain_mass"],
@@ -110,7 +110,7 @@ class SysDyn(om.ExplicitComponent):
         else:
             simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,
                                         hinge_depth,inputs["joint_depth"],inputs["intake_x"],PARAMS["intake_z"],
-                                        inputs["piston_area"],inputs["piston_stroke"],
+                                        inputs["piston_area"],inputs["max_piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
                                         PARAMS["drivetrain_mass"],

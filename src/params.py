@@ -32,6 +32,8 @@ PARAMS["recovery_ratio"] = 0.515#   [-]         recovery ratio from WAVE with no
 PARAMS["intake_x"] = 4.7        #   [m]         x-coordinate of the intake, sim with 12.
 PARAMS["intake_z"] = 0.         #   [m]         z-coordinate of the intake
 PARAMS["drivetrain_mass"] = 50. #   [kg]        mass of the piston
+PARAMS["max_piston_stroke"] = 8.0   #   [m]     maximum stroke of the piston
+
 
 #   Econ Params
 PARAMS["FCR"] = 0.108  # fixed charge rate
@@ -66,7 +68,6 @@ INPUTS = {
 
     # Hydraulic Params
     'piston_area' : 0.26,
-    'piston_stroke' : 12.0,
     'accum_volume' : 4.0,
     'accum_P0' : 3.0,
 
