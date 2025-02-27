@@ -10,7 +10,8 @@ disp('MATLAB path initialized.')
 
 if nworkers>0 
     disp(['Starting parallel pool with ', num2str(nworkers), ' workers...'])
-    parpool(nworkers);
+    c = parcluster('local');
+    parpool(c, nworkers);
     disp('Parallel pool started.')
 end
 

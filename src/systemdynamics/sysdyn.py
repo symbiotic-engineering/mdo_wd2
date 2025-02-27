@@ -7,6 +7,7 @@ import src.GILL.src.capy2wecSim as GILL
 import matlab
 import random
 import time as timer
+from matplotlib import pyplot as plt
 
 class SysDyn(om.ExplicitComponent):
     def setup(self,engine):
@@ -27,17 +28,14 @@ class SysDyn(om.ExplicitComponent):
         self.add_input('Vo', val=0)
         self.add_input('draft', val=0)
         self.add_input('cog', val=0)
-        self.add_input('thickness', val=1.0)
 
         # Pumping Mechanism
-        self.add_input('hinge_depth', val=8.9)
         self.add_input('joint_depth', val=7.0)
         self.add_input('intake_x', val=4.7)
-        self.add_input('drivetrain_mass', val=1.0)
         
         # Hydraulics
         self.add_input('piston_area', val=0.26)
-        self.add_input('piston_stroke', val=4.0)
+        self.add_input('max_piston_stroke', val=4.0)
         self.add_input('accum_volume', val=4.0)
         self.add_input('accum_P0', val=3.0)
         self.add_input('pressure_relief', val=6.0)
@@ -54,6 +52,7 @@ class SysDyn(om.ExplicitComponent):
         timesteps = int(PARAMS["wecsimoptions"]["tend"]/PARAMS["wecsimoptions"]["dt"])+1
         self.add_output('feedflow', val=np.zeros(timesteps))
         self.add_output('permflow', val=np.zeros(timesteps))
+        self.add_output('stroke_length', val=0.0)
         
     def compute(self,inputs,outputs):
         hydroDct = {
@@ -99,24 +98,26 @@ class SysDyn(om.ExplicitComponent):
 
         key = random.randint(0, 10**16 - 1)  # Generate a random 16-digit integer
 
+        hinge_depth = matlab.double(inputs["draft"])
+
         if PARAMS["nworkers"] == 0:
-            Qf,Qp,t,keyout = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,inputs["thickness"],
-                                        inputs["hinge_depth"],inputs["joint_depth"],inputs["intake_x"],
-                                        inputs["piston_area"],inputs["piston_stroke"],
+            Qf,Qp,t,P,stroke,keyout = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,
+                                        hinge_depth,inputs["joint_depth"],inputs["intake_x"],PARAMS["intake_z"],
+                                        inputs["piston_area"],inputs["max_piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
-                                        inputs["drivetrain_mass"],
-                                        wecSimOptions,key, nargout=4)
+                                        PARAMS["drivetrain_mass"],
+                                        wecSimOptions,key, nargout=6)
         else:
-            simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,inputs["thickness"],
-                                        inputs["hinge_depth"],inputs["joint_depth"],inputs["intake_x"],
-                                        inputs["piston_area"],inputs["piston_stroke"],
+            simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,
+                                        hinge_depth,inputs["joint_depth"],inputs["intake_x"],PARAMS["intake_z"],
+                                        inputs["piston_area"],inputs["max_piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
-                                        inputs["drivetrain_mass"],
+                                        PARAMS["drivetrain_mass"],
                                         wecSimOptions,key, nargout=1)
-            Qf,Qp,t,keyout = self.eng.fetchOutputs(simouts,nargout=4)
-        
+            Qf,Qp,t,P,stroke,keyout = self.eng.fetchOutputs(simouts,nargout=6)
+
         try:
             if key != keyout:
                 raise ValueError(f"wrong output fetched")
@@ -128,5 +129,6 @@ class SysDyn(om.ExplicitComponent):
         time = np.array(t)
         outputs['feedflow'] = feedflow
         outputs['permflow'] = permflow
+        outputs['stroke_length'] = stroke
 
 

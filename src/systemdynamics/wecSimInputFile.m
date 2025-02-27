@@ -43,6 +43,7 @@ switch wave_type
         waves.height = 2.64;                     % Significant Wave Height [m]
         waves.period = 9.86;                       % Peak Period [s]
         waves.spectrumType = 'PM';              % Specify Spectrum Type
+        waves.phaseSeed = 1;
 end
 %waves.direction = [0,30,90];            % Wave Directionality [deg]
 %waves.spread = [0.1,0.2,0.7];           % Wave Directional Spreading [%}
@@ -95,8 +96,9 @@ constraint(1).location = [0 0 -hydro.simulation_parameters.waterDepth];
 constraint(2)= constraintClass('Constraint2'); % Initialize ConstraintClass 
 constraint(2).location = [0 0 -hinge_depth];
 
+intake_depth = hinge_depth - intake_z;
 constraint(3)= constraintClass('Constraint3'); % Initialize ConstraintClass 
-constraint(3).location = [intake_x 0 -hinge_depth];
+constraint(3).location = [intake_x 0 -intake_depth];
 
 constraint(4)= constraintClass('Constraint4'); % Initialize ConstraintClass 
 constraint(4).location = [0 0 -joint_depth];
@@ -105,5 +107,5 @@ constraint(4).location = [0 0 -joint_depth];
 pto(1) = ptoClass('PTO1');                      % Initialize ptoClass for PTO1
 pto(1).stiffness = 0;                           % PTO Stiffness Coeff [N/m]
 pto(1).damping = 0;                         % PTO Damping Coeff [Ns/m]
-pto(1).location = [intake_x/2 0 -0.9*hinge_depth];   % PTO Global Location [m]
-pto(1).orientation.z = [-intake_x/5 0 (hinge_depth-joint_depth)/5];  % PTO orientation 
+pto(1).location = [intake_x/2 0 -0.9*intake_depth];   % PTO Global Location [m]
+pto(1).orientation.z = [-intake_x/5 0 (intake_depth-joint_depth)/5];  % PTO orientation 

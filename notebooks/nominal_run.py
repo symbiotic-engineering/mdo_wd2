@@ -9,7 +9,7 @@ import src.hydro.hydro as hydro
 import src.systemdynamics.sysdyn as sysdyn
 import src.econ.econ as econ
 import src.desal.desal as desal
-from src.params import PARAMS
+from src.params import PARAMS, INPUTS
 import matlab.engine
 import time
 
@@ -25,36 +25,11 @@ eng.cd(initialization_script_path, nargout=0)
 eng.initializematlab(PARAMS["nworkers"],nargout=0)
 eng.cd('..', nargout=0)
 
-inputs = {
-    # WEC Params
-    'w' : 18,
-    't' : 1,
-    'h' : 10,
-    'draft' : 9,
-    'cog' : -0.7 * 10,
-    'wec_mass' : 127000.0,
-    'inertia_matrix' : np.array([[1.85e6]]),
-
-    # Mechanism Params
-    'hinge_depth' : 8.9,
-    'joint_depth' : 7.0,
-    'intake_x' : 4.7,
-    'drivetrain_mass' : 50.0,
-
-    # Hydraulic Params
-    'piston_area' : 0.26,
-    'piston_stroke' : 12.0,
-    'accum_volume' : 4.0,
-    'accum_P0' : 3.0,
-
-    # Desal Params
-    'capacity' : 6000,
-}
+inputs = INPUTS
 
 hydroins = {    
     'width': inputs["w"],
     'thickness': inputs["t"],
-    'height': inputs["h"],
     'draft': inputs["draft"],
     'center_of_gravity': inputs["cog"],
 }
@@ -97,15 +72,12 @@ sysdynins = {
     "Vo": inputs["w"]*inputs["t"]*inputs["draft"],
     "draft": inputs["draft"],
     "cog": inputs["cog"],
-    "thickness": inputs["t"],
 
-    "hinge_depth": inputs["hinge_depth"],
     "joint_depth": inputs["joint_depth"],
     "intake_x": inputs["intake_x"],
-    "drivetrain_mass": inputs["drivetrain_mass"],
 
     "piston_area": inputs["piston_area"],
-    "piston_stroke": inputs["piston_stroke"],
+    "max_piston_stroke": PARAMS["max_piston_stroke"],
     "accum_volume": inputs["accum_volume"],
     "accum_P0": inputs["accum_P0"],
     "pressure_relief": desalouts["pressure_relief"],
@@ -124,14 +96,14 @@ SysDyn.compute(sysdynins, sysdynouts)
 end_time = time.time()
 print(f'System Dynamics Completed in {end_time-start_time} seconds.')
 
-print('Starting System Dynamics for the 2nd time...')
+'''print('Starting System Dynamics for the 2nd time...')
 start_time = time.time()
 sysdynouts = {}
 SysDyn = sysdyn.SysDyn()
 SysDyn.setup(eng)
 SysDyn.compute(sysdynins, sysdynouts)
 end_time = time.time()
-print(f'System Dynamics Completed in {end_time-start_time} seconds the 2nd time.')
+print(f'System Dynamics Completed in {end_time-start_time} seconds the 2nd time.')'''
 
 econins = {
     'feedflow_cap': inputs["capacity"]/PARAMS["recovery_ratio"],

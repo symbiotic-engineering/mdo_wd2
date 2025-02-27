@@ -66,14 +66,14 @@ def solve(body,add_inf=True):
     #[S,D] = capy.Delhommeau().evaluate(body.mesh, body.mesh, free_surface=0.0, water_depth=depth, wavenumber=0.0)
     # Create problems and solve
     rad_prob = [capy.RadiationProblem(body=body, omega=omega, radiating_dof=rad_dof, rho=PARAMS["rho"], water_depth=PARAMS["water_depth"]) for rad_dof in PARAMS["dof"] for omega in PARAMS["omega"]]
-    rad_result = solver.solve_all(rad_prob,keep_details=(True))
+    rad_result = solver.solve_all(rad_prob,keep_details=(True),progress_bar=False)
     diff_prob = [capy.DiffractionProblem(body=body, wave_direction=PARAMS["wave_direction"], omega=omega, rho=PARAMS["rho"], water_depth=PARAMS["water_depth"]) for omega in PARAMS["omega"]]  # diffraction
-    diff_result = solver.solve_all(diff_prob,keep_details=(True))
+    diff_result = solver.solve_all(diff_prob,keep_details=(True),progress_bar=False)
 
     # Infinite Frequency Radiaiton Problem
     if add_inf:
         rad_prob_inf = [capy.RadiationProblem(body=body, omega=np.inf, radiating_dof=rad_dof, rho=PARAMS["rho"], water_depth=np.inf) for rad_dof in PARAMS["dof"]]
-        rad_result_inf = solver.solve_all(rad_prob_inf)
+        rad_result_inf = solver.solve_all(rad_prob_inf,progress_bar=False)
 
     # Assemble dataset
     if add_inf:
@@ -91,7 +91,6 @@ class Hydro(om.ExplicitComponent):
     def setup(self):
         self.add_input('width', val=18)
         self.add_input('thickness', val=1)
-        self.add_input('height', val=10)
         self.add_input('draft', val=9)
         self.add_input('center_of_gravity', val=-9)
 
@@ -108,7 +107,7 @@ class Hydro(om.ExplicitComponent):
     def compute(self, inputs, outputs):
         w = inputs['width']
         t = inputs['thickness']
-        h = inputs['height']
+        h = inputs['draft'] + 0.1
         draft = inputs['draft']
         cog = inputs['center_of_gravity']
         dataset = run(w,t,h,draft,cog)
