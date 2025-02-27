@@ -47,7 +47,7 @@ def run_sim(inputs,eng):
         "cog": inputs["cog"],
 
         "joint_depth": inputs["joint_depth"],
-        "intake_x": inputs["intake_x"],
+        "intake_x": PARAMS["intake_x"],
 
         "piston_area": inputs["piston_area"],
         "piston_stroke": inputs["piston_stroke"],
