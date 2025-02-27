@@ -29,6 +29,7 @@ PARAMS["Bs"] = 2.30e-8          #   [m/s]       solute transport parameter
 PARAMS["recovery_ratio"] = 0.515#   [-]         recovery ratio from WAVE with nominal flow and pressure, note that this is nominal, and not what will always be the recovery ratio, as flow/pressure drops, recovery ratio will drop as well
 
 #   System Dynamics Params
+PARAMS["intake_x"] = 12         #   [m]         x-coordinate of the intake
 PARAMS["intake_z"] = 0.         #   [m]         z-coordinate of the intake
 PARAMS["drivetrain_mass"] = 50. #   [kg]        mass of the piston
 
@@ -43,7 +44,7 @@ PARAMS["wecsimoptions"] = {
 }
 
 # Optimization Params
-PARAMS["nworkers"] = 0
+PARAMS["nworkers"] = 6
 
 #   Dependant Params
 PARAMS["period"] = 2*np.pi/PARAMS["omega"]  # wave period
