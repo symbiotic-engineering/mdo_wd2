@@ -29,7 +29,7 @@ PARAMS["Bs"] = 2.30e-8          #   [m/s]       solute transport parameter
 PARAMS["recovery_ratio"] = 0.515#   [-]         recovery ratio from WAVE with nominal flow and pressure, note that this is nominal, and not what will always be the recovery ratio, as flow/pressure drops, recovery ratio will drop as well
 
 #   System Dynamics Params
-PARAMS["intake_x"] = 12         #   [m]         x-coordinate of the intake
+PARAMS["intake_x"] = 4.7        #   [m]         x-coordinate of the intake, sim with 12.
 PARAMS["intake_z"] = 0.         #   [m]         z-coordinate of the intake
 PARAMS["drivetrain_mass"] = 50. #   [kg]        mass of the piston
 
@@ -44,10 +44,32 @@ PARAMS["wecsimoptions"] = {
 }
 
 # Optimization Params
-PARAMS["nworkers"] = 6
+PARAMS["nworkers"] = 0
 
 #   Dependant Params
 PARAMS["period"] = 2*np.pi/PARAMS["omega"]  # wave period
 PARAMS["wavenumber"] = PARAMS["omega"]**2/PARAMS["g"]  # wave number
 PARAMS["wavelength"] = 2*np.pi/PARAMS["omega"]  # wave length
 
+# Nominal Set of Inputs
+INPUTS = {
+    # WEC Params
+    'w' : 18,
+    't' : 1.0,
+    'draft' : 9,
+    'cog' : -0.7 * 10,
+    'wec_mass' : 127000.0,
+    'inertia_matrix' : np.array([[1.85e6]]),
+
+    # Mechanism Params
+    'joint_depth' : 7.0,
+
+    # Hydraulic Params
+    'piston_area' : 0.26,
+    'piston_stroke' : 12.0,
+    'accum_volume' : 4.0,
+    'accum_P0' : 3.0,
+
+    # Desal Params
+    'capacity' : 6000,
+}

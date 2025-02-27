@@ -6,7 +6,7 @@ sys.path.append(parent_folder)
 import numpy as np
 import src.model as model
 import matlab.engine
-from src.params import PARAMS
+from src.params import PARAMS, INPUTS
 from matplotlib import pyplot as plt
 
 def run_simulation(inputs, eng):
@@ -32,34 +32,12 @@ if __name__ == "__main__":
     eng.initializematlab(PARAMS["nworkers"],nargout=0)
     eng.cd('..', nargout=0)
 
-    nominal_inputs = {
-        # WEC Params
-        'w' : 18,
-        't' : 1.0,
-        'draft' : 9,
-        'cog' : -0.7 * 10,
-        'wec_mass' : 127000.0,
-        'inertia_matrix' : np.array([[1.85e6]]),
-
-        # Mechanism Params
-        'joint_depth' : 5.0,
-        'intake_x' : 3.5,
-
-        # Hydraulic Params
-        'piston_area' : 0.26,
-        'piston_stroke' : 12.0,
-        'accum_volume' : 4.0,
-        'accum_P0' : 3.0,
-
-        # Desal Params
-        'capacity' : 6000,
-    }
-    model.run_sim(nominal_inputs,eng)
+    model.run_sim(INPUTS,eng)
     print("starting par runs...")
-    simulation_inputs = [nominal_inputs]
+    simulation_inputs = [INPUTS]
     for intake_x in np.arange(4, 20.5, 0.5):
         simulation_inputs.append({
-            **nominal_inputs,
+            **INPUTS,
             "intake_x": intake_x
         })
     
