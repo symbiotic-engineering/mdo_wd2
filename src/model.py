@@ -9,10 +9,10 @@ from src.params import PARAMS
 
 def run_sim(inputs,eng):
     hydroins = {    
-        'width': inputs["w"],
-        'thickness': inputs["t"],
-        'draft': inputs["draft"],
-        'center_of_gravity': inputs["cog"],
+        'width': inputs["width"],
+        'draft': PARAMS["draft"],
+        'thickness': inputs["thickness"],
+        'cg': PARAMS["draft"]*PARAMS["cg_draft_factor"],
     }
 
     hydroouts = {}
@@ -41,12 +41,12 @@ def run_sim(inputs,eng):
         "hydrostatic_stiffness": hydroouts["hydrostatic_stiffness"],
 
         "wec_mass": inputs["wec_mass"],
-        "inertia_matrix": inputs["inertia_matrix"],
-        "Vo": inputs["w"]*inputs["t"]*inputs["draft"],
-        "draft": inputs["draft"],
-        "cog": inputs["cog"],
+        "inertia_matrix": inputs["wec_mass"]*PARAMS["unit_inertia"],
+        "Vo": inputs["width"]*inputs["thickness"]*PARAMS["draft"],
+        "draft": PARAMS["draft"],
+        "cg": PARAMS["draft"]*PARAMS["cg_draft_factor"],
 
-        "joint_depth": inputs["joint_depth"],
+        "hinge2joint": inputs["hinge2joint"],
         "intake_x": PARAMS["intake_x"],
 
         "piston_area": inputs["piston_area"],

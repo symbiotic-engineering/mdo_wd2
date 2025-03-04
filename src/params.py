@@ -10,13 +10,19 @@ PARAMS["distance_to_shore"] = 500.0 #   [m]     distance from WEC to shore, also
 PARAMS["R"] = 8.314             #   [J/K*mol]   ideal gas constant
 PARAMS["temperature"] = 298.15  #   [K]         temperature
 
-#   Hydro Params
+#   Hydro/WEC Params
 PARAMS["body_name"] = 'Flap'    #   [-]         name of the body
-PARAMS["water_depth"] = 12.     #   [m]         depth of the water
+PARAMS["water_depth"] = 20.     #   [m]         depth of the water
 PARAMS["forward_speed"] = 0.    #   [m/s]       forward speed of the body
 PARAMS["wave_direction"] = np.array(0.) #   [deg]   direction of the waves
 PARAMS["omega"] = np.linspace(0.2,3,20) #   [rad/s] wave frequencies
 PARAMS["dof"] = ["Pitch"]       #   [-]         degree(s) of freedom
+'''PARAMS["nom_thickness"] = 2.0   #   [m]         nominal thickness of the WEC
+PARAMS["nom_length_min"] = 8.0  #   [m]         length limit to use nominal thickness
+PARAMS["small_wec_ratio"] = 0.2 #   [-]         ratio of the WEC length to thickness for small wecs'''
+PARAMS["draft"] = 9.0           #   [m]         draft of the WEC
+PARAMS["unit_inertia"] =  np.array([[1.85e6]])/127000   #   [kgm^2] ratio of inertia to mass
+PARAMS["cg_draft_factor"] = -7/9#   [-]         cg = cg_draft_factor*draft
 
 #   RO Params
 PARAMS["feedTDS"] = 40000       #   [mg/L]      feed total dissolved solids (note mg/L = g/m^3)
@@ -46,7 +52,7 @@ PARAMS["wecsimoptions"] = {
 }
 
 # Optimization Params
-PARAMS["nworkers"] = 0
+PARAMS["nworkers"] = 8
 
 #   Dependant Params
 PARAMS["period"] = 2*np.pi/PARAMS["omega"]  # wave period
@@ -56,15 +62,12 @@ PARAMS["wavelength"] = 2*np.pi/PARAMS["omega"]  # wave length
 # Nominal Set of Inputs
 INPUTS = {
     # WEC Params
-    'w' : 18,
-    't' : 1.0,
-    'draft' : 9,
-    'cog' : -0.7 * 10,
+    'width' : 18.,
+    'thickness' : 2.0,        
     'wec_mass' : 127000.0,
-    'inertia_matrix' : np.array([[1.85e6]]),
 
     # Mechanism Params
-    'joint_depth' : 7.0,
+    'hinge2joint' : 2.0,
 
     # Hydraulic Params
     'piston_area' : 0.26,
