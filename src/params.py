@@ -41,7 +41,7 @@ PARAMS["recovery_ratio"] = 0.515#   [-]         recovery ratio from WAVE with no
 PARAMS["intake_x"] = 4.7        #   [m]         x-coordinate of the intake, sim with 12.
 PARAMS["intake_z"] = 0.         #   [m]         z-coordinate of the intake
 PARAMS["drivetrain_mass"] = 50. #   [kg]        mass of the piston
-PARAMS["max_piston_stroke"] = 8.0   #   [m]     maximum stroke of the piston
+PARAMS["max_piston_stroke"] = 8.#   [m]         maximum stroke of the piston
 
 #   Econ Params
 PARAMS["FCR"] = 0.108  # fixed charge rate
@@ -65,7 +65,7 @@ PARAMS["wavelength"] = 2*np.pi/PARAMS["omega"]  # wave length
 INPUTS = {
     # WEC Params
     'width' : 18.,
-    'thickness' : 2.0,        
+    'thickness' : 1.0,        
     'wec_mass' : 127000.0,
 
     # Mechanism Params

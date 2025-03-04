@@ -35,18 +35,18 @@ if __name__ == "__main__":
     model.run_sim(INPUTS,eng)
     print("starting par runs...")
     simulation_inputs = [INPUTS]
-    for intake_x in np.arange(4, 20.5, 0.5):
+    for width in np.arange(10, 24, 1):
         simulation_inputs.append({
             **INPUTS,
-            "intake_x": intake_x
+            "width" : width
         })
     
     results = run_simulation_in_parallel(simulation_inputs)
     
     # Plot results
-    intake_x_values = [inputs['intake_x'] for inputs in simulation_inputs]
-    plt.plot(intake_x_values, results, marker='o')
-    plt.xlabel('intake_x')
-    plt.ylabel('LCOW')
+    input_values = [inputs['width'] for inputs in simulation_inputs]
+    plt.plot(input_values, results, marker='o')
+    plt.xlabel('width [m]')
+    plt.ylabel('LCOW $/m^3')
     plt.grid(True)
     plt.show()
