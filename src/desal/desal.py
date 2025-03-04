@@ -38,6 +38,8 @@ class DesalParams(om.ExplicitComponent):
         self.add_output('throt_resist', val=60.23)  # [MPa*s/m^3] throttle resistance
         self.add_output('osmotic_pressure', val=3.0)# [MPa] osmotic pressure
 
+        self.declare_partials(of = ['mem_resist','throt_resist'], wrt = '*')
+
     def compute(self,inputs,outputs):
         cf = PARAMS["feedTDS"]/PARAMS["M_salt"]
         cp = PARAMS["permTDS"]/PARAMS["M_salt"]
@@ -53,3 +55,8 @@ class DesalParams(om.ExplicitComponent):
         outputs['pressure_relief'] = pressure_relief
         outputs['throt_resist'] = throt_resist
         outputs['osmotic_pressure'] = dpi
+
+''' def compute_partials(self,inputs,partials):
+        partials['mem_resist','capacity'] = 
+        partials['throt_resist','capacity'] = 
+'''

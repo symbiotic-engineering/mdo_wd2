@@ -97,7 +97,7 @@ class Hydro(om.ExplicitComponent):
         self.add_input('width', val=18)
         self.add_input('draft', val=9)
         self.add_input('thickness', val=2.0)
-        self.add_input('cg', val=-7)
+        self.add_input('cg', val=-7.0)
 
         self.add_output('added_mass', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
         self.add_output('radiation_damping', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
