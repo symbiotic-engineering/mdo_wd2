@@ -48,6 +48,11 @@ def dict2xarray(outputs):
 
     return xr.Dataset(data_vars, coords=coords)
 
+def set_thickness(w,h):
+    t = PARAMS["nom_thickness"]
+    length = max(w,h)
+    if length < PARAMS["nom_length_min"]: t = length*PARAMS["small_wec_ratio"]
+    return t
 
 def get_rectangle(w,t,h,draft,cog):
     mesh = capy.meshes.predefined.rectangles.mesh_parallelepiped(size=(t,w,h), resolution=(2,12,8), center=(0, 0, 0.5*h-draft),name='flap')
@@ -90,9 +95,9 @@ def run(w,t,h,draft,cog,):
 class Hydro(om.ExplicitComponent):
     def setup(self):
         self.add_input('width', val=18)
-        self.add_input('thickness', val=1)
         self.add_input('draft', val=9)
-        self.add_input('center_of_gravity', val=-9)
+        self.add_input('thickness', val=2.0)
+        self.add_input('cg', val=-7)
 
         self.add_output('added_mass', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
         self.add_output('radiation_damping', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
@@ -106,11 +111,11 @@ class Hydro(om.ExplicitComponent):
 
     def compute(self, inputs, outputs):
         w = inputs['width']
-        t = inputs['thickness']
         h = inputs['draft'] + 0.1
+        t = inputs['thickness']
         draft = inputs['draft']
-        cog = inputs['center_of_gravity']
-        dataset = run(w,t,h,draft,cog)
+        cg = inputs['cg']
+        dataset = run(w,t,h,draft,cg)
 
         # Convert to dictionary
         outputs["added_mass"] = dataset['added_mass'].sel(water_depth=PARAMS["water_depth"]).values
@@ -124,5 +129,6 @@ class Hydro(om.ExplicitComponent):
         outputs["ex_re"] = np.real(dataset['excitation_force'].values)
         outputs["ex_im"] = np.imag(dataset['excitation_force'].values)
         outputs["hydrostatic_stiffness"] = dataset["hydrostatic_stiffness"].values
+        outputs["thickness"] = t
 
         

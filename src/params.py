@@ -11,12 +11,21 @@ PARAMS["R"] = 8.314             #   [J/K*mol]   ideal gas constant
 PARAMS["temperature"] = 298.15  #   [K]         temperature
 
 #   Hydro Params
-PARAMS["body_name"] = 'Flap'    #   [-]         name of the body
 PARAMS["water_depth"] = 12.     #   [m]         depth of the water
 PARAMS["forward_speed"] = 0.    #   [m/s]       forward speed of the body
 PARAMS["wave_direction"] = np.array(0.) #   [deg]   direction of the waves
 PARAMS["omega"] = np.linspace(0.2,3,20) #   [rad/s] wave frequencies
+
+#   WEC Params
+PARAMS["body_name"] = 'Flap'    #   [-]         name of the body
 PARAMS["dof"] = ["Pitch"]       #   [-]         degree(s) of freedom
+PARAMS["draft"] = 9.0           #   [m]         draft of the WEC
+PARAMS["unit_inertia"] =  np.array([[1.85e6]])/127000   #   [kgm^2] ratio of inertia to mass
+PARAMS["cg_draft_factor"] = -7/9#   [-]         cg = cg_draft_factor*draft
+''' Old WEC Thickness Params
+PARAMS["nom_thickness"] = 2.0   #   [m]         nominal thickness of the WEC
+PARAMS["nom_length_min"] = 8.0  #   [m]         length limit to use nominal thickness
+PARAMS["small_wec_ratio"] = 0.2 #   [-]         ratio of the WEC length to thickness for small wecs'''
 
 #   RO Params
 PARAMS["feedTDS"] = 40000       #   [mg/L]      feed total dissolved solids (note mg/L = g/m^3)
@@ -28,12 +37,11 @@ PARAMS["Aw"] = 2.57e-12         #   [m^2]       permeability coefficient
 PARAMS["Bs"] = 2.30e-8          #   [m/s]       solute transport parameter
 PARAMS["recovery_ratio"] = 0.515#   [-]         recovery ratio from WAVE with nominal flow and pressure, note that this is nominal, and not what will always be the recovery ratio, as flow/pressure drops, recovery ratio will drop as well
 
-#   System Dynamics Params
+#   Mechanism Params
 PARAMS["intake_x"] = 4.7        #   [m]         x-coordinate of the intake, sim with 12.
 PARAMS["intake_z"] = 0.         #   [m]         z-coordinate of the intake
 PARAMS["drivetrain_mass"] = 50. #   [kg]        mass of the piston
-PARAMS["max_piston_stroke"] = 8.0   #   [m]     maximum stroke of the piston
-
+PARAMS["max_piston_stroke"] = 8.#   [m]         maximum stroke of the piston
 
 #   Econ Params
 PARAMS["FCR"] = 0.108  # fixed charge rate
@@ -46,7 +54,7 @@ PARAMS["wecsimoptions"] = {
 }
 
 # Optimization Params
-PARAMS["nworkers"] = 0
+PARAMS["nworkers"] = 8
 
 #   Dependant Params
 PARAMS["period"] = 2*np.pi/PARAMS["omega"]  # wave period
@@ -56,15 +64,12 @@ PARAMS["wavelength"] = 2*np.pi/PARAMS["omega"]  # wave length
 # Nominal Set of Inputs
 INPUTS = {
     # WEC Params
-    'w' : 18,
-    't' : 1.0,
-    'draft' : 9,
-    'cog' : -0.7 * 10,
+    'width' : 18.,
+    'thickness' : 1.0,        
     'wec_mass' : 127000.0,
-    'inertia_matrix' : np.array([[1.85e6]]),
 
     # Mechanism Params
-    'joint_depth' : 7.0,
+    'hinge2joint' : 2.0,
 
     # Hydraulic Params
     'piston_area' : 0.26,
