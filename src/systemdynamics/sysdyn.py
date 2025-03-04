@@ -27,10 +27,10 @@ class SysDyn(om.ExplicitComponent):
         self.add_input('inertia_matrix', val=np.zeros((1,1)))
         self.add_input('Vo', val=0)
         self.add_input('draft', val=0)
-        self.add_input('cog', val=0)
+        self.add_input('cg', val=0)
 
         # Pumping Mechanism
-        self.add_input('joint_depth', val=7.0)
+        self.add_input('hinge2joint', val=7.0)
         self.add_input('intake_x', val=4.7)
         
         # Hydraulics
@@ -70,10 +70,10 @@ class SysDyn(om.ExplicitComponent):
 
         # Build MATLAB hydro.struct
         hydroXR = dict2xarray(hydroDct)
-        cb = np.array([0.0,0.0,0.5*inputs["draft"]])
-        cg = np.array([0.0,0.0,inputs["cog"]])
+        cb_vec = np.array([0.0,0.0,0.5*inputs["draft"]])
+        cg_vec = np.array([0.0,0.0,inputs["cg"]])
         hydro = self.eng.struct()
-        hydro = GILL.capy2struct(hydro, hydroXR, inputs['Vo'], cb, cg)
+        hydro = GILL.capy2struct(hydro, hydroXR, inputs['Vo'], cb_vec, cg_vec)
         hydro = self.eng.normalizeBEM(hydro)
         hydro = self.eng.solveIRFs(hydro)
         hydro = self.eng.rebuildhydrostruct(hydro)
@@ -99,10 +99,10 @@ class SysDyn(om.ExplicitComponent):
         key = random.randint(0, 10**16 - 1)  # Generate a random 16-digit integer
 
         hinge_depth = matlab.double(inputs["draft"])
-
+        joint_depth = matlab.double(inputs["draft"]-inputs["hinge2joint"])
         if PARAMS["nworkers"] == 0:
             Qf,Qp,t,P,stroke,keyout = self.eng.wdds_sim(hydro,inputs["wec_mass"],wec_inertia,
-                                        hinge_depth,inputs["joint_depth"],inputs["intake_x"],PARAMS["intake_z"],
+                                        hinge_depth,joint_depth,inputs["intake_x"],PARAMS["intake_z"],
                                         inputs["piston_area"],inputs["max_piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
@@ -110,7 +110,7 @@ class SysDyn(om.ExplicitComponent):
                                         wecSimOptions,key, nargout=6)
         else:
             simouts = self.eng.wdds_par(hydro,inputs["wec_mass"],wec_inertia,
-                                        hinge_depth,inputs["joint_depth"],inputs["intake_x"],PARAMS["intake_z"],
+                                        hinge_depth,joint_depth,inputs["intake_x"],PARAMS["intake_z"],
                                         inputs["piston_area"],inputs["max_piston_stroke"],
                                         inputs["accum_volume"],inputs["accum_P0"],inputs["pressure_relief"],
                                         inputs["throt_resist"],inputs["mem_resist"],inputs["osmotic_pressure"],
