@@ -28,8 +28,10 @@ class RunWDDS:
         self.prob.model.add_objective('LCOW')
 
         self.prob.driver = om.SimpleGADriver()
-        
-    def solve_once(self):
         self.prob.setup()
+        
+    def solve_once(self, design_variables):
+        for var_name, var_value in design_variables.items():
+            self.prob.set_val(var_name, var_value)
         self.prob.run_model()
         return self.prob.get_val('LCOW')

@@ -8,13 +8,14 @@ import src.model as model
 import matlab.engine
 from src.params import PARAMS, INPUTS
 from matplotlib import pyplot as plt
+from src.runner import RunWDDS
 
-def run_simulation(inputs, eng):
-    return model.run_sim(inputs, eng)  # Run the simulation with the shared engine
+def run_simulation(inputs):
+    return Runner.solve_once(inputs)
 
 def run_simulation_in_parallel(simulation_inputs):
     with concurrent.futures.ThreadPoolExecutor(max_workers=PARAMS["nworkers"]) as executor:
-        futures = {executor.submit(run_simulation, inputs, eng): i for i, inputs in enumerate(simulation_inputs)}
+        futures = {executor.submit(run_simulation, inputs): i for i, inputs in enumerate(simulation_inputs)}
 
         results = [None] * len(simulation_inputs)
         for future in concurrent.futures.as_completed(futures):
@@ -32,20 +33,24 @@ if __name__ == "__main__":
     eng.initializematlab(PARAMS["nworkers"],nargout=0)
     eng.cd('..', nargout=0)
 
-    model.run_sim(INPUTS,eng)
+    Runner = RunWDDS(eng)
+    Runner.create_problem()
     print("starting par runs...")
     simulation_inputs = [INPUTS]
-    for width in np.arange(10, 24, 1):
+    for width in np.arange(15, 18, 1):
         simulation_inputs.append({
             **INPUTS,
-            "width" : width
+            "width" : np.array([width])
         })
     
-    results = run_simulation_in_parallel(simulation_inputs)
+    results = np.array(run_simulation_in_parallel(simulation_inputs))
     
     # Plot results
-    input_values = [inputs['width'] for inputs in simulation_inputs]
-    plt.plot(input_values, results, marker='o')
+    
+    input_values = np.array([inputs['width'] for inputs in simulation_inputs])
+    print(f"inputs: {input_values}")
+    print(f"results: {results}")
+    plt.plot(input_values.flatten(), results.flatten(), marker='o')
     plt.xlabel('width [m]')
     plt.ylabel('LCOW $/m^3')
     plt.grid(True)

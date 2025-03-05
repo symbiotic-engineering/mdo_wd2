@@ -16,8 +16,6 @@ eng.cd(initialization_script_path, nargout=0)
 eng.initializematlab(PARAMS["nworkers"],nargout=0)
 eng.cd('..', nargout=0)
 
-result = model.run_sim(INPUTS,eng)
-print(result)
 Runner = RunWDDS(eng)
 Runner.create_problem()
 lcow = Runner.solve_once()
