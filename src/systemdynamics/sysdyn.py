@@ -89,7 +89,6 @@ class SysDyn(om.ExplicitComponent):
 
         cb_vec = np.array([0.0,0.0,0.5*draft])
         cg_vec = np.array([0.0,0.0,cg])
-        hydroXR = hydroXR.transpose('omega','radiating_dof','influenced_dof','wave_direction')
         hydro = self.eng.struct()
         hydro = GILL.capy2struct(hydro, hydroXR, Vo, cb_vec, cg_vec)
         hydro = self.eng.normalizeBEM(hydro)

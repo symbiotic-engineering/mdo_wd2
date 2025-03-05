@@ -120,9 +120,10 @@ class Hydro(om.ExplicitComponent):
         # Convert to dictionary
         for var_name, dims in PARAMS["preferred_orders"].items():
             dataset[var_name] = dataset[var_name].transpose(*dims)
-        outputs["added_mass"] = dataset['added_mass'].sel(water_depth=PARAMS["water_depth"]).values
+        depth = PARAMS["water_depth"].item()
+        outputs["added_mass"] = dataset['added_mass'].sel(water_depth=depth).values
         outputs["added_mass"][-1] = dataset['added_mass'].sel(water_depth=np.inf).values[-1]
-        outputs["radiation_damping"] = dataset['radiation_damping'].sel(water_depth=PARAMS["water_depth"]).values
+        outputs["radiation_damping"] = dataset['radiation_damping'].sel(water_depth=depth).values
         outputs["radiation_damping"][-1] = dataset['radiation_damping'].sel(water_depth=np.inf).values[-1]
         outputs["sc_re"] = np.real(dataset['diffraction_force'].values)
         outputs["sc_im"] = np.imag(dataset['diffraction_force'].values)
