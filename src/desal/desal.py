@@ -1,5 +1,5 @@
 import numpy as np
-from src.params import PARAMS
+from src.params import PARAMS, INPUTS
 import openmdao.api as om
 
 # Osmotic Pressure Methods
@@ -31,7 +31,7 @@ def throt_resistance(capacity,mem_resist,dpi,recovery_ratio):
 
 class DesalParams(om.ExplicitComponent):
     def setup(self):
-        self.add_input('capacity', val=6000.0)      # [m^3/day] capacity of the plant
+        self.add_input('capacity', val=INPUTS["capacity"])      # [m^3/day] capacity of the plant
 
         self.add_output('mem_resist', val=60.23)    # [MPa*s/m^3] membrane resistance
         self.add_output('pressure_relief', val=6.0) # [MPa] maximum RO pressure
@@ -51,10 +51,10 @@ class DesalParams(om.ExplicitComponent):
         pressure_relief = max_pressure(inputs['capacity'],mem_resist,dpi)
         throt_resist = throt_resistance(inputs['capacity'],mem_resist,dpi,PARAMS["recovery_ratio"])
 
-        outputs['mem_resist'] = mem_resist
-        outputs['pressure_relief'] = pressure_relief
-        outputs['throt_resist'] = throt_resist
-        outputs['osmotic_pressure'] = dpi
+        outputs['mem_resist'] = np.array([mem_resist])
+        outputs['pressure_relief'] = np.array([pressure_relief])
+        outputs['throt_resist'] = np.array([throt_resist])
+        outputs['osmotic_pressure'] = np.array([dpi])
 
 ''' def compute_partials(self,inputs,partials):
         partials['mem_resist','capacity'] = 

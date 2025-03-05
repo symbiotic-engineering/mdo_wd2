@@ -75,13 +75,13 @@ def run_sim(inputs,eng):
     }
 
     sysdynouts = {}
-    SysDyn = sysdyn.SysDyn()
-    SysDyn.setup(eng)
+    SysDyn = sysdyn.SysDyn(eng)
+    SysDyn.setup()
     SysDyn.compute(sysdynins, sysdynouts)
     print(sysdynouts["stroke_length"])
     econins = {
         'feedflow_cap': inputs["capacity"]/PARAMS["recovery_ratio"],
-        'permflow_cap': inputs["capacity"],
+        'capacity': inputs["capacity"],
         'feedflow': sysdynouts['feedflow'],
         'permflow': sysdynouts['permflow'],
     }

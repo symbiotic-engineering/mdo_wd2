@@ -1,22 +1,22 @@
 import numpy as np
 import xarray as xr
 import openmdao.api as om
-from src.params import PARAMS
+from src.params import PARAMS, INPUTS
 
 class DesignVariableMapper(om.ExplicitComponent):
 
     def setup(self):
-        self.add_input("width", val=18.)
-        self.add_input("thickness", val=2.0)
-        self.add_input("draft", val=9.0)
-        self.add_input("cg_draft_factor", val=-7/9)
-        self.add_input("wec_mass", val=127000.0)
-        self.add_input("capacity", val=6000)
+        self.add_input("width", val=INPUTS["width"])
+        self.add_input("thickness", val=INPUTS["thickness"])
+        self.add_input("draft", val=PARAMS["draft"])
+        self.add_input("cg_draft_factor", val=PARAMS["cg_draft_factor"])
+        self.add_input("wec_mass", val=INPUTS["wec_mass"])
+        self.add_input("capacity", val=INPUTS["capacity"])
         
-        self.add_output("cg", val=0.0)
-        self.add_output("inertia_matrix", val=PARAMS["unit_inertia"]*127000.0)
-        self.add_output("Vo", val=0.0)
-        self.add_output("feedflow_cap", val=6000/PARAMS["recovery_ratio"])
+        self.add_output("cg", val=PARAMS["cg_draft_factor"]*PARAMS["draft"])
+        self.add_output("inertia_matrix", val=PARAMS["unit_inertia"]*INPUTS["wec_mass"])
+        self.add_output("Vo", val=INPUTS["width"]*INPUTS["thickness"]*PARAMS["draft"])
+        self.add_output("feedflow_cap", val=INPUTS["capacity"]/PARAMS["recovery_ratio"])
 
         self.declare_partials("cg", "draft")
         self.declare_partials("inertia_matrix", "wec_mass")
