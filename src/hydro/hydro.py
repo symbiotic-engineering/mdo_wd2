@@ -55,8 +55,6 @@ def set_thickness(w,h):
     return t
 
 def get_rectangle(w,t,h,draft,cog):
-    print(f"THE TWH is {t,w,h}")
-    print(f"the cg is {cog}")
     mesh = capy.meshes.predefined.rectangles.mesh_parallelepiped(size=(t,w,h), resolution=(2,12,8), center=(0, 0, 0.5*h-draft),name='flap')
     body = capy.FloatingBody(mesh)
     body.keep_immersed_part()
@@ -112,21 +110,16 @@ class Hydro(om.ExplicitComponent):
         self.add_output('hydrostatic_stiffness', val=np.zeros((1,1)))
 
     def compute(self, inputs, outputs):
-        print("Shape before compute:", self._outputs['added_mass'].shape)
-
-        
         w = inputs['width'].item()
         h = inputs['draft'].item() + 0.1
         t = inputs['thickness'].item()
         draft = inputs['draft'].item()
         cg = inputs['cg'].item()
         dataset = run(w,t,h,draft,cg)
-        print(f"the dataset is {dataset}")
-        # Convert to dictionary
         
+        # Convert to dictionary
         for var_name, dims in PARAMS["preferred_orders"].items():
             dataset[var_name] = dataset[var_name].transpose(*dims)
-
         outputs["added_mass"] = dataset['added_mass'].sel(water_depth=PARAMS["water_depth"]).values
         outputs["added_mass"][-1] = dataset['added_mass'].sel(water_depth=np.inf).values[-1]
         outputs["radiation_damping"] = dataset['radiation_damping'].sel(water_depth=PARAMS["water_depth"]).values
@@ -138,4 +131,3 @@ class Hydro(om.ExplicitComponent):
         outputs["ex_re"] = np.real(dataset['excitation_force'].values)
         outputs["ex_im"] = np.imag(dataset['excitation_force'].values)
         outputs["hydrostatic_stiffness"] = dataset["hydrostatic_stiffness"].values
-        print("Shape after compute:", outputs["added_mass"].shape)

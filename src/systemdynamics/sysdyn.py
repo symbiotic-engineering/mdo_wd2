@@ -57,7 +57,6 @@ class SysDyn(om.ExplicitComponent):
         self.add_output('stroke_length', val=PARAMS["max_piston_stroke"])
         
     def compute(self,inputs,outputs):
-        print(f"the added mass shape is {inputs['added_mass'].shape}")
         hydroDct = {
             "added_mass": inputs["added_mass"],
             "radiation_damping": inputs["radiation_damping"],
