@@ -17,6 +17,8 @@ class Econ(om.ExplicitComponent):
 
         self.add_output('LCOW', val=1.0)
 
+        self.declare_partials(of='LCOW', wrt='*')
+
     def compute(self, inputs, outputs):
         feedflow_cap = inputs['feedflow_cap'].item()
         capacity = inputs['capacity'].item()
@@ -30,6 +32,6 @@ class Econ(om.ExplicitComponent):
         opex.append(RO.OPEX(feedflow_bar,permflow_bar,PARAMS["distance_to_shore"],PARAMS["feedTDS"]))
 
         # LCOW calculation        
-        awp = feedflow_bar*PARAMS["days_in_year"]
+        awp = permflow_bar*PARAMS["days_in_year"]
         outputs['LCOW'] = LCOW(awp, sum(capex), sum(opex), PARAMS["FCR"])
 

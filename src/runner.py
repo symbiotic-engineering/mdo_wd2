@@ -30,8 +30,9 @@ class RunWDDS:
         self.prob.driver = om.SimpleGADriver()
         self.prob.setup()
         
-    def solve_once(self, design_variables):
+    def solve_once(self, design_variables = INPUTS):
         for var_name, var_value in design_variables.items():
+            print(f"setting {var_name} to {var_value}")
             self.prob.set_val(var_name, var_value)
         self.prob.run_model()
         return self.prob.get_val('LCOW')

@@ -56,6 +56,8 @@ class SysDyn(om.ExplicitComponent):
         self.add_output('permflow', val=np.zeros(timesteps))
         self.add_output('stroke_length', val=PARAMS["max_piston_stroke"])
         
+        self.declare_partials(of='*', wrt=['*'])
+
     def compute(self,inputs,outputs):
         hydroDct = {
             "added_mass": inputs["added_mass"],

@@ -11,11 +11,13 @@ from matplotlib import pyplot as plt
 from src.runner import RunWDDS
 
 def run_simulation(inputs):
+    Runner = RunWDDS(eng)
+    Runner.create_problem()
     return Runner.solve_once(inputs)
 
 def run_simulation_in_parallel(simulation_inputs):
     with concurrent.futures.ThreadPoolExecutor(max_workers=PARAMS["nworkers"]) as executor:
-        futures = {executor.submit(run_simulation, inputs): i for i, inputs in enumerate(simulation_inputs)}
+        futures = {executor.submit(run_simulation,inputs): i for i, inputs in enumerate(simulation_inputs)}
 
         results = [None] * len(simulation_inputs)
         for future in concurrent.futures.as_completed(futures):
@@ -33,8 +35,6 @@ if __name__ == "__main__":
     eng.initializematlab(PARAMS["nworkers"],nargout=0)
     eng.cd('..', nargout=0)
 
-    Runner = RunWDDS(eng)
-    Runner.create_problem()
     print("starting par runs...")
     simulation_inputs = [INPUTS]
     for width in np.arange(15, 18, 1):

@@ -108,6 +108,8 @@ class Hydro(om.ExplicitComponent):
         self.add_output('ex_re', val=np.zeros((len(PARAMS["omega"])+1,1,1)))
         self.add_output('ex_im', val=np.zeros((len(PARAMS["omega"])+1,1,1)))
         self.add_output('hydrostatic_stiffness', val=np.zeros((1,1)))
+        self.declare_partials(of='*', wrt=['width', 'draft', 'thickness'])
+        self.declare_partials(of='hydrostatic_stiffness', wrt=['cg'])
 
     def compute(self, inputs, outputs):
         w = inputs['width'].item()
