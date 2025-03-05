@@ -72,24 +72,24 @@ PARAMS["wavelength"] = 2*np.pi/PARAMS["omega"]          #   [m]     wave length
 # Nominal Set of Inputs
 INPUTS = {
     # WEC Params
-    'width' : np.array([18.]),
-    'thickness' : np.array([1.0]),        
-    'wec_mass' : np.array([127000.0]),
+    'width' : np.array([18.]),          #   [m]     width of the WEC, sway dimension
+    'thickness' : np.array([1.0]),      #   [m]     thickness of the WEC, surge dimension   
+    'wec_mass' : np.array([127000.0]),  #   [kg]    mass of the WEC
 
     # Mechanism Params
-    'hinge2joint' : np.array([2.0]),
+    'hinge2joint' : np.array([2.0]),    #   [m]     distance from hinge to PTO joint
 
     # Hydraulic Params
-    'piston_area' : np.array([0.26]),
-    'accum_volume' : np.array([4.0]),
-    'accum_P0' : np.array([3.0]),
+    'piston_area' : np.array([0.26]),   #   [m^2]   area of the piston
+    'accum_volume' : np.array([4.0]),   #   [m^3]   volume of the accumulator
+    'accum_P0' : np.array([3.0]),       #   [MPa]   precharge pressure of the accumulator
 
     # Desal Params
-    'capacity' : np.array([6000]),
+    'capacity' : np.array([6000]),      #   [m^3/day]   capacity of the SWRO plant
 }
 
 # Bounds
-BOUNDS = {
+BOUNDS = {                              #  (lower, upper) Bounds for the inputs above
     'width' : (10., 24.),
     'thickness' : (1., 5.),
     'wec_mass' : (1e6, 3e6),
