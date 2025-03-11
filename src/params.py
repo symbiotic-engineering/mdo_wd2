@@ -34,6 +34,16 @@ PARAMS["cg_draft_factor"] = np.array([-7/9])    #   [-]     cg = cg_draft_factor
 PARAMS["nom_thickness"] = 2.0   #   [m]         nominal thickness of the WEC
 PARAMS["nom_length_min"] = 8.0  #   [m]         length limit to use nominal thickness
 PARAMS["small_wec_ratio"] = 0.2 #   [-]         ratio of the WEC length to thickness for small wecs'''
+PARAMS["RM5_surf"] = 1214.0                     #   [m^2]   surface area for RM5 float
+PARAMS["RM5_Cflap"] = 2529811*1.33              #   [2025USD]   cost of the RM5 flap
+PARAMS["RM5_Cbase"] = 1283019*1.33              #   [2025USD]   cost of the RM5 base
+PARAMS["RM5_Cbear"] = 13098*1.33                #   [2025USD]   cost of the RM5 bearings
+PARAMS["RM5_Cmoor"] = 750240*1.33               #   [2025USD]   cost of the RM5 mooring
+PARAMS["RM5_Cmonitoring"] = 463519*1.33         #   [2025USD/yr]    cost of the RM5 monitoring
+PARAMS["RM5_CmarineOps"] = 76231*1.33           #   [2025USD/yr]    cost of the RM5 marine operations
+PARAMS["RM5_CshoreOps"] = 261113*1.33           #   [2025USD/yr]    cost of the RM5 shore operations
+PARAMS["RM5_Cparts"] = 64840*1.33               #   [2025USD/yr]    cost of the RM5 parts
+PARAMS["RM5_Cconsumables"] = 13143*1.33         #   [2025USD/yr]    cost of the RM5 consumables
 
 #   RO Params
 PARAMS["feedTDS"] = np.array([40000])           #   [mg/L]  feed total dissolved solids (note mg/L = g/m^3)
@@ -51,8 +61,15 @@ PARAMS["intake_z"] = np.array([0.])             #   [m]     z-coordinate of the 
 PARAMS["drivetrain_mass"] = np.array([50.])     #   [kg]    mass of the piston
 PARAMS["max_piston_stroke"] = np.array([8.])    #   [m]     maximum stroke of the piston
 
+#   Hydraulic Params
+PARAMS["accum_cost_2.5G"] = np.array([3985.0])  #   [$]    cost of the 2.5 gallon accumulator
+PARAMS["accum_cost_5G"] = np.array([5488.0])    #   [$]    cost of the 5 gallon accumulator
+PARAMS["accum_cost_10G"] = np.array([7285.0])   #   [$]    cost of the 10 gallon accumulator
+PARAMS["accum_cost_15G"] = np.array([8985.0])   #   [$]    cost of the 15 gallon accumulator
+
 #   Econ Params
 PARAMS["FCR"] = 0.108  # fixed charge rate
+PARAMS["insurance_rate"] = 0.02  # insurance rate
 
 # WEC-Sim Options
 PARAMS["wecsimoptions"] = {
@@ -71,20 +88,20 @@ PARAMS["wavelength"] = 2*np.pi/PARAMS["omega"]          #   [m]     wave length
 
 # Nominal Set of Inputs
 INPUTS = {
-    # WEC Params
+    # WEC vars
     'width' : np.array([18.]),          #   [m]     width of the WEC, sway dimension
     'thickness' : np.array([1.0]),      #   [m]     thickness of the WEC, surge dimension   
     'wec_mass' : np.array([127000.0]),  #   [kg]    mass of the WEC
 
-    # Mechanism Params
+    # Mechanism vars
     'hinge2joint' : np.array([2.0]),    #   [m]     distance from hinge to PTO joint
 
-    # Hydraulic Params
+    # Hydraulic vars
     'piston_area' : np.array([0.26]),   #   [m^2]   area of the piston
     'accum_volume' : np.array([4.0]),   #   [m^3]   volume of the accumulator
     'accum_P0' : np.array([3.0]),       #   [MPa]   precharge pressure of the accumulator
 
-    # Desal Params
+    # Desal vars
     'capacity' : np.array([6000]),      #   [m^3/day]   capacity of the SWRO plant
 }
 
