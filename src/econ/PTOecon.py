@@ -56,7 +56,6 @@ def CAPEX(piston_area,piston_stroke,accum_vol):
     accum_vol_remaining -= count5*5
     count2 = accum_vol_remaining / 2.5
     accum_cost = accum_cost_fcn(count2,count5,count10,count15)
-    print("Accumulator cost: ",accum_cost)
     capex.append(accum_cost)
     
     return sum(capex)

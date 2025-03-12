@@ -62,7 +62,7 @@ def get_rectangle(w,t,h,draft,cog):
     body.rotation_center = (0,0,-draft)
     body.add_all_rigid_body_dofs()
     body.keep_only_dofs(dofs=PARAMS["dof"])
-    print(f'Created {body.mesh.nb_faces} panels')
+    #print(f'Created {body.mesh.nb_faces} panels')
     return body
 
 def solve(body,add_inf=True):
