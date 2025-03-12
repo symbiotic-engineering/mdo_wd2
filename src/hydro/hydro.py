@@ -2,7 +2,7 @@ import capytaine as capy
 import numpy as np
 import xarray as xr
 import openmdao.api as om
-from src.params import PARAMS
+from src.params import PARAMS, INPUTS
 
 def dict2xarray(outputs):
     """
@@ -62,7 +62,7 @@ def get_rectangle(w,t,h,draft,cog):
     body.rotation_center = (0,0,-draft)
     body.add_all_rigid_body_dofs()
     body.keep_only_dofs(dofs=PARAMS["dof"])
-    print(f'Created {body.mesh.nb_faces} panels')
+    #print(f'Created {body.mesh.nb_faces} panels')
     return body
 
 def solve(body,add_inf=True):
@@ -94,33 +94,38 @@ def run(w,t,h,draft,cog,):
 
 class Hydro(om.ExplicitComponent):
     def setup(self):
-        self.add_input('width', val=18)
-        self.add_input('draft', val=9)
-        self.add_input('thickness', val=2.0)
-        self.add_input('cg', val=-7)
+        self.add_input('width', val=INPUTS["width"])
+        self.add_input('draft', val=PARAMS["draft"])
+        self.add_input('thickness', val=INPUTS["thickness"])
+        self.add_input('cg', val=PARAMS["cg_draft_factor"]*PARAMS["draft"])
 
-        self.add_output('added_mass', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
-        self.add_output('radiation_damping', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
-        self.add_output('sc_re', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
-        self.add_output('sc_im', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
-        self.add_output('fk_re', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
-        self.add_output('fk_im', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
-        self.add_output('ex_re', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
-        self.add_output('ex_im', val=np.zeros((1,1,len(PARAMS["omega"])+1)))
+        self.add_output('added_mass', val=np.zeros((len(PARAMS["omega"])+1,1,1)))
+        self.add_output('radiation_damping', val=np.zeros((len(PARAMS["omega"])+1,1,1)))
+        self.add_output('sc_re', val=np.zeros((len(PARAMS["omega"])+1,1,1)))
+        self.add_output('sc_im', val=np.zeros((len(PARAMS["omega"])+1,1,1)))
+        self.add_output('fk_re', val=np.zeros((len(PARAMS["omega"])+1,1,1)))
+        self.add_output('fk_im', val=np.zeros((len(PARAMS["omega"])+1,1,1)))
+        self.add_output('ex_re', val=np.zeros((len(PARAMS["omega"])+1,1,1)))
+        self.add_output('ex_im', val=np.zeros((len(PARAMS["omega"])+1,1,1)))
         self.add_output('hydrostatic_stiffness', val=np.zeros((1,1)))
+        self.declare_partials(of='*', wrt=['width', 'draft', 'thickness'])
+        self.declare_partials(of='hydrostatic_stiffness', wrt=['cg'])
 
     def compute(self, inputs, outputs):
-        w = inputs['width']
-        h = inputs['draft'] + 0.1
-        t = inputs['thickness']
-        draft = inputs['draft']
-        cg = inputs['cg']
+        w = inputs['width'].item()
+        h = inputs['draft'].item() + 0.1
+        t = inputs['thickness'].item()
+        draft = inputs['draft'].item()
+        cg = inputs['cg'].item()
         dataset = run(w,t,h,draft,cg)
-
+        
         # Convert to dictionary
-        outputs["added_mass"] = dataset['added_mass'].sel(water_depth=PARAMS["water_depth"]).values
+        for var_name, dims in PARAMS["preferred_orders"].items():
+            dataset[var_name] = dataset[var_name].transpose(*dims)
+        depth = PARAMS["water_depth"].item()
+        outputs["added_mass"] = dataset['added_mass'].sel(water_depth=depth).values
         outputs["added_mass"][-1] = dataset['added_mass'].sel(water_depth=np.inf).values[-1]
-        outputs["radiation_damping"] = dataset['radiation_damping'].sel(water_depth=PARAMS["water_depth"]).values
+        outputs["radiation_damping"] = dataset['radiation_damping'].sel(water_depth=depth).values
         outputs["radiation_damping"][-1] = dataset['radiation_damping'].sel(water_depth=np.inf).values[-1]
         outputs["sc_re"] = np.real(dataset['diffraction_force'].values)
         outputs["sc_im"] = np.imag(dataset['diffraction_force'].values)
@@ -129,6 +134,3 @@ class Hydro(om.ExplicitComponent):
         outputs["ex_re"] = np.real(dataset['excitation_force'].values)
         outputs["ex_im"] = np.imag(dataset['excitation_force'].values)
         outputs["hydrostatic_stiffness"] = dataset["hydrostatic_stiffness"].values
-        outputs["thickness"] = t
-
-        
