@@ -61,5 +61,5 @@ def CAPEX(piston_area,piston_stroke,accum_vol):
     
     return sum(capex)
 
-def OPEX():
+def OPEX(piston_area,piston_stroke,accum_vol):
     return 0
