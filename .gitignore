@@ -2,6 +2,7 @@
 *.h5
 src/Hydro/nemoh_fcns/output/
 degoede_ignore/ 
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

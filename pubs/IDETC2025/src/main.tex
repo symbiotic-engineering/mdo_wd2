@@ -43,13 +43,13 @@ This paper
 
 \section{Introduction}
 
-The world is facing a water crisis. Fresh water demand is expected to grow over 40\% by 2050 \cite{watershortage2015}. This increase in demand coupled with other factors like droughts, urbanization, and uneven distribution of water resources will result in significant stress on water resources. Desalination through processes like SeaWater Reverse Osmosis (SWRO) is one way to alleviate stress on these essential freshwater resources. However, these processes require a large amount of energy, which if provided through fossil fuels would exacerbate the climate crisis, further stressing freshwater resources \cite{nytdrought}. Therefore, it is essential for sustainable energy sources to be used to power SWRO. 
+The world is facing a water crisis. Fresh water demand is expected to grow over 40\% by 2050 \cite{watershortage2015}. This increase in demand coupled with other factors like droughts, urbanization, and uneven distribution of water resources will result in significant stress on water resources. Desalination through processes like seawater reverse osmosis (SWRO) is one way to alleviate stress on these essential freshwater resources. However, these processes require a large amount of energy, which if provided through fossil fuels would exacerbate the climate crisis, further stressing freshwater resources \cite{nytdrought}. Therefore, it is essential for sustainable energy sources to power SWRO. 
 
 Wave Energy Converters (WECs) have not seen the same level of development as other renewable energy sources like wind and solar. However, SWRO provides a unique opportunity for WECs to develop \cite{blue_econ}. Desalination, a Blue Economy application, needs to take place near the coast, so co-location with marine energy is guaranteed. Additionally, WECs have an advantage over their solar competitors in suitability of power for SWRO. The primary energy demand of SWRO is in the pressurization of seawater, and WECs can provide this directly through a hydraulic style Power Take-Off (PTO) system in the form of a Wave-Driven Desalination System (WDDS) \cite{Davies2005}. The direct nature of this power transfer has the opportunity to reach efficiencies not possible with other renewable energy sources requiring an intermediate step to convert the energy to electricity. 
 
-Multidisciplinary Design Optimization (MDO) strategies like Control Co-Design (CCD) have been applied to electricity generating WECs with great success \cite{Stroefer2023,PenaSanchez2022,Rosati2023,Grasberger2024}. Michelén Ströfer et al. used CCD with PTO design to get a 22\% increase in electrical power output. Additionally, all these studies have shown that a wholistic model of a WEC system is essential to predict behavior. The coupled dynamics between the waves, WEC, PTO, and controls are essential to understand the system's behavior. Although these studies have showed the importance of MDO approaches and wholistic models for electricity generating WECs, these approaches have not been applied to WDDS.
+Multidisciplinary Design Optimization (MDO) strategies like Control Co-Design (CCD) have been applied to electricity generating WECs with great success \cite{Stroefer2023,PenaSanchez2022,Rosati2023,Grasberger2024}. Michelén Ströfer et al. (2023) used CCD with PTO design to get a 22\% increase in electrical power output. Additionally, all these studies have shown that a wholistic model of a WEC system is essential to predict behavior. The coupled dynamics between the waves, WEC, PTO, and controls are essential to understand the system's behavior. Although these studies have showed the importance of MDO approaches and wholistic models for electricity generating WECs, these approaches have not been applied to WDDS.
 
-This study looks to fill this gap and apply a wholistic MDO framework to WDDS. This framework is then used in a design of experiments as a precursor to an MDO study for the optimization of freshwater production. For this study, a simple WDDS architecture is presented, and shown in Fig \ref{fig:WDDS}. This architecture uses an Oscillating Surge Wave Energy Converter (OSWEC) to drive a piston pump witch takes in seawater and sends it back to shore where a SWRO plant is located. The SWRO plant then uses the high pressure seawater provided by the OSWEC to produce freshwater. This type of system is similar to systems that have been studied in the past \cite{Yu2018,Suchithra2022,Mi2023,Simmons2024}, but without the energy recovery unit that many of these studies have. The energy recovery unit is proven to increase the performance, but is removed from this study to simplify the system and focus on the MDO aspects of the study. 
+This study looks to fill this gap and apply a wholistic MDO framework to WDDS. This framework is then used in a design of experiments as a precursor to an MDO study for the optimization of freshwater production. For this study, a simple WDDS architecture is presented, and shown in Fig \ref{fig:WDDS}. This architecture uses an oscillating surge wave energy converter (OSWEC) to drive a piston pump witch takes in seawater and sends it back to shore where a SWRO plant is located. The SWRO plant then uses the high pressure seawater provided by the OSWEC to produce freshwater. This type of system is similar to systems that have been studied in the past \cite{Yu2018,Suchithra2022,Mi2023,Simmons2024}, but without the energy recovery unit that many of these studies have. The energy recovery unit is proven to increase the performance, but is removed from this study to simplify the system and focus on the MDO aspects of the study. A comparison with the energy recovery unit is left for future work.
 
 \begin{center}
     \includegraphics[width=\linewidth]{../figs/WDDS.png}
@@ -71,41 +71,64 @@ All code for this study can be accessed at \href{https://github.com/symbiotic-en
 
 \section{Problem Formulation}
 \subsection{Multidisciplinary Design Optimization Framework}
+The formal problem formulation presented in this study is given by
+\begin{align*} 
+    \text{Minimize} \quad & \text{LCOW}(\mathbf{x},\mathbf{p}; \hat{u})  \\
+    \text{by varying} \quad & \mathbf{x}\\
+    \text{subject to } \quad &  g_i \leq 0 \\
+                             &  h_i = 0 \\
+                            % &  C_1 = |\mathbb{E}(j\omega)| - (A + \frac{h}{2})  \leq 0 \\
+    \text{while solving} \quad & R_i(\mathbf{x},\mathbf{p};\hat{u}) = 0\\
+    \text{for } \quad & \hat{u}
+    \label{eq:problem}
+\end{align*}
+\noindent where LCOW (levelized cost of water) is the objective to be minimized and further discussed in section \ref{sec:econ}, $\mathbf{x}$ is the design vector, $\mathbf{p}$ is the parameter vector, and $\hat{u}$ is the vector of coupled variables. $g_i$ represents inequality constraints, and $h_i$ represents equality constraints. $R_i$ represents the governing equations of the various disciplines. 
+
 \subsection{Design Space}
+The design vector, $\mathbf{x}$, is composed of the following variables: WEC width, $w$ [m], WEC thickness, $t$ [m], WEC mass, $m$ [kg], the distance from the WEC hinge to the PTO joint, $\ell_1$ [m], piston area, $A_p$ [m$^2$], accumulator volume, $V_{acc}$ [m$^3$], accumulator pre-charge pressure, $P_0$ [MPa], and SWRO plant capacity, $Q_{p,max}$ [m$^3$/day]. This is summarized in Table \ref{tab:design_space}.
+\begin{table}[h]
+    \centering
+    \caption{Design variables}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Variable & Nominal Value & Lower Bound & Upper Bound\\
+        \hline
+        $w$ & 18 m & 10 m & 30 m \\
+        $t$ & 2 m & 1 m & 5 m \\
+        $m$ & 127$\times10^3$ kg & 50$\times10^3$ kg & 500$\times10^3$ kg \\
+        $\ell_1$ & 2 m & 0.1 m & draft \\
+        $A_p$ & 0.26 m$^2$ & 0.01 m$^2$ & 1 m$^2$ \\
+        $V_{acc}$ & 4 m$^3$ & 0.01 m$^3$ & 6 m$^3$ \\
+        $P_0$ & 3 MPa & 1 MPa & 7 MPa \\
+        $Q_{p,max}$ & 3150 m$^3$/day & 1000 m$^3$/day & 10000 m$^3$/day\\
+        \hline
+    \end{tabular}
+    \label{tab:design_space} 
+\end{table}
+One feature of note on the bounds is that the upper bound on $\ell_1$ is the draft parameter, rather than an explicit number. The WEC width refers to the dimension in sway while WEC thickness refers to the dimension in surge. Draft and height are not included in the design space to cut down on design space dimensions, and we already have good control over WEC dynamics with these variables and mass. To aid in the understanding of the mechanism variable $\ell_1$, a diagram of the mechanism is shown in Fig. \ref{fig:mechanism}. The mechanism diagram also shows the intake location defined by $\ell_2$ and $\ell_3$, both of which are parameters.
+
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{../figs/mechanism.pdf}
+    \captionof{figure}{Mechanism Diagram.}
+    \label{fig:mechanism}
+\end{center}
 
 \section{System Modeling}
-\subsection{Hydrodynamics}
+The system model is is shown in the N2 Diagram in Fig. \ref{fig:n2}. There are four main modules: ``Desal", which calculates parameters related to the SWRO plant, ``Hydro", which calculates parameters related to the wave-structure interaction, ``SysDyn" which solves the system dynamics of the WDDS, and ``Econ" which evaluates the LCOW objective. The ``Mapper" module simply maps some of the variables and parameters to  other variables and parameters necessary for the different modules, but this module is not worthy of being considered another discipline. The four main modules are discussed in more details in the coming subsections. 
 
-The Cummins equation is commonly used to calculate the motion of a wave energy converter and is shown below.
-\begin{equation}
-    \label{eq:cummins}
-    I\ddot{\Xi} = f_e - f_r - f_d - f_{hs} - f_{pto}  
-\end{equation}
-where $I$ is the inertia matrix, a function of WEC mass (a design variable), $\Xi$ is the body motion vector, $f_e$ is the excitation force, $f_r$ is the radiation force, $f_d$ is the drag force, $f_{hs}$ is the hydrostatic force, and $f_{pto}$ is the PTO force. The PTO force is entirely modeled in the system dynamics module, and the drag force is removed to assume linear potential flow. The hydrostatic force accounts for the buoyancy of the WEC and a tendency to return to an equilibrium position, it is assumed to follow the form below.
-\begin{equation}
-    \label{eq:hydrostatic}
-    f_{hs} = K_{hs} \Xi
-\end{equation}
-where $K_{hs}$ is the hydrostatic stiffness matrix. The radiation force is accounts for the radiated waves generated by the WEC motion and is assumed to follow the form below.
-\begin{equation}
-    \label{eq:radiation}
-    f_r = A \ddot{\Xi} + B \dot{\Xi}
-\end{equation}
-where $A$ and $B$ are the added mass and radiation damping matrices respectively. This leaves us with 4 terms required to fully characterize the hydrodynamics of the WEC: the excitation force, the inertia matrix, the added mass matrix, and the radiation damping matrix. To calculate these, we utilize the open source Boundary Element Method (BEM) solver Capytaine \cite{ancellin_capytaine_2019}. 
-
-%Wave-structure interactions are commonly characterized using linear potential flow theory. The theory assumes the fluid velocity field $\vec{v}$ is the gradient of some complex potential ($\phi$), where $\vec{v}=\nabla \phi$ and $\phi$ satisfies the Laplace equation, $\nabla^2 \phi = 0$. It also assumes inviscid, irrotational, and incompressible flow. $\phi(x,y,z)$ is complex velocity potential represented in $ \Phi = \mathbb{Re}(\phi e^{-j\omega t})$. The boundary conditions for the associated boundary value problem (BVP) are at the sea bed, immersed surface of the body and far field radiation condition \citep{Falnes_2002}. 
-
-%Similarly, the hydrodynamics module also calculates the hydrostatic stiffness matrix of the WECs ($C_{33}$). For a stably floating body $b$ a hydrodynamic analysis is then performed $(M_{bb} = \rho g V_b)$ .  The density of sea water is $\rho$, $g$ is acceleration due to gravity, $V_b$ is the submerged volume of the WEC, and $M_{bb}$ is the mass of the WEC.
-
-%Most common solvers modeling hydrodynamics are based on a reformulation of the governing PDE (Laplace equation) and associated boundary conditions as boundary integral equations (BIEs). These BIEs and the associated boundary element method (BEM) are well-suited for wave problems in unbounded domains, complex geometries and arbitrary arrangement of bodies \citep{bem_wave}.  In this method, only the body geometry is discretized into a mesh with panels and Green's identity is used to derive a boundary integral equation which is then discretized into a linear system. Thus, this method is ideal for design (size and shape) optimizations as only the body surface needs to be meshed. This is advantageous compared to meshing the domain (large ocean) around the floating body. This method is implemented in the open-source frequency-domain BEM code Capytaine, our solver of choice \citep{ancellin_capytaine_2019} \citep{babarit_theoretical_2015}. 
+\begin{center}
+    \includegraphics[width=\linewidth]{../figs/n2.pdf}
+    \captionof{figure}{N2 Diagram of the WDDS System Model.}
+    \label{fig:n2}
+\end{center} 
 
 \subsection{Seawater Desalination Parameters}
 From the capacity variable along with parameters defining the composition of the seawater, the desalination module calculates several parameters necessary for the calculation of the full description of the SWRO plant. The governing equation for the reverse osmosis process we use is shown below.
 \begin{equation}
     \label{eq:ro}
-    Q_p = A_w A (\Delta P - \Delta \pi)
+    Q_p = A_w A_m (\Delta P - \Delta \pi)
 \end{equation}
-where $Q_p$ is the permeate flow rate, $A_w$ is the water permeability coefficient, $A$ is the membrane area, $\Delta P$ is the pressure difference across the membrane, and $\Delta \pi$ is the osmotic pressure difference across the membrane. The osmotic pressure is calculated using the van't Hoff equation shown below.
+where $Q_p$ is the permeate flow rate, $A_w$ is the water permeability coefficient, $A_m$ is the membrane area, $\Delta P$ is the pressure difference across the membrane, and $\Delta \pi$ is the osmotic pressure difference across the membrane. The osmotic pressure is calculated using the van't Hoff equation shown below.
 \begin{equation}
     \label{eq:osmotic_pressure}
     \pi = iCRT
@@ -115,25 +138,44 @@ where $i$ is the number of ions produced per molecule of solute, $C$ is the conc
     \label{eq:osmotic_pressure_applegate}
     \pi = 1.12 T \sum m_i
 \end{equation}
-where $\sum m_i$ is the summation of the molarities of dissolved ions in seawater. In this study we will be focusing on the equation presented in eq \ref{eq:osmotic_pressure}, but equation \ref{eq:osmotic_pressure_applegate} is included for reference as a potential alternative for applications where there is a stronger understanding of the composition of the seawater at a specific site. 
+where $\sum m_i$ is the summation of the molarities of dissolved ions in seawater. In this study we will be focusing on the equation presented in eq \ref{eq:osmotic_pressure}, but equation \ref{eq:osmotic_pressure_applegate} is included for reference as a potential alternative for applications where there is a stronger understanding of the composition of the seawater at a specific site. In this study, we set $\Delta \pi$ to the osmotic pressure of the seawater (assuming an osmotic pressure of the permeate side of 0).
 
-In this study, we set $\Delta \pi$ to the osmotic pressure of the seawater (assuming an osmotic pressure of the permeate side of 0).
+For the water permeability coefficient $A_w$ we use the constant value ($2.57\times10^{-12}$ m$^3$/N-s) used by Yu and Jenne \cite{Yu2018}. We use the same RO membrane, the SW30HR-380 Dry from DuPont \cite{SW30HR380}, justifying our use of their coefficient. The membrane area $A_m$ is then calculated as the quotient of the capacity of the system (a design variable) divided by the designed flux of the RO membrane. The flux of the membrane is calculated as the quotient of the flow rate and the membrane area, both found off the datasheet \cite{SW30HR380}.
 
-For the water permeability coefficient $A_w$ we use the constant value ($2.57\times10^{-12}$ m$^3$/N-s) used by Yu and Jenne \cite{Yu2018}. We use the same RO membrane, the SW30HR-380 Dry from DuPont \cite{SW30HR380}, justifying our use of their coefficient. The membrane area $A$ is then calculated as the quotient of the capacity of the system (a design variable) divided by the designed flux of the RO membrane. The flux of the membrane is calculated as the quotient of the flow rate and the membrane area, both found off the datasheet \cite{SW30HR380}.
-
-At this point the governing equation \ref{eq:ro} is only a relationship between pressure and flow rate. For the system dynamics we would like this to be defined as an resistance style relationship. The resistance of the membrane ($R_m$) is simply $frac{1}{A_w A}$, and is used in the system dynamics module.
+At this point the governing equation \ref{eq:ro} is only a relationship between pressure and flow rate. For the system dynamics we would like this to be defined as a linear resistance relationship. The resistance of the membrane ($R_m$) is simply $\frac{1}{A_w A_m}$, and is used in the system dynamics module.
 
 To avoid running the system above capacity, a pressure relief valve is included and set to the pressure indicated in the following equation.
 \begin{equation}
-    P_{\text{relief}} = \text{capacity}R_m + \Delta \pi
+    P_{\text{relief}} = Q_{p,max}R_m + \Delta \pi
     \label{eq:pressure_relief}
 \end{equation}
-this ensures that if the flow exceeds the capacity of the system, the pressure relief valve will open. It is worth noting here that since the membrane resistance, $R_m$, contains $\text{capacity}^{-1}$, the pressure relief setting does not change given the current design space and model for membrane resistance. It remains a dependant variable though to enable flexibility for the system to adapt to an alternative design space or model.
+this ensures that if the flow exceeds the capacity of the system, the pressure relief valve will open. It is worth noting here that since the membrane resistance, $R_m$, contains $Q_{p,max}^{-1}$, the pressure relief setting does not change given the current design space and model for membrane resistance. It remains a dependant variable though to enable flexibility for the system to adapt to an alternative design space or model.
 
 For any flow to go through the membrane, a resistance on the brine side is necessary. This resistance can be thought of as a throttle valve, or could be an energy recovery unit in a more complex system. In this study we use a simple throttle valve model, with a constant resistance $R_t$. This resistance is calculated such that when the system runs at full capacity, it also runs at the recommended recovery ratio given the SW30HR-380 membrane and the specified seawater composition.
 \begin{equation}
-    R_t = \frac{P_{\text{relief}}}{\text{capacity}(\frac{1}{\text{recovery ratio}} - 1)}
+    R_t = \frac{P_{\text{relief}}}{Q_{p,max}(\frac{1}{\text{recovery ratio}} - 1)}
 \end{equation}
+
+\subsection{Hydrodynamics}
+
+The Cummins equation is commonly used to calculate the motion of a wave energy converter and is shown below.
+\begin{equation}
+    \label{eq:cummins}
+    I\ddot{\xi} = f_e - f_r - f_d - f_{hs} - f_{pto}  
+\end{equation}
+where $I$ is the inertia matrix, a function of WEC mass (a design variable), $\xi$ is the body motion, $f_e$ is the excitation force, $f_r$ is the radiation force, $f_d$ is the drag force, $f_{hs}$ is the hydrostatic force, and $f_{pto}$ is the PTO force. The PTO force is entirely modeled in the system dynamics module, and the drag force is removed to assume linear potential flow. The hydrostatic force accounts for the buoyancy of the WEC and a tendency to return to an equilibrium position, it is assumed to follow the form below.
+\begin{equation}
+    \label{eq:hydrostatic}
+    f_{hs} = K_{hs} \xi
+\end{equation}
+where $K_{hs}$ is the hydrostatic stiffness matrix. The radiation force is accounts for the radiated waves generated by the WEC motion and is assumed to follow the form below.
+\begin{equation}
+    \label{eq:radiation}
+    f_r = A(\omega) \ddot{\xi} + B(\omega) \dot{\xi}
+\end{equation}
+where $A(\omega)$ and $B(\omega)$ are the added mass and radiation damping matrices respectively. This leaves us with 4 terms required to fully characterize the hydrodynamics of the WEC: the excitation force, the inertia matrix, the added mass matrix, and the radiation damping matrix. To calculate these, we utilize the open source Boundary Element Method (BEM) solver Capytaine \cite{ancellin_capytaine_2019}. BEM solvers are well suited for wave-structure interaction problems since they only need to mesh boundaries between structure and fluid instead of the entire fluid volume like traditional CFD solvers would need to, significantly reducing computational cost \cite{bem_wave}. We approximate the flap as a rectangular prism, and restrict it to only move in pitch about the bottom of the flap. It is important to note that the added mass, radiation damping, and excitation force are all functions of frequency.
+
+The added mass and radiation damping matrices are calculated by sweeping across frequencies and solving Capytaine's radiation problem. The excitation force is calculated by sweeping across frequencies and solving Capytaine's diffraction problem and then combining the diffraction and Froude-Krylov forces. The hydrostatic stiffness is calculated using Capytaine's hydrostatics solver. These results are then used in the system dynamics module to calculate the motion of the WEC coupled with the PTO.
 
 \subsection{System Dynamics}
 
@@ -169,7 +211,7 @@ The ``piston\_cylinder" subsystem is further broken down in Fig. \ref{fig:piston
     \label{fig:piston_simscape}
 \end{center}
 
-The ``simple\_ro" subsystem is broken down in Fig. \ref{fig:ro_simscape}. This subsystem includes a check valve to prevent forward osmosis in low energy sea states, and then the membrane resistance and osmotic pressure blocks allow for a simscape representation of the reverse osmosis equation presented in eq \ref{eq:ro}. The membrane resistance block is a linear resistance on the volumetric flow rate, and the osmotic pressure block applies a pressure on the permeate side equal to the osmotic pressure difference as calculated in equations \ref{eq:osmotic_pressure} or \ref{eq:osmotic_pressure_applegate}.
+The ``simple\_ro" subsystem is broken down in Fig. \ref{fig:ro_simscape}. This subsystem includes a check valve to prevent forward osmosis in low energy sea states, and then the membrane resistance and osmotic pressure blocks allow for a Simscape representation of the reverse osmosis equation presented in eq \ref{eq:ro}. The membrane resistance block is a linear resistance on the volumetric flow rate, and the osmotic pressure block applies a pressure on the permeate side equal to the osmotic pressure difference as calculated in equations \ref{eq:osmotic_pressure} or \ref{eq:osmotic_pressure_applegate}.
 
 \begin{center}
     \includegraphics[width=\linewidth]{../figs/desalsimscape.pdf}
@@ -187,7 +229,7 @@ The two subsystems of the WEC and PTO are then coupled through as shown in Fig. 
     \label{fig:coupled_system}
 \end{center}
 
-\subsection{Economics}
+\subsection{Economics} \label{sec:econ}
 
 Our objective function LCOW is calculated using the AWP from the system dynamics module and the costs calculated from this economic module. We use a simple cost model with costs split into two categories: capital costs (CAPEX) and operational (OPEX). The equation below for LCOW is a modification of the LCOE equation proposed by the U.S. Department of Energy \cite{LCOE_DOE}
 \begin{equation}

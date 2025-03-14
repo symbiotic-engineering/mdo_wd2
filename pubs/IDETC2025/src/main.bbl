@@ -63,6 +63,11 @@ J.~Simmons, {\em Modeling and Design of Hydraulic Power Take-Offs for Ocean
 M.~Ancellin and F.~Dias, ``Capytaine: a {Python-based} linear potential flow
   solver,'' {\em Journal of Open Source Software}, vol.~4, p.~1341, apr 2019.
 
+\bibitem{bem_wave}
+J.~Newman and C.-H. Lee, ``Boundary-element methods in offshore structure
+  analysis,'' {\em Journal of Offshore Mechanics and Arctic Engineering},
+  vol.~124, p.~81, 05 2002.
+
 \bibitem{separationprocesses}
 J.~D. Seader, E.~J. Henley, and D.~K. Roper, {\em SEPARATION PROCESS
   PRINCIPLES: Chemical and Biochemical Operations}.

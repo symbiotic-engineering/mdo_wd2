@@ -55,17 +55,26 @@ def set_thickness(w,h):
     return t
 
 def get_rectangle(w,t,h,draft,cog):
-    mesh = capy.meshes.predefined.rectangles.mesh_parallelepiped(size=(t,w,h), resolution=(2,12,8), center=(0, 0, 0.5*h-draft),name='flap')
-    body = capy.FloatingBody(mesh)
+    n_surge = int(np.ceil(t*4/5))
+    n_sway = int(np.ceil(w*26/30))
+    n_heave = int(np.ceil(h*8/9.1))
+    mesh = capy.meshes.predefined.rectangles.mesh_parallelepiped(size=(t,w,h), resolution=(n_surge,n_sway,n_heave), center=(0, 0, 0.5*h-draft),name='flap')
+    lid = mesh.generate_lid(z=mesh.lowest_lid_position(omega_max=PARAMS["omega"][-1]))
+    body = capy.FloatingBody(mesh,lid_mesh=lid)
+    body_lidless = capy.FloatingBody(mesh)
     body.keep_immersed_part()
+    body_lidless.keep_immersed_part()
     body.center_of_mass=np.array([0,0,cog])
+    body_lidless.center_of_mass=np.array([0,0,cog])
     body.rotation_center = (0,0,-draft)
+    body_lidless.rotation_center = (0,0,-draft)
     body.add_all_rigid_body_dofs()
+    body_lidless.add_all_rigid_body_dofs()
     body.keep_only_dofs(dofs=PARAMS["dof"])
-    #print(f'Created {body.mesh.nb_faces} panels')
-    return body
+    body_lidless.keep_only_dofs(dofs=PARAMS["dof"])
+    return body, body_lidless
 
-def solve(body,add_inf=True):
+def solve(body,body_lidless,add_inf=True):
     solver = capy.BEMSolver()
     hydrostatics = body.compute_hydrostatics()           # solves hydrostatics problem (no waves)
     #[S,D] = capy.Delhommeau().evaluate(body.mesh, body.mesh, free_surface=0.0, water_depth=depth, wavenumber=0.0)
@@ -77,7 +86,7 @@ def solve(body,add_inf=True):
 
     # Infinite Frequency Radiaiton Problem
     if add_inf:
-        rad_prob_inf = [capy.RadiationProblem(body=body, omega=np.inf, radiating_dof=rad_dof, rho=PARAMS["rho"], water_depth=np.inf) for rad_dof in PARAMS["dof"]]
+        rad_prob_inf = [capy.RadiationProblem(body=body_lidless, omega=np.inf, radiating_dof=rad_dof, rho=PARAMS["rho"], water_depth=np.inf) for rad_dof in PARAMS["dof"]]
         rad_result_inf = solver.solve_all(rad_prob_inf,progress_bar=False)
 
     # Assemble dataset
@@ -88,8 +97,8 @@ def solve(body,add_inf=True):
     return dataset
 
 def run(w,t,h,draft,cog,):
-    body = get_rectangle(w,t,h,draft,cog)
-    data = solve(body)
+    body,body_lidless = get_rectangle(w,t,h,draft,cog)
+    data = solve(body,body_lidless)
     return data
 
 class Hydro(om.ExplicitComponent):

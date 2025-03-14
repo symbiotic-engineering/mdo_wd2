@@ -13,45 +13,45 @@ Name 2 in "Y.-H. Yu, D.S. Jenne, and R. Thresher, A. Copping, S. Geerlofs, and L
 while executing---line 969 of file ieeetr.bst
 Warning--empty institution in rm5
 Warning--empty booktitle in DEEP5manual
-You've used 27 entries,
+You've used 28 entries,
             1876 wiz_defined-function locations,
-            643 strings with 8284 characters,
-and the built_in function-call counts, 6429 in all, are:
-= -- 606
-> -- 297
+            651 strings with 8434 characters,
+and the built_in function-call counts, 6634 in all, are:
+= -- 626
+> -- 305
 < -- 1
-+ -- 111
-- -- 84
-* -- 463
-:= -- 930
-add.period$ -- 29
-call.type$ -- 27
-change.case$ -- 25
++ -- 114
+- -- 86
+* -- 478
+:= -- 961
+add.period$ -- 30
+call.type$ -- 28
+change.case$ -- 26
 chr.to.int$ -- 0
-cite$ -- 29
-duplicate$ -- 352
-empty$ -- 575
-format.name$ -- 84
-if$ -- 1554
+cite$ -- 30
+duplicate$ -- 364
+empty$ -- 593
+format.name$ -- 86
+if$ -- 1605
 int.to.chr$ -- 0
-int.to.str$ -- 27
-missing$ -- 24
-newline$ -- 87
-num.names$ -- 26
-pop$ -- 92
+int.to.str$ -- 28
+missing$ -- 25
+newline$ -- 90
+num.names$ -- 27
+pop$ -- 94
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 262
+skip$ -- 271
 stack$ -- 0
-substring$ -- 257
-swap$ -- 151
+substring$ -- 261
+swap$ -- 156
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 2
-while$ -- 52
-width$ -- 29
-write$ -- 251
+while$ -- 54
+width$ -- 30
+write$ -- 261
 (There were 3 error messages)

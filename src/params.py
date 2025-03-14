@@ -59,7 +59,7 @@ PARAMS["recovery_ratio"] = np.array([0.515])    #   [-]     recovery ratio from 
 PARAMS["intake_x"] = np.array([4.7])            #   [m]     x-coordinate of the intake, sim with 12.
 PARAMS["intake_z"] = np.array([0.])             #   [m]     z-coordinate of the intake
 PARAMS["drivetrain_mass"] = np.array([50.])     #   [kg]    mass of the piston
-PARAMS["max_piston_stroke"] = np.array([8.])    #   [m]     maximum stroke of the piston
+PARAMS["max_piston_stroke"] = np.array([20.])   #   [m]     maximum stroke of the piston
 
 #   Hydraulic Params
 PARAMS["accum_cost_2.5G"] = np.array([3985.0])  #   [$]    cost of the 2.5 gallon accumulator
@@ -94,7 +94,7 @@ INPUTS = {
     'wec_mass' : np.array([127000.0]),  #   [kg]    mass of the WEC
 
     # Mechanism vars
-    'hinge2joint' : np.array([2.0]),    #   [m]     distance from hinge to PTO joint
+    'hinge2joint' : np.array([2.]),     #   [m]     distance from hinge to PTO joint
 
     # Hydraulic vars
     'piston_area' : np.array([0.26]),   #   [m^2]   area of the piston
@@ -107,12 +107,12 @@ INPUTS = {
 
 # Bounds
 BOUNDS = {                              #  (lower, upper) Bounds for the inputs above
-    'width' : (10., 24.),
+    'width' : (10., 30.),
     'thickness' : (1., 5.),
-    'wec_mass' : (1e6, 3e6),
-    'hinge2joint' : (0.1, PARAMS["draft"]),
-    'piston_area' : (1e-2, 1),
-    'accum_volume' : (1e-2, 5),
-    'accum_P0' : (1, 7),
+    'wec_mass' : (50e3, 500e3),
+    'hinge2joint' : (0.1, 4.),
+    'piston_area' : (1e-1, 1),
+    'accum_volume' : (1e-2, 6),
+    'accum_P0' : (3, 6),
     'capacity' : (1000, 10000),
 }
