@@ -1,5 +1,7 @@
 import numpy as np
 from src.params import PARAMS
+from scipy.interpolate import Rbf
+
 
 def accum_cost_fcn(count2,count5,count10,count15):
     return PARAMS["accum_cost_2.5G"]*count2 + PARAMS["accum_cost_5G"]*count5 + PARAMS["accum_cost_10G"]*count10 + PARAMS["accum_cost_15G"]*count15
@@ -7,13 +9,7 @@ def accum_cost_fcn(count2,count5,count10,count15):
 def accum_vol_fcn(count2,count5,count10,count15):
     return 2.5*count2 + 5*count5 + 10*count10 + 15*count15
 
-def CAPEX(piston_area,piston_stroke,accum_vol):
-    capex = []
-    
-    # Hydraulic Cylinder cost
-    piston_unit = 200
-
-    # Accumulator Volume to Purchase
+def accum_cost(accum_vol):
     accum_vol_gal = accum_vol * 264.172
     accum_vol_remaining = np.ceil(accum_vol_gal / 2.5)*2.5
     
@@ -55,9 +51,33 @@ def CAPEX(piston_area,piston_stroke,accum_vol):
     count5 = accum_vol_remaining // 5
     accum_vol_remaining -= count5*5
     count2 = accum_vol_remaining / 2.5
-    accum_cost = accum_cost_fcn(count2,count5,count10,count15)
-    capex.append(accum_cost)
+    return accum_cost_fcn(count2,count5,count10,count15)
+
+def piston_cost(piston_area,piston_stroke):
+    points = np.array(list(PARAMS["piston_factors"].keys()))
+    values = np.array(list(PARAMS["piston_factors"].values()))
+    diameters, strokes = points[:, 0], points[:, 1]
+    rbf_interpolator = Rbf(diameters, strokes, values, function='multiquadric')
     
+    min_diameter = min(PARAMS["piston_factors"], key=lambda x: x[0])[0]*0.0254
+    max_diameter = max(PARAMS["piston_factors"], key=lambda x: x[0])[0]*0.0254
+    min_area = np.pi*(min_diameter/2)**2
+    max_area = np.pi*(max_diameter/2)**2
+    total_area = piston_area
+    N = 1
+    while piston_area > max_area:
+        N += 1
+        piston_area = total_area/N
+    diameter = ((piston_area/np.pi)**0.5)*2*3.28084*12
+    stroke_in = piston_stroke*3.28084*12
+    query_point = (diameter, stroke_in)
+    piston_factor = rbf_interpolator(*query_point)    
+    return N * piston_factor * PARAMS["piston_unit"] * stroke_in/12
+
+def CAPEX(piston_area,piston_stroke,accum_vol):
+    capex = []    
+    capex.append(piston_cost(piston_area,piston_stroke))
+    capex.append(accum_cost(accum_vol))
     return sum(capex)
 
 def OPEX(piston_area,piston_stroke,accum_vol):

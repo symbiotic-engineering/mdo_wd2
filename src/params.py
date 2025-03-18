@@ -60,6 +60,22 @@ PARAMS["intake_x"] = np.array([4.7])            #   [m]     x-coordinate of the 
 PARAMS["intake_z"] = np.array([0.])             #   [m]     z-coordinate of the intake
 PARAMS["drivetrain_mass"] = np.array([50.])     #   [kg]    mass of the piston
 PARAMS["max_piston_stroke"] = np.array([20.])   #   [m]     maximum stroke of the piston
+PARAMS["piston_unit"] = 200                     #   [$/ft]  unscaled cost of the piston per foot stroke
+PARAMS["piston_factors"] = {                    #   [-]     factors for the piston cost based on diameter and stroke
+        (12, 16): 8,                            #   [-]     factor for the 12" diameter and 16' stroke
+        (12, 20): 8,                            #   [-]     factor for the 12" diameter and 20' stroke
+        (12, 60): 9,                            #   [-]     factor for the 12" diameter and 60' stroke
+        (12, 160): 10,                          #   [-]     factor for the 12" diameter and 160' stroke
+        (18, 16): 9,                            #   [-]     factor for the 18" diameter and 16' stroke
+        (18, 20): 9,                            #   [-]     factor for the 18" diameter and 20' stroke
+        (18, 60): 9,                            #   [-]     factor for the 18" diameter and 60' stroke
+        (18, 160): 10,                          #   [-]     factor for the 18" diameter and 160' stroke
+        (20, 16): 10,                           #   [-]     factor for the 20" diameter and 16' stroke
+        (20, 20): 11,                           #   [-]     factor for the 20" diameter and 20' stroke
+        (20, 60): 12,                           #   [-]     factor for the 20" diameter and 60' stroke
+        (20, 160): 13,                          #   [-]     factor for the 20" diameter and 160' stroke
+    }
+
 
 #   Hydraulic Params
 PARAMS["accum_cost_2.5G"] = np.array([3985.0])  #   [$]    cost of the 2.5 gallon accumulator

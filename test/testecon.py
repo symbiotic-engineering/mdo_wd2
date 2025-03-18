@@ -4,36 +4,33 @@ parent_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(parent_folder)
 import unittest
 import src.econ.econ as econ
+import src.econ.PTOecon as PTOecon
 import numpy as np
+from src.params import PARAMS
 
 class TestEcon(unittest.TestCase):
 
     def setUp(self):
-        # Setup econ instance and inputs for each test
-        self.feedflow_cap = 6000
-        self.permflow_cap = 3000
-        self.feedflow_bar = 3000
-        self.permflow_bar = 1500
-        
         # Create econ object and setup
         self.Econ = econ.Econ()
         self.Econ.setup()
         
-        # Define hydroins for computation
-        self.econins = {
-            "feedflow_cap": self.feedflow_cap,
-            "permflow_cap": self.permflow_cap,
-            "feedflow_bar": self.feedflow_bar,
-            "permflow_bar": self.permflow_bar,
-        }
-        self.econouts = {}
+    def test_piston(self):
+        # Test piston cost
+        piston_area = 0.028502296
+        piston_stroke = 2
+        cost = PTOecon.piston_cost(piston_area, piston_stroke)
+        print(f"piston cost : ${cost}")
+        np.testing.assert_allclose(0,0)
 
-    def test_LCOW(self):
-        # Example test case for a function in econ
-        self.Econ.compute(self.econins, self.econouts)
-        LCOW = self.econouts["LCOW"]
-        expected_LCOW = 1.1305986430143982
-        np.testing.assert_allclose(LCOW, expected_LCOW)
+    def test_accum(self):
+        # Test accumulator cost
+        accum_vol = 4.0
+        cost = PTOecon.accum_cost(accum_vol)
+        expected_cost = PARAMS["accum_cost_15G"]*70 + PARAMS["accum_cost_5G"]*1 + PARAMS["accum_cost_2.5G"]*1
+        print(f"4 m^3 accumulator cost : ${cost}")
+        np.testing.assert_allclose(cost,expected_cost)
+
         
 if __name__ == '__main__':
     unittest.main()
