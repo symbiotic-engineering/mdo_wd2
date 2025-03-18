@@ -119,24 +119,26 @@ class SysDyn(om.ExplicitComponent):
 
         hinge_depth = matlab.double(draft)
         joint_depth = matlab.double(draft-hinge2joint)
-        if PARAMS["nworkers"] == 0:
-            Qf,Qp,t,P,stroke,keyout = self.eng.wdds_sim(hydro,wec_mass,wec_inertia,
-                                        hinge_depth,joint_depth,intake_x,PARAMS["intake_z"],
-                                        piston_area,max_piston_stroke,
-                                        accum_volume,accum_P0,pressure_relief,
-                                        throt_resist,mem_resist,osmotic_pressure,
-                                        PARAMS["drivetrain_mass"],
-                                        wecSimOptions,key, nargout=6)
-        else:
-            simouts = self.eng.wdds_par(hydro,wec_mass,wec_inertia,
-                                        hinge_depth,joint_depth,intake_x,PARAMS["intake_z"],
-                                        piston_area,max_piston_stroke,
-                                        accum_volume,accum_P0,pressure_relief,
-                                        throt_resist,mem_resist,osmotic_pressure,
-                                        PARAMS["drivetrain_mass"],
-                                        wecSimOptions,key, nargout=1)
-            Qf,Qp,t,P,stroke,keyout = self.eng.fetchOutputs(simouts,nargout=6)
-
+        try:
+            if PARAMS["nworkers"] == 0:
+                Qf,Qp,t,P,stroke,keyout = self.eng.wdds_sim(hydro,wec_mass,wec_inertia,
+                                            hinge_depth,joint_depth,intake_x,PARAMS["intake_z"],
+                                            piston_area,max_piston_stroke,
+                                            accum_volume,accum_P0,pressure_relief,
+                                            throt_resist,mem_resist,osmotic_pressure,
+                                            PARAMS["drivetrain_mass"],
+                                            wecSimOptions,key, nargout=6)
+            else:
+                simouts = self.eng.wdds_par(hydro,wec_mass,wec_inertia,
+                                            hinge_depth,joint_depth,intake_x,PARAMS["intake_z"],
+                                            piston_area,max_piston_stroke,
+                                            accum_volume,accum_P0,pressure_relief,
+                                            throt_resist,mem_resist,osmotic_pressure,
+                                            PARAMS["drivetrain_mass"],
+                                            wecSimOptions,key, nargout=1)
+                Qf,Qp,t,P,stroke,keyout = self.eng.fetchOutputs(simouts,nargout=6)
+        except matlab.engine.MatlabExecutionError as e:
+            raise om.AnalysisError(f"System Dynamics solver failed")
         try:
             if key != keyout:
                 raise ValueError(f"wrong output fetched")

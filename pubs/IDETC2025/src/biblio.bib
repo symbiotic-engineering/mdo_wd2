@@ -37,25 +37,25 @@ readstatus = {skimmed},
 }
 
 @Article{Coe2021,
-author     = {Coe, Ryan G. and Bacelli, Giorgio and Forbush, Dominic},
-journal    = {Renewable and Sustainable Energy Reviews},
-title      = {A practical approach to wave energy modeling and control},
-year       = {2021},
-issn       = {1364-0321},
-month      = may,
-number     = {represent},
-pages      = {110791},
-volume     = {142},
-abstract   = {The potential for control design to dramatically improve the economic viability of wave energy has generated a great deal of interest and excitement. However, for a number of reasons, the promised benefits from better control designs have yet to be widely realized by wave energy devices and wave energy remains a relatively nascent technology. This brief paper summarizes a simple, yet powerful approach to wave energy dynamics modeling, and subsequent control design based on impedance matching. Our approach leverages the same concepts that are exploited by a simple FM radio to achieve a feedback controller for wave energy devices that approaches optimal power absorption. If fully utilized, this approach can deliver immediate and consequential reductions to the cost of wave energy. Additionally, this approach provides the necessary framework for control co-design of a wave energy converter, in which an understanding of the control logic allows for synchronous design of the device control system and hardware.},
-comment    = {WEC impedance matching control introduced, no need for really complex/fancy controls. PI almost reaches theoretical limit.},
-date       = {2021-03-04},
-day        = {4},
-doi        = {10.1016/j.rser.2021.110791},
-file       = {:Lit/importance of impedance matching.pdf:PDF},
-groups     = {Controls},
-keywords   = {Wave energy converter (WEC), Impedance matching, Control, Marine renewable energy, Power maximization},
-publisher  = {Elsevier BV},
-readstatus = {read},
+  author     = {Coe, Ryan G. and Bacelli, Giorgio and Forbush, Dominic},
+  journal    = {Renewable and Sustainable Energy Reviews},
+  title      = {A practical approach to wave energy modeling and control},
+  year       = {2021},
+  issn       = {1364-0321},
+  month      = may,
+  number     = {represent},
+  pages      = {110791},
+  volume     = {142},
+  abstract   = {The potential for control design to dramatically improve the economic viability of wave energy has generated a great deal of interest and excitement. However, for a number of reasons, the promised benefits from better control designs have yet to be widely realized by wave energy devices and wave energy remains a relatively nascent technology. This brief paper summarizes a simple, yet powerful approach to wave energy dynamics modeling, and subsequent control design based on impedance matching. Our approach leverages the same concepts that are exploited by a simple FM radio to achieve a feedback controller for wave energy devices that approaches optimal power absorption. If fully utilized, this approach can deliver immediate and consequential reductions to the cost of wave energy. Additionally, this approach provides the necessary framework for control co-design of a wave energy converter, in which an understanding of the control logic allows for synchronous design of the device control system and hardware.},
+  comment    = {WEC impedance matching control introduced, no need for really complex/fancy controls. PI almost reaches theoretical limit.},
+  date       = {2021-03-04},
+  day        = {4},
+  doi        = {10.1016/j.rser.2021.110791},
+  file       = {:Lit/importance of impedance matching.pdf:PDF},
+  groups     = {Controls, Impedance Modeling},
+  keywords   = {Wave energy converter (WEC), Impedance matching, Control, Marine renewable energy, Power maximization},
+  publisher  = {Elsevier BV},
+  readstatus = {read},
 }
 
 @Article{Liao2023,
@@ -79,23 +79,23 @@ readstatus = {skimmed},
 }
 
 @Article{Stroefer2023,
-author     = {Ströfer, Carlos A. Michelén and Gaebele, Daniel T. and Coe, Ryan G. and Bacelli, Giorgio},
-journal    = {IEEE Transactions on Sustainable Energy},
-title      = {Control Co-Design of Power Take-Off Systems for Wave Energy Converters Using WecOptTool},
-year       = {2023},
-issn       = {1949-3037},
-month      = oct,
-number     = {4},
-pages      = {2157--2167},
-volume     = {14},
-abstract   = {Improved power takeoff (PTO) controller design for wave energy converters is considered a critical component for reducing the cost of energy production. However, the device and control design process often remains sequential, with the space of possible final designs largely reduced before the controller has been considered. Control co-design, whereby the device and control design are considered concurrently, has resulted in improved designs in many industries, but remains rare in the wave energy community. In this paper we demonstrate the use of a new open-source code, WecOptTool, for control co-design of wave energy converters, with the aim to make the co-design approach more accessible and accelerate its adoption. Additionally, we highlight the importance of designing a wave energy converter to maximize electrical power, rather than mechanical power, and demonstrate the co-design process while modeling the PTO's components (i.e., drive-train and generator, and their dynamics). We also consider the design and optimization of causal fixed-structure controllers. The demonstration presented here considers the PTO design problem and finds the optimal PTO drive-train that maximizes annual electrical power production. The results show a 22% improvement in the optimal controller and drive-train co-design over the optimal controller for the nominal, as built, device design.},
-comment    = {Optimize PTO for electricity production (along with CCD and using WecOptTool). This results in 22% more electrical power!},
-doi        = {10.1109/tste.2023.3272868},
-file       = {:Lit/Control_Co-Design_of_Power_Take-off_Systems_for_Wa.pdf:PDF},
-groups     = {Optimization, Controls},
-keywords   = {Wave energy converter (WEC), power take-off (PTO), optimization, co-design, optimal control},
-publisher  = {Institute of Electrical and Electronics Engineers (IEEE)},
-readstatus = {read},
+  author     = {Ströfer, Carlos A. Michelén and Gaebele, Daniel T. and Coe, Ryan G. and Bacelli, Giorgio},
+  journal    = {IEEE Transactions on Sustainable Energy},
+  title      = {Control Co-Design of Power Take-Off Systems for Wave Energy Converters Using WecOptTool},
+  year       = {2023},
+  issn       = {1949-3037},
+  month      = oct,
+  number     = {4},
+  pages      = {2157--2167},
+  volume     = {14},
+  abstract   = {Improved power takeoff (PTO) controller design for wave energy converters is considered a critical component for reducing the cost of energy production. However, the device and control design process often remains sequential, with the space of possible final designs largely reduced before the controller has been considered. Control co-design, whereby the device and control design are considered concurrently, has resulted in improved designs in many industries, but remains rare in the wave energy community. In this paper we demonstrate the use of a new open-source code, WecOptTool, for control co-design of wave energy converters, with the aim to make the co-design approach more accessible and accelerate its adoption. Additionally, we highlight the importance of designing a wave energy converter to maximize electrical power, rather than mechanical power, and demonstrate the co-design process while modeling the PTO's components (i.e., drive-train and generator, and their dynamics). We also consider the design and optimization of causal fixed-structure controllers. The demonstration presented here considers the PTO design problem and finds the optimal PTO drive-train that maximizes annual electrical power production. The results show a 22% improvement in the optimal controller and drive-train co-design over the optimal controller for the nominal, as built, device design.},
+  comment    = {Optimize PTO for electricity production (along with CCD and using WecOptTool). This results in 22% more electrical power!},
+  doi        = {10.1109/tste.2023.3272868},
+  file       = {:Lit/Control_Co-Design_of_Power_Take-off_Systems_for_Wa.pdf:PDF},
+  groups     = {Optimization, Controls, Impedance Modeling},
+  keywords   = {Wave energy converter (WEC), power take-off (PTO), optimization, co-design, optimal control},
+  publisher  = {Institute of Electrical and Electronics Engineers (IEEE)},
+  readstatus = {read},
 }
 
 @Article{Singh2014,
@@ -824,27 +824,6 @@ groups     = {Controls, Hydrodynamics},
 readstatus = {skimmed},
 }
 
-@Article{Grasberger2024,
-  author     = {Grasberger, Jeff and Yang, Lisheng and Bacelli, Giorgio and Zuo, Lei},
-  journal    = {Renewable Energy},
-  title      = {Control co-design and optimization of oscillating-surge wave energy converter},
-  year       = {2024},
-  issn       = {0960-1481},
-  month      = may,
-  pages      = {120234},
-  volume     = {225},
-  abstract   = {Ocean wave energy has the potential to play a crucial role in the shift to renewable energy. In order to improve wave energy conversion performance, it is necessary to break through the traditional sequential design process due to the coupling of subsystems such as the wave capture structure geometry, power takeoff (PTO), and control systems. A co-design optimization is introduced in this paper to include effects of all subsystems with one outer and one inner optimization loop in order to reach a fully optimal design of an oscillating surge wave energy converter (OSWEC). A width and height sweep serves as an outer loop geometry optimization while power takeoff components and control parameters are optimized efficiently in an inner loop for each geometry. An investigation into electrical power and mechanical power maximization also outlines the contrasting nature of the two objectives to illustrate the importance of electrical power maximization for identifying optimality. The co-design optimization leads to an optimal design with a width of 12 m and a height of 10 m which achieves an improvement in the normalized power value of over 60% when compared to sequential design. A sensitivity analysis of the PTO system enhances understanding of the impact of PTO component value changes to support detailed-design of relevant components including drivetrain and generator. Lastly, the effect of the wave height and period on the optimal design is explored. Through the optimization and sensitivity analysis, a greater understanding on the effects of applying control co-design principles on surface piercing OSWECs is achieved and the importance of control co-design methods is demonstrated.},
-  comment    = {CCD = 61.4% increase in objective function.},
-  date       = {2024-02-28},
-  day        = {28},
-  doi        = {10.1016/j.renene.2024.120234},
-  file       = {:Lit/1-s2.0-S0960148124002994-main.pdf:PDF},
-  groups     = {Controls, Optimization},
-  keywords   = {Ocean wave energy, Oscillating-surge wave energy converter, Control co-design, Shape optimization, Power-takeoff design},
-  publisher  = {Elsevier BV},
-  readstatus = {skimmed},
-}
-
 @TechReport{Driscoll2830,
   author     = {Frederick Driscoll, Jochem Weber, Dale Jenne, Robert Thresher, Lee Fingersh, Diana Bull, Ann Dallman, Budi Gunawan, Kelley Ruehl, David Newborn, Miguel Quintero, Alison LaBonte, Darshan Karwat, Scott Beatty},
   title      = {Methodology to Calculate the ACE and HPQ Metrics Used in the Wave Energy Prize},
@@ -923,7 +902,7 @@ HPQ = "efficiency"},
 Chapter 2 proposes some PTO options and compares performace given a set of design parameters. Missing transient dynamics modeling. Adds a hydraulic generator that is used to power a charge pump on the inlet side.},
   date       = {2024-04},
   file       = {:/home/degoede/Documents/Research/Lit Libraries/Lit/SimmonsThesis.pdf:PDF},
-  groups     = {Direct Drive Desal, WEC PTO, Optimization},
+  groups     = {Direct Drive Desal, WEC PTO, Optimization, WEC Systems},
   readstatus = {read},
 }
 
@@ -1148,7 +1127,7 @@ Chapter 2 proposes some PTO options and compares performace given a set of desig
   title  = {DEEP 5 User Manual},
   year   = {2013},
   file   = {:/home/degoede/Documents/Research/Lit Libraries/Lit/deep5-manual.pdf:PDF},
-  groups = {Desal Systems},
+  groups = {Desal System},
 }
 
 @InProceedings{LCOE_DOE,
@@ -1158,9 +1137,167 @@ Chapter 2 proposes some PTO options and compares performace given a set of desig
   year      = {2013},
   address   = {Washington DC},
   month     = apr,
+  file      = {:Lit/STANDARDIZEDCOSTANDPERFORMANCEREPORTINGFORMARINEANDHYDROKINETICTECHNOLOGIES.pdf:PDF},
   groups    = {Energy Systems},
 }
 
+@Article{7029110,
+  author  = {Ladan, Shabnam and Wu, Ke},
+  journal = {IEEE Transactions on Microwave Theory and Techniques},
+  title   = {Nonlinear Modeling and Harmonic Recycling of Millimeter-Wave Rectifier Circuit},
+  year    = {2015},
+  number  = {3},
+  pages   = {937-944},
+  volume  = {63},
+  doi     = {10.1109/TMTT.2015.2396043},
+  file    = {:Lit/Nonlinear_Modeling_and_Harmonic_Recycling_of_Millimeter-Wave_Rectifier_Circuit.pdf:PDF},
+  groups  = {Impedance Modeling},
+}
+
+@TechReport{rm5,
+  author   = {Y.-H. Yu, D.S. Jenne, and R. Thresher, A. Copping, S. Geerlofs, and L.A. Hanna},
+  title    = {Reference Model 5 (RM5): Oscillating Surge Wave Energy Converter},
+  year     = {2015},
+  month    = jan,
+  number   = {Report},
+  abstract = {This report is an addendum to SAND2013-9040: Methodology for Design and Economic Analysis of Marine Energy Conversion (MEC) Technologies. This report describes an Oscillating Water Column Wave Energy Converter (OSWEC) reference model design in a complementary manner to Reference Models 1â•ﬁ4 contained in the above report. A conceptual design for a taut moored oscillating surge wave energy converter was developed. The design had an annual electrical power of 108 kilowatts (kW), rated power of 360 kW, and intended deployment at water depths between 50 m and 100 m. The study includes structural analysis, power output estimation, a hydraulic power conversion chain system, and mooring designs. The results were used to estimate device capital cost and annual operation and maintenance costs. The device performance and costs were used for the economic analysis, following the methodology presented in SAND2013-9040 that included costs for designing, manufacturing, deploying, and operating commercial-scale MEC arrays up to 100 devices. The levelized cost of energy estimated for the Reference Model 5 OSWEC, presented in this report, was for a single device and arrays of 10, 50, and 100 units, and it enabled the economic analysis to account for cost reductions associated with economies of scale. The baseline commercial levelized cost of energy estimate for the Reference Model 5 device in an array comprised of 10 units is $1.44/kilowatt-hour (kWh), and the value drops to approximately $0.69/kWh for an array of 100 units.},
+  file     = {:/home/degoede/Documents/Research/Lit Libraries/Lit/RM5.pdf:PDF},
+  groups   = {WEC PTO, Energy Systems, WEC Systems},
+  keywords = {NREL/TP-5000-62861, January 2015, oscillating wave energy converter, OSWEC, reference model 5, RM5, NREL, PNNL},
+}
+
+@Article{Grasberger2024,
+  author    = {Grasberger, Jeff and Yang, Lisheng and Bacelli, Giorgio and Zuo, Lei},
+  journal   = {Renewable Energy},
+  title     = {Control co-design and optimization of oscillating-surge wave energy converter},
+  year      = {2024},
+  issn      = {0960-1481},
+  month     = may,
+  pages     = {120234},
+  volume    = {225},
+  abstract  = {Renewable Energy, 225 (2024) 120234. doi:10.1016/j.renene.2024.120234},
+  doi       = {10.1016/j.renene.2024.120234},
+  file      = {:/home/degoede/Documents/Research/Lit Libraries/Lit/oswec_ccd.pdf:PDF},
+  groups    = {Controls, Optimization, WEC Systems},
+  keywords  = {Ocean wave energy, Oscillating-surge wave energy converter, Control co-design, Shape optimization, Power-takeoff design},
+  publisher = {Elsevier BV},
+}
+
+@Article{Whittaker2012,
+  author    = {Whittaker, Trevor and Folley, Matt},
+  journal   = {Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences},
+  title     = {Nearshore oscillating wave surge converters and the development of Oyster},
+  year      = {2012},
+  issn      = {1471-2962},
+  month     = jan,
+  number    = {1959},
+  pages     = {345--364},
+  volume    = {370},
+  abstract  = {Phil. Trans. R. Soc. A. 2012.370:345-364},
+  doi       = {10.1098/rsta.2011.0152},
+  file      = {:/home/degoede/Documents/Research/Lit Libraries/Lit/oyster.pdf:PDF},
+  groups    = {WEC Systems},
+  keywords  = {wave energy; oscillating wave surge converter; nearshore},
+  publisher = {The Royal Society},
+}
+
+@Article{watershortage2015,
+  author  = {Jan Eliasson},
+  journal = {Nature},
+  title   = {The rising pressure of global water shortages},
+  year    = {2015},
+  month   = jan,
+  number  = {6},
+  volume  = {517},
+  comment = {By the year 2050, demand for fresh water is expected to grow by
+over 40%},
+  doi     = {https://doi.org/10.1038/517006a},
+  file    = {:/home/degoede/Documents/Research/Lit Libraries/Lit/watershortage_nature.pdf:PDF},
+  groups  = {Desal Motives},
+}
+
+@Article{nytdrought,
+  author  = {Justin Gillis},
+  journal = {New York Times},
+  title   = {California Drought Is Made Worseby Global Warming, Scientists Say},
+  year    = {2015},
+  month   = aug,
+  file    = {:Lit/California Drought Is Made Worse by Global Warming, Scientists Say - The New York Times.pdf:PDF},
+  groups  = {Desal Motives},
+  url     = {http://web-static-aws.seas.harvard.edu/climate/eli/Courses/global-change-debates/Sources/California-droughts/California Drought Is Made Worse by Global Warming, Scientists Say - The New York Times.pdf},
+}
+@Misc{wecsim,
+  title  = {WEC-Sim (Wave Energy Converter SIMulator)},
+  groups = {WEC Systems},
+  url    = {https://wec-sim.github.io/WEC-Sim/master/index.html},
+}
+@Book{separationprocesses,
+  author    = {Seader, J. D. and Henley, Earnest J. and Roper, D. Keith},
+  publisher = {Wiley},
+  title     = {SEPARATION PROCESS PRINCIPLES: Chemical and Biochemical Operations},
+  year      = {2011},
+  edition   = {3rd},
+  isbn      = {978-0-470-48183-7},
+}
+@Misc{SW30HR380,
+  author       = {DuPont},
+  howpublished = {Datasheet},
+  month        = oct,
+  title        = {FilmTec™ SW30HR-380 Element Product Data Sheet},
+  year         = {2024},
+  file         = {:/home/degoede/Documents/Research/Lit Libraries/Lit/RO-FilmTec-SW30HR-380-PDS-45-D00971-en.pdf:PDF},
+  groups       = {Reverse Osmosis},
+}
+@article{ancellin_capytaine_2019,
+  author  = {Matthieu Ancellin and Fr{\'{e}}d{\'{e}}ric Dias},
+  title   = {Capytaine: a {Python-based} linear potential flow solver},
+  journal = {Journal of Open Source Software},
+  year    = 2019,
+  month   = {apr},
+  volume  = {4},
+  number  = {36},
+  pages   = {1341},
+  doi     = {10.21105/joss.01341},
+  url     = {https://doi.org/10.21105%2Fjoss.01341},
+}
+@article{bem_wave,
+author = {Newman, J. and Lee, C.-H},
+year = {2002},
+month = {05},
+pages = {81},
+title = {Boundary-Element Methods In Offshore Structure Analysis},
+volume = {124},
+journal = {Journal of Offshore Mechanics and Arctic Engineering},
+doi = {10.1115/1.1464561}
+}
+@Misc{reasontek,
+author = {ReasonTek},
+year = {2025},
+month = {03},
+title = {Low Pressure Accuumulator Quote}
+}
+@InProceedings{Rogers2006,
+  author    = {Jeremy Rogers and Steve Gunn},
+  booktitle = {SLSFS 2005},
+  title     = {Identifying Feature Relevance Using a Random Forest},
+  year      = {2006},
+  editor    = {C. Saunders and others},
+  pages     = {173–184},
+  publisher = {Springer},
+  series    = {LNCS},
+  volume    = {3940},
+  abstract  = {Subspace, Latent Structure and Feature Selection},
+  file      = {:/home/degoede/Documents/Research/Lit Libraries/Lit/randomforests.pdf:PDF},
+  groups    = {Controls},
+}
+@article{Sobieski, 
+    title={Multidisciplinary design optimization: An emerging new engineering discipline}, 
+    DOI={10.1007/978-94-011-0453-1_14}, 
+    journal={Solid Mechanics and Its Applications},
+    author={Sobieszczanski-Sobieski, Jaroslaw}, 
+    year={1995}, 
+    pages={483–496}
+} 
 @Comment{jabref-meta: databaseType:bibtex;}
 
 @Comment{jabref-meta: grouping:
@@ -1168,14 +1305,16 @@ Chapter 2 proposes some PTO options and compares performace given a set of desig
 1 StaticGroup:Direct Drive Desal\;0\;1\;0xbf6069ff\;PISTON\;\;;
 1 StaticGroup:Reverse Osmosis\;0\;1\;0x60bfabff\;MDI_FORMAT_HORIZONTAL_ALIGN_RIGHT\;\;;
 1 StaticGroup:Desal Systems\;0\;1\;0xbfbb60ff\;WATER_PUMP\;\;;
-1 StaticGroup:WEC PTO\;0\;1\;0xbf6063ff\;GEAR\;\;;
-1 StaticGroup:Controls\;0\;0\;0x4bbf73ff\;CONTROLLER\;\;;
+1 StaticGroup:WEC PTO\;0\;0\;0xbf6063ff\;GEAR\;\;;
+1 StaticGroup:WEC Systems\;0\;0\;0xbfbb60ff\;MDI_ANIMATION\;\;;
+1 StaticGroup:Controls\;0\;1\;0x4bbf73ff\;CONTROLLER\;\;;
+1 StaticGroup:Impedance Modeling\;0\;1\;0x4bbf73ff\;PIPE_DISCONNECTED\;\;;
 1 StaticGroup:Optimization\;0\;1\;0xbfbb60ff\;STAIRS_UP\;\;;
 1 StaticGroup:Pressure Fluctuations\;0\;1\;0x60bfb8ff\;SINE_WAVE\;\;;
 1 StaticGroup:Arrays\;0\;1\;0x6e60bfff\;DOTS_HEXAGON\;\;;
 1 StaticGroup:Other Renewable Desal\;0\;1\;0x5d5fbfff\;WIND_TURBINE\;\;;
 1 StaticGroup:Hydrodynamics\;0\;1\;0x6e5bc4ff\;WAVES\;\;;
 1 StaticGroup:Energy Systems\;0\;0\;0xbfbb60ff\;LIGHTNING_FILL\;\;;
-1 StaticGroup:Desal Motives\;0\;0\;0x60bfb5ff\;WATER_OFF_OUTLINE\;\;;
+1 StaticGroup:Desal Motives\;0\;1\;0x60bfb5ff\;WATER_OFF_OUTLINE\;\;;
 1 StaticGroup:Carbon Sequestration\;0\;1\;0xbf6066ff\;MDI_GAS_CYLINDER\;\;;
 }

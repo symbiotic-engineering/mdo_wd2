@@ -1,0 +1,58 @@
+This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: asmems4.bst
+Database file #1: biblio.bib
+Repeated entry---line 316 of file biblio.bib
+ : @inproceedings{Yu2018
+ :                      ,
+I'm skipping whatever remains of this entry
+Warning--empty year in wecsim
+Name 1 in "Y.-H. Yu, D.S. Jenne, and R. Thresher, A. Copping, S. Geerlofs, and L.A. Hanna" has a comma at the end for entry rm5
+while executing---line 1268 of file asmems4.bst
+Name 2 in "Y.-H. Yu, D.S. Jenne, and R. Thresher, A. Copping, S. Geerlofs, and L.A. Hanna" has a comma at the end for entry rm5
+while executing---line 1268 of file asmems4.bst
+Warning--empty institution in rm5
+Warning--empty booktitle in DEEP5manual
+You've used 36 entries,
+            1984 wiz_defined-function locations,
+            716 strings with 10029 characters,
+and the built_in function-call counts, 9114 in all, are:
+= -- 787
+> -- 377
+< -- 1
++ -- 149
+- -- 113
+* -- 578
+:= -- 1257
+add.period$ -- 103
+call.type$ -- 36
+change.case$ -- 35
+chr.to.int$ -- 0
+cite$ -- 39
+duplicate$ -- 513
+empty$ -- 891
+format.name$ -- 113
+if$ -- 2184
+int.to.chr$ -- 0
+int.to.str$ -- 36
+missing$ -- 33
+newline$ -- 178
+num.names$ -- 37
+pop$ -- 169
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 359
+stack$ -- 0
+substring$ -- 373
+swap$ -- 254
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 3
+while$ -- 72
+width$ -- 38
+write$ -- 384
+(There were 3 error messages)

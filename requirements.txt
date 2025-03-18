@@ -94,6 +94,7 @@ notebook_shim==0.2.4
 num2words==0.5.14
 numpy==2.2.1
 numpydoc==1.6.0
+omxdsm @ https://github.com/onodip/OpenMDAO-XDSM/tarball/master#sha256=3d2bd951bc106fbd88a14d3b78578ba55208c1fc59af5f32e1fcccd6575fcc4e
 openmdao==3.36.0
 opt_einsum==3.4.0
 overrides==7.7.0
@@ -128,6 +129,7 @@ python-dateutil==2.9.0.post0
 python-json-logger==3.2.1
 pytz==2024.2
 pyviz_comms==3.0.4
+pyXDSM==2.3.1
 PyYAML==6.0.2
 pyzmq==26.2.0
 referencing==0.36.2
@@ -185,5 +187,6 @@ websockets==14.2
 widgetsnbextension==4.0.13
 wrapt==1.17.2
 xarray==2025.1.1
+xdsmjs==2.0.0
 xyzservices==2025.1.0
 zipp==3.21.0

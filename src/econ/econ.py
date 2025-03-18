@@ -23,7 +23,7 @@ class Econ(om.ExplicitComponent):
         self.add_input('stroke_length', val=PARAMS["max_piston_stroke"])
         self.add_input('accum_volume', val=INPUTS["accum_volume"])
 
-        self.add_output('LCOW', val=1.0)
+        self.add_output('LCOW', val=1000.0)
 
         self.declare_partials(of='LCOW', wrt='*')
 
