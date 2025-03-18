@@ -1,140 +1,217 @@
 \begin{thebibliography}{10}
 
 \bibitem{watershortage2015}
-J.~Eliasson, ``The rising pressure of global water shortages,'' {\em Nature},
-  vol.~517, Jan. 2015.
+Eliasson, J., 2015.
+\newblock ``The rising pressure of global water shortages''.
+\newblock {\em Nature, \textbf{ 517}}(6), Jan.
+
+\bibitem{Li2018}
+Li, Z., Siddiqi, A., Anadon, L.~D., and Narayanamurti, V., 2018.
+\newblock ``Towards sustainability in water-energy nexus: Ocean energy for
+  seawater desalination''.
+\newblock {\em Renewable and Sustainable Energy Reviews, \textbf{ 82}}, Feb.,
+  pp.~3833--3847.
 
 \bibitem{nytdrought}
-J.~Gillis, ``California drought is made worseby global warming, scientists
-  say,'' {\em New York Times}, Aug. 2015.
+Gillis, J., 2015.
+\newblock ``California drought is made worseby global warming, scientists
+  say''.
+\newblock {\em New York Times}, Aug.
 
 \bibitem{blue_econ}
-U.~D. of~Energy, ``Powering the blue economy: Exploring opportunities for
-  marine renewable energy in maritime markets,'' 4 2019.
+of~Energy, U.~D., 2019.
+\newblock Powering the blue economy: Exploring opportunities for marine
+  renewable energy in maritime markets, 4.
 
 \bibitem{Davies2005}
-P.~Davies, ``Wave-powered desalination: resource assessment and review of
-  technology,'' {\em Desalination}, vol.~186, pp.~97--109, Dec. 2005.
+Davies, P., 2005.
+\newblock ``Wave-powered desalination: resource assessment and review of
+  technology''.
+\newblock {\em Desalination, \textbf{ 186}}(1–3), Dec., pp.~97--109.
+
+\bibitem{Sobieski}
+Sobieszczanski-Sobieski, J., 1995.
+\newblock ``Multidisciplinary design optimization: An emerging new engineering
+  discipline''.
+\newblock {\em Solid Mechanics and Its Applications}, p.~483–496.
 
 \bibitem{Stroefer2023}
-C.~A.~M. Ströfer, D.~T. Gaebele, R.~G. Coe, and G.~Bacelli, ``Control
-  co-design of power take-off systems for wave energy converters using
-  wecopttool,'' {\em IEEE Transactions on Sustainable Energy}, vol.~14,
-  pp.~2157--2167, Oct. 2023.
+Ströfer, C. A.~M., Gaebele, D.~T., Coe, R.~G., and Bacelli, G., 2023.
+\newblock ``Control co-design of power take-off systems for wave energy
+  converters using wecopttool''.
+\newblock {\em IEEE Transactions on Sustainable Energy, \textbf{ 14}}(4), Oct.,
+  pp.~2157--2167.
 
 \bibitem{PenaSanchez2022}
-Y.~Peña-Sanchez, D.~García-Violini, and J.~V. Ringwood, ``Control co-design
-  of power take-off parameters for wave energy systems,'' {\em
-  IFAC-PapersOnLine}, vol.~55, no.~27, pp.~311--316, 2022.
+Peña-Sanchez, Y., García-Violini, D., and Ringwood, J.~V., 2022.
+\newblock ``Control co-design of power take-off parameters for wave energy
+  systems''.
+\newblock {\em IFAC-PapersOnLine, \textbf{ 55}}(27), pp.~311--316.
 
 \bibitem{Rosati2023}
-M.~Rosati and J.~V. Ringwood, ``Control co-design of power take-off and bypass
-  valve for owc-based wave energy conversion systems,'' {\em Renewable Energy},
-  vol.~219, p.~119523, Dec. 2023.
+Rosati, M., and Ringwood, J.~V., 2023.
+\newblock ``Control co-design of power take-off and bypass valve for owc-based
+  wave energy conversion systems''.
+\newblock {\em Renewable Energy, \textbf{ 219}}, Dec., p.~119523.
 
 \bibitem{Grasberger2024}
-J.~Grasberger, L.~Yang, G.~Bacelli, and L.~Zuo, ``Control co-design and
-  optimization of oscillating-surge wave energy converter,'' {\em Renewable
-  Energy}, vol.~225, p.~120234, May 2024.
+Grasberger, J., Yang, L., Bacelli, G., and Zuo, L., 2024.
+\newblock ``Control co-design and optimization of oscillating-surge wave energy
+  converter''.
+\newblock {\em Renewable Energy, \textbf{ 225}}, May, p.~120234.
 
 \bibitem{Yu2018}
-Y.-H. Yu and D.~Jenne, ``Numerical modeling and dynamic analysis of a
-  wave-powered reverse-osmosis system,'' {\em Journal of Marine Science and
-  Engineering}, vol.~6, p.~132, Nov. 2018.
+Yu, Y.-H., and Jenne, D., 2018.
+\newblock ``Numerical modeling and dynamic analysis of a wave-powered
+  reverse-osmosis system''.
+\newblock {\em Journal of Marine Science and Engineering, \textbf{ 6}}(4),
+  Nov., p.~132.
 
 \bibitem{Suchithra2022}
-R.~Suchithra, T.~K. Das, K.~Rajagopalan, A.~Chaudhuri, N.~Ulm, M.~Prabu,
-  A.~Samad, and P.~Cross, ``Numerical modelling and design of a small-scale
-  wave-powered desalination system,'' {\em Ocean Engineering}, vol.~256,
-  p.~111419, July 2022.
+Suchithra, R., Das, T.~K., Rajagopalan, K., Chaudhuri, A., Ulm, N., Prabu, M.,
+  Samad, A., and Cross, P., 2022.
+\newblock ``Numerical modelling and design of a small-scale wave-powered
+  desalination system''.
+\newblock {\em Ocean Engineering, \textbf{ 256}}, July, p.~111419.
 
 \bibitem{Mi2023}
-J.~Mi, X.~Wu, J.~Capper, X.~Li, A.~Shalaby, R.~Wang, S.~Lin, M.~Hajj, and
-  L.~Zuo, ``Experimental investigation of a reverse osmosis desalination system
-  directly powered by wave energy,'' {\em Applied Energy}, vol.~343, p.~121194,
-  Aug. 2023.
+Mi, J., Wu, X., Capper, J., Li, X., Shalaby, A., Wang, R., Lin, S., Hajj, M.,
+  and Zuo, L., 2023.
+\newblock ``Experimental investigation of a reverse osmosis desalination system
+  directly powered by wave energy''.
+\newblock {\em Applied Energy, \textbf{ 343}}, Aug., p.~121194.
 
 \bibitem{Simmons2024}
-J.~Simmons, {\em Modeling and Design of Hydraulic Power Take-Offs for Ocean
-  Wave-Powered Reverse Osmosis Desalination}.
-\newblock PhD thesis, University of Minnesota, 4 2024.
-
-\bibitem{ancellin_capytaine_2019}
-M.~Ancellin and F.~Dias, ``Capytaine: a {Python-based} linear potential flow
-  solver,'' {\em Journal of Open Source Software}, vol.~4, p.~1341, apr 2019.
-
-\bibitem{bem_wave}
-J.~Newman and C.-H. Lee, ``Boundary-element methods in offshore structure
-  analysis,'' {\em Journal of Offshore Mechanics and Arctic Engineering},
-  vol.~124, p.~81, 05 2002.
+Simmons, J., 2024.
+\newblock ``Modeling and design of hydraulic power take-offs for ocean
+  wave-powered reverse osmosis desalination''.
+\newblock PhD thesis, University of Minnesota, 4.
 
 \bibitem{separationprocesses}
-J.~D. Seader, E.~J. Henley, and D.~K. Roper, {\em SEPARATION PROCESS
-  PRINCIPLES: Chemical and Biochemical Operations}.
-\newblock Wiley, 3rd~ed., 2011.
+Seader, J.~D., Henley, E.~J., and Roper, D.~K., 2011.
+\newblock {\em SEPARATION PROCESS PRINCIPLES: Chemical and Biochemical
+  Operations}, 3rd~ed.
+\newblock Wiley.
 
 \bibitem{SW30HR380}
-DuPont, ``Filmtec™ sw30hr-380 element product data sheet.'' Datasheet, Oct.
-  2024.
+DuPont, 2024.
+\newblock Filmtec™ sw30hr-380 element product data sheet.
+\newblock Datasheet, Oct.
+
+\bibitem{falnes2022}
+Falnes, J., and Kurniawan, A., 2020.
+\newblock {\em Ocean Waves and Oscillating Systems: Linear Interactions
+  Including Wave-Energy Extraction}, 2nd~ed.
+\newblock Cambridge University Press.
+
+\bibitem{ancellin_capytaine_2019}
+Ancellin, M., and Dias, F., 2019.
+\newblock ``Capytaine: a {Python-based} linear potential flow solver''.
+\newblock {\em Journal of Open Source Software, \textbf{ 4}}(36), apr, p.~1341.
+
+\bibitem{bem_wave}
+Newman, J., and Lee, C.-H., 2002.
+\newblock ``Boundary-element methods in offshore structure analysis''.
+\newblock {\em Journal of Offshore Mechanics and Arctic Engineering, \textbf{
+  124}}, 05, p.~81.
 
 \bibitem{wecsim}
-``Wec-sim (wave energy converter simulator).''
+Wec-sim (wave energy converter simulator).
 
 \bibitem{LCOE_DOE}
-A.~LaBonte, P.~O’Connor, C.~Fitzpatrick, K.~Hallett, and Y.~Li,
-  ``Standardized cost and performance reporting for marineand hydrokinetic
-  technologies,'' in {\em 1st Marine Energy Technology Symposiumt}, (Washington
-  DC), Apr. 2013.
+LaBonte, A., O’Connor, P., Fitzpatrick, C., Hallett, K., and Li, Y., 2013.
+\newblock ``Standardized cost and performance reporting for marineand
+  hydrokinetic technologies''.
+\newblock In 1st Marine Energy Technology Symposiumt.
 
 \bibitem{rm5}
-D.~J. Y.-H.~Yu, S.~G. R.~Thresher, A.~Copping, and L.~Hanna, ``Reference model
-  5 (rm5): Oscillating surge wave energy converter,'' Tech. Rep. Report, Jan.
-  2015.
+Y.-H.~Yu, D.~J., R.~Thresher, A.~Copping, S.~G., and Hanna, L., 2015.
+\newblock Reference model 5 (rm5): Oscillating surge wave energy converter.
+\newblock Tech. Rep. Report, Jan.
+
+\bibitem{reasontek}
+ReasonTek, 2025.
+\newblock Low pressure accuumulator quote, 03.
 
 \bibitem{Slocum2016}
-A.~H. Slocum, M.~N. Haji, A.~Z. Trimble, M.~Ferrara, and S.~J. Ghaemsaidi,
-  ``Integrated pumped hydro reverse osmosis systems,'' {\em Sustainable Energy
-  Technologies and Assessments}, vol.~18, pp.~80--99, Dec. 2016.
+Slocum, A.~H., Haji, M.~N., Trimble, A.~Z., Ferrara, M., and Ghaemsaidi, S.~J.,
+  2016.
+\newblock ``Integrated pumped hydro reverse osmosis systems''.
+\newblock {\em Sustainable Energy Technologies and Assessments, \textbf{ 18}},
+  Dec., pp.~80--99.
 
 \bibitem{Haefner2023}
-M.~W. Haefner and M.~N. Haji, ``Integrated pumped hydro reverse osmosis system
-  optimization featuring surrogate model development in reverse osmosis
-  modeling,'' {\em Applied Energy}, vol.~352, p.~121812, Dec. 2023.
+Haefner, M.~W., and Haji, M.~N., 2023.
+\newblock ``Integrated pumped hydro reverse osmosis system optimization
+  featuring surrogate model development in reverse osmosis modeling''.
+\newblock {\em Applied Energy, \textbf{ 352}}, Dec., p.~121812.
 
 \bibitem{roopexcurve}
-R.~Huehmer, J.~Gomez, J.~M. Curl, and K.~Moore, ``Cost modeling of desalination
-  systems,'' in {\em International Desalination Association World Congress},
+Huehmer, R., Gomez, J., Curl, J.~M., and Moore, K., 2011.
+\newblock ``Cost modeling of desalination systems''.
+\newblock In International Desalination Association World Congress,
   International Desalination Association World Congress, International
-  Desalination Association World Congress, Sept. 2011.
+  Desalination Association World Congress.
 
 \bibitem{Wittholz2008}
-M.~K. Wittholz, B.~K. O’Neill, C.~B. Colby, and D.~Lewis, ``Estimating the
-  cost of desalination plants using a cost database,'' {\em Desalination},
-  vol.~229, pp.~10--20, Sept. 2008.
+Wittholz, M.~K., O’Neill, B.~K., Colby, C.~B., and Lewis, D., 2008.
+\newblock ``Estimating the cost of desalination plants using a cost database''.
+\newblock {\em Desalination, \textbf{ 229}}(1–3), Sept., pp.~10--20.
 
 \bibitem{Elkadeem2024}
-M.~R. Elkadeem, K.~M. Kotb, S.~W. Sharshir, M.~A. Hamada, A.~E. Kabeel, I.~K.
-  Gabr, M.~A. Hassan, M.~Y. Worku, M.~A. Abido, Z.~Ullah, H.~M. Hasanien, and
-  F.~F. Selim, ``Optimize and analyze a large-scale grid-tied solar pv-powered
-  swro system for sustainable water-energy nexus,'' {\em Desalination},
-  vol.~579, p.~117440, June 2024.
+Elkadeem, M.~R., Kotb, K.~M., Sharshir, S.~W., Hamada, M.~A., Kabeel, A.~E.,
+  Gabr, I.~K., Hassan, M.~A., Worku, M.~Y., Abido, M.~A., Ullah, Z., Hasanien,
+  H.~M., and Selim, F.~F., 2024.
+\newblock ``Optimize and analyze a large-scale grid-tied solar pv-powered swro
+  system for sustainable water-energy nexus''.
+\newblock {\em Desalination, \textbf{ 579}}, June, p.~117440.
 
 \bibitem{Goekcek2016}
-M.~Gökçek and O.~B. Gökçek, ``Technical and economic evaluation of
-  freshwater production from a wind-powered small-scale seawater reverse
-  osmosis system (wp-swro),'' {\em Desalination}, vol.~381, pp.~47--57, Mar.
-  2016.
+Gökçek, M., and Gökçek, O.~B., 2016.
+\newblock ``Technical and economic evaluation of freshwater production from a
+  wind-powered small-scale seawater reverse osmosis system (wp-swro)''.
+\newblock {\em Desalination, \textbf{ 381}}(site.), Mar., pp.~47--57.
 
 \bibitem{Yu2022}
-Y.-H. Yu and D.~Jenne, ``Analysis of a wave-powered, reverse-osmosis system and
-  its economic availability in the united states,'' in {\em International
-  Conference on Ocean, Offshore and Arctic Engineering}, 10 2017.
+Yu, Y.-H., and Jenne, D., 2017.
+\newblock ``Analysis of a wave-powered, reverse-osmosis system and its economic
+  availability in the united states''.
+\newblock In International Conference on Ocean, Offshore and Arctic
+  Engineering.
 
 \bibitem{DEEP5manual}
-I.~A.~E. Agency, ``Deep 5 user manual,'' 2013.
+Agency, I. A.~E., 2013.
+\newblock ``Deep 5 user manual''.
 
 \bibitem{voutch}
-N.~Voutchkov, {\em Desalination project cost estimating and management}.
-\newblock CRC Press, 2019.
+Voutchkov, N., 2019.
+\newblock {\em Desalination project cost estimating and management}.
+\newblock CRC Press.
+
+\bibitem{Rogers2006}
+Rogers, J., and Gunn, S., 2006.
+\newblock ``Identifying feature relevance using a random forest''.
+\newblock In SLSFS 2005, C.~Saunders et~al., eds., Vol.~3940 of {\em LNCS},
+  Springer, p.~173–184.
+
+\bibitem{YJecon2017}
+Yi-Hsiang~Yu, D.~J., 2017.
+\newblock ``Analysis of a wave-powered, reverse-osmosis system and its economic
+  availability in the united states''.
+\newblock In Proceedings of the ASME 2017 36th International Conference on
+  Ocean, Offshore and Arctic Engineering OMAE2017.
+
+\bibitem{Brodersen2022}
+Brodersen, K.~M., Bywater, E.~A., Lanter, A.~M., Schennum, H.~H., Furia, K.~N.,
+  Sheth, M.~K., Kiefer, N.~S., Cafferty, B.~K., Rao, A.~K., Garcia, J.~M., and
+  Warsinger, D.~M., 2022.
+\newblock ``Direct-drive ocean wave-powered batch reverse osmosis''.
+\newblock {\em Desalination, \textbf{ 523}}, Feb., p.~115393.
+
+\bibitem{Ringwood2014}
+Ringwood, J.~V., Bacelli, G., and Fusco, F., 2014.
+\newblock ``Energy-maximizing control of wave-energy converters: The
+  development of control system technology to optimize their operation''.
+\newblock {\em IEEE Control Systems, \textbf{ 34}}(5), Oct., pp.~30--55.
 
 \end{thebibliography}

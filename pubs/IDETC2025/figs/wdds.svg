@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="228.26752mm"
+   height="109.57674mm"
+   viewBox="0 0 228.26751 109.57674"
    version="1.1"
    id="svg5"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
@@ -25,11 +25,11 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.91639906"
-     inkscape:cx="1255.4574"
-     inkscape:cy="689.65588"
+     inkscape:cx="211.15255"
+     inkscape:cy="210.60694"
      inkscape:window-width="1920"
      inkscape:window-height="1011"
-     inkscape:window-x="1920"
+     inkscape:window-x="0"
      inkscape:window-y="32"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
@@ -48,31 +48,31 @@
          id="stop65180" />
     </linearGradient>
     <marker
-       style="overflow:visible;"
+       style="overflow:visible"
        id="Arrow1Mend"
-       refX="0.0"
-       refY="0.0"
+       refX="0"
+       refY="0"
        orient="auto"
        inkscape:stockid="Arrow1Mend"
        inkscape:isstock="true">
       <path
-         transform="scale(0.4) rotate(180) translate(10,0)"
-         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
          id="path121671" />
     </marker>
     <marker
-       style="overflow:visible;"
+       style="overflow:visible"
        id="Arrow1Send"
-       refX="0.0"
-       refY="0.0"
+       refX="0"
+       refY="0"
        orient="auto"
        inkscape:stockid="Arrow1Send"
        inkscape:isstock="true">
       <path
-         transform="scale(0.2) rotate(180) translate(6,0)"
-         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
          id="path121677" />
     </marker>
     <clipPath
@@ -271,11 +271,23 @@
          d="M 0,278.461 H 366.637 V 0 H 0 Z"
          id="path292-9" />
     </clipPath>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient210"
+       id="linearGradient13652"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(13.396896,36.807602,346.98981,-126.2942,218.30305,92.435967)"
+       x1="0"
+       y1="0"
+       x2="1"
+       y2="0"
+       spreadMethod="pad" />
   </defs>
   <g
      inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="Layer 2">
+     inkscape:label="Layer 2"
+     transform="translate(-219.39047,-126.69192)">
     <path
        style="fill:none;stroke:#736997;stroke-width:2.94252;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 86.259409,173.90982 52.640121,24.78758 7.21222,-15.94015 -52.680312,-24.80656"
@@ -284,9 +296,10 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-219.39047,-126.69192)">
     <rect
-       style="fill:#fbb073;stroke:none;stroke-width:1.506;stroke-linejoin:round;paint-order:markers fill stroke;fill-opacity:1"
+       style="fill:#fbb073;fill-opacity:1;stroke:none;stroke-width:1.506;stroke-linejoin:round;paint-order:markers fill stroke"
        id="rect2322"
        width="19.526052"
        height="13.5266"
@@ -339,7 +352,7 @@
        id="text305814"><tspan
          sodipodi:role="line"
          id="tspan305812"
-         style="fill:#67c0db;fill-opacity:1;stroke-width:0.264583;font-weight:bold"
+         style="font-weight:bold;fill:#67c0db;fill-opacity:1;stroke-width:0.264583"
          x="39.554146"
          y="228.26213">Permeate</tspan></text>
     <text
@@ -350,7 +363,7 @@
        id="text313242"><tspan
          sodipodi:role="line"
          id="tspan313240"
-         style="fill:#678c88;fill-opacity:1;stroke-width:0.265;stroke-miterlimit:4;stroke-dasharray:none;font-weight:bold"
+         style="font-weight:bold;fill:#678c88;fill-opacity:1;stroke-width:0.265;stroke-miterlimit:4;stroke-dasharray:none"
          x="135.39346"
          y="229.52634">Brine</tspan></text>
     <text
@@ -422,7 +435,7 @@
        rx="9.8061333"
        ry="6.5252938" />
     <rect
-       style="fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:2;stroke-linejoin:round;paint-order:markers fill stroke;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:markers fill stroke"
        id="rect2322-3-3"
        width="19.526052"
        height="35.262672"
@@ -480,7 +493,7 @@
                        id="g214">
                       <path
                          d="m 256.475,78.542 -76.344,27.788 13.397,36.807 76.344,-27.787 z"
-                         style="fill:url(#linearGradient210);stroke:none"
+                         style="fill:url(#linearGradient13652);stroke:none"
                          id="path212" />
                     </g>
                   </g>
@@ -542,7 +555,7 @@
        id="text38576"><tspan
          sodipodi:role="line"
          id="tspan38574"
-         style="stroke-width:0.180841;fill:#0072b2;fill-opacity:1"
+         style="fill:#0072b2;fill-opacity:1;stroke-width:0.180841"
          x="282.92566"
          y="208.70822">Pressurized</tspan></text>
     <text
@@ -593,14 +606,14 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:6.91067px;line-height:1.25;font-family:sans-serif;fill:#d55e00;fill-opacity:1;stroke:none;stroke-width:0.172767"
-       x="369.83731"
-       y="227.39983"
+       x="375.19403"
+       y="226.27684"
        id="text74087"><tspan
          sodipodi:role="line"
          id="tspan74085"
          style="fill:#d55e00;fill-opacity:1;stroke-width:0.172767"
-         x="369.83731"
-         y="227.39983">RO Membrane [4]</tspan></text>
+         x="375.19403"
+         y="226.27684">RO Membrane </tspan></text>
     <path
        style="fill:none;stroke:#0072b2;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send-3-6-1)"
        d="m 342.07456,203.56946 48.22301,0.19245"
@@ -619,9 +632,9 @@
          style="fill:#56b4e9;fill-opacity:1;stroke-width:0.15437"
          x="418.10754"
          y="204.23619"
-         id="tspan97704">Permeate [5]</tspan></text>
+         id="tspan97704">Permeate </tspan></text>
     <path
-       style="fill:none;stroke:#009e73;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-end:url(#Arrow1Send)"
+       style="fill:none;stroke:#009e73;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Send)"
        d="m 396.12353,198.40467 c -15.3787,-34.79975 -59.48429,-32.87371 -59.48429,-32.87371"
        id="path102685" />
     <text
@@ -634,7 +647,7 @@
          style="fill:#009e73;fill-opacity:1;stroke-width:0.156788"
          x="364.75003"
          y="167.44403"
-         id="tspan106703">Brine [6]</tspan></text>
+         id="tspan106703">Brine </tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -649,25 +662,25 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:8.04824px;line-height:1.25;font-family:sans-serif;fill:#cc79a7;fill-opacity:1;stroke:none;stroke-width:0.201206"
-       x="220.01917"
-       y="164.5985"
+       x="231.44604"
+       y="165.13641"
        id="text122563"><tspan
          sodipodi:role="line"
          id="tspan122561"
          style="fill:#cc79a7;fill-opacity:1;stroke-width:0.201206"
-         x="220.01917"
-         y="164.5985">WEC [1]</tspan></text>
+         x="231.44604"
+         y="165.13641">WEC </tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.53103px;line-height:1.25;font-family:sans-serif;fill:#808284;fill-opacity:0.74902;stroke:none;stroke-width:0.188276"
-       x="261.7681"
-       y="199.34183"
+       x="267.26065"
+       y="198.25621"
        id="text131430"><tspan
          sodipodi:role="line"
          id="tspan131428"
          style="fill:#808284;fill-opacity:0.74902;stroke-width:0.188276"
-         x="261.7681"
-         y="199.34183">Piston [3]</tspan></text>
+         x="267.26065"
+         y="198.25621">Piston </tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.09129px;line-height:1.25;font-family:sans-serif;fill:#006699;fill-opacity:1;stroke:none;stroke-width:0.177283"
@@ -678,7 +691,7 @@
          id="tspan147937"
          style="fill:#006699;fill-opacity:1;stroke-width:0.177283"
          x="225.18114"
-         y="131.8615">Waves [2]</tspan></text>
+         y="131.8615">Waves </tspan></text>
     <g
        id="g288"
        transform="matrix(0.34923533,-0.04986828,-0.04986828,-0.34923533,227.35316,231.59843)">

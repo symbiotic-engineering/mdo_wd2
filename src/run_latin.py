@@ -17,4 +17,4 @@ eng.initializematlab(PARAMS["nworkers"],nargout=0)
 eng.cd('..', nargout=0)
 
 Runner = RunWDDS(eng)
-Runner.latin_hypercube(4)
+Runner.latin_hypercube(508)
