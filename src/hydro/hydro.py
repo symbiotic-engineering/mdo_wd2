@@ -61,7 +61,6 @@ def get_rectangle(w,t,h,draft,cog):
     mesh = capy.meshes.predefined.rectangles.mesh_parallelepiped(size=(t,w,h), resolution=(n_surge,n_sway,n_heave), center=(0, 0, 0.5*h-draft),name='flap')
     lid = mesh.generate_lid(z=mesh.lowest_lid_position(omega_max=PARAMS["omega"][-1]))
     body = capy.FloatingBody(mesh,lid_mesh=lid)
-    body.show()
     body_lidless = capy.FloatingBody(mesh)
     body.keep_immersed_part()
     body_lidless.keep_immersed_part()
