@@ -31,12 +31,20 @@ class TestEcon(unittest.TestCase):
         print(f"piston2 cost : ${cost}")
         np.testing.assert_allclose(0,0)
 
-    def test_accum(self):
+    def test_accum4(self):
         # Test accumulator cost
         accum_vol = 4.0
         cost = PTOecon.accum_cost(accum_vol)
         expected_cost = PARAMS["accum_cost_15G"]*70 + PARAMS["accum_cost_5G"]*1 + PARAMS["accum_cost_2.5G"]*1
         print(f"4 m^3 accumulator cost : ${cost}")
+        np.testing.assert_allclose(cost,expected_cost)
+    
+    def test_accum004g(self):
+        # Test accumulator cost
+        accum_vol = 0.04
+        cost = PTOecon.accum_cost(accum_vol)
+        expected_cost = PARAMS["accum_cost_10G"] + PARAMS["accum_cost_2.5G"]
+        print(f"0.04 m^3 accumulator cost : ${cost}")
         np.testing.assert_allclose(cost,expected_cost)
 
     def test_link(self):
@@ -49,6 +57,5 @@ class TestEcon(unittest.TestCase):
         print(f"link cost : ${cost}")
         np.testing.assert_allclose(cost,cost)
 
-        
 if __name__ == '__main__':
     unittest.main()
