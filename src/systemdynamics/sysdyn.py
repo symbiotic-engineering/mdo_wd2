@@ -89,13 +89,13 @@ class SysDyn(om.ExplicitComponent):
         mem_resist = inputs["mem_resist"].item()
         osmotic_pressure = inputs["osmotic_pressure"].item()
 
-        cb_vec = np.array([0.0,0.0,0.5*draft])
-        cg_vec = np.array([0.0,0.0,cg])
+        cb_vec = np.array([[0.0],[0.0],[0.5*draft]])
+        cg_vec = np.array([[0.0],[0.0],[cg]])
         hydro = self.eng.struct()
         hydro = GILL.capy2struct(hydro, hydroXR, Vo, cb_vec, cg_vec)
         hydro = self.eng.normalizeBEM(hydro)
         hydro = self.eng.solveIRFs(hydro)
-        hydro = self.eng.rebuildhydrostruct(hydro)
+        hydro = self.eng.rebuildHydroStruct(hydro,1,0)
         
         # Initialize an array to hold inertia values
         wec_inertia_np= np.zeros(3)
