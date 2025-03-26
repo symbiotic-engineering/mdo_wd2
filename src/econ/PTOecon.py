@@ -6,7 +6,7 @@ import openmdao.api as om
 
 
 def accum_cost_fcn(count2,count5,count10,count15):
-    return PARAMS["accum_cost_2.5G"]*count2 + PARAMS["accum_cost_5G"]*count5 + PARAMS["accum_cost_10G"]*count10 + PARAMS["accum_cost_15G"]*count15
+    return PRIVATEPARAMS["accum_cost_2.5G"]*count2 + PRIVATEPARAMS["accum_cost_5G"]*count5 + PRIVATEPARAMS["accum_cost_10G"]*count10 + PRIVATEPARAMS["accum_cost_15G"]*count15
 
 def accum_vol_fcn(count2,count5,count10,count15):
     return 2.5*count2 + 5*count5 + 10*count10 + 15*count15

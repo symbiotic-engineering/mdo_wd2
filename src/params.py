@@ -81,13 +81,6 @@ PARAMS["piston_factors"] = {                    #   [-]     factors for the pist
         (20, 160): 13,                          #   [-]     factor for the 20" diameter and 160' stroke
     }
 
-
-#   Hydraulic Params
-PARAMS["accum_cost_2.5G"] = np.array([3985.0])  #   [$]    cost of the 2.5 gallon accumulator
-PARAMS["accum_cost_5G"] = np.array([5488.0])    #   [$]    cost of the 5 gallon accumulator
-PARAMS["accum_cost_10G"] = np.array([7285.0])   #   [$]    cost of the 10 gallon accumulator
-PARAMS["accum_cost_15G"] = np.array([8985.0])   #   [$]    cost of the 15 gallon accumulator
-
 #   Econ Params
 PARAMS["FCR"] = 0.108  # fixed charge rate
 PARAMS["insurance_rate"] = 0.02  # insurance rate
