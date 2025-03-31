@@ -1,6 +1,6 @@
 import numpy as np
 from src.params import PARAMS
-from src.privateparams import PRIVATEPARAMS
+#from src.privateparams import PRIVATEPARAMS
 from scipy.interpolate import Rbf
 from scipy.optimize import brentq
 import openmdao.api as om
