@@ -1,7 +1,8 @@
 import numpy as np
 import matlab.engine
-from src.params import PARAMS, INPUTS, BOUNDS
+from src.params import PARAMS, INPUTS, BOUNDS, BITS
 import openmdao.api as om
+from src.OpenMDAO.openmdao.drivers.robust_genetic_algorithm import RobustGADriver
 import src.designvariablemapper.designvariablemapper as dvmapper
 import src.hydro.hydro as hydro
 import src.systemdynamics.sysdyn as sysdyn
@@ -13,7 +14,7 @@ class RunWDDS:
         self.eng = eng
         self.prob = None
 
-    def create_problem(self,driver=True):
+    def create_problem(self):
         self.prob = om.Problem()
 
         self.prob.model.add_subsystem('Mapper',dvmapper.DesignVariableMapper(),promotes_inputs=["*"],promotes_outputs=["*"])
@@ -27,12 +28,9 @@ class RunWDDS:
             self.prob.model.add_design_var(key, lower=lower, upper=upper)
 
         self.prob.model.add_objective('LCOW')
-
-        if driver: self.prob.driver = om.SimpleGADriver()
-        if driver: self.prob.setup()
     
     def latin_hypercube(self, num_samples):
-        self.create_problem(driver=False)
+        self.create_problem()
         self.prob.driver = om.DOEDriver(om.LatinHypercubeGenerator(samples=num_samples))
         self.prob.driver.options['run_parallel'] = True
         self.prob.driver.options['procs_per_model'] = 1
@@ -44,7 +42,33 @@ class RunWDDS:
         self.prob.cleanup()
 
     def solve_once(self, design_variables = INPUTS):
+        self.prob.driver = om.SimpleGADriver()
+        self.prob.setup()
         for var_name, var_value in design_variables.items():
             self.prob.set_val(var_name, var_value)
         self.prob.run_model()
+        return self.prob.get_val('LCOW')
+
+    def optimize(self):
+        self.create_problem()
+        self.prob.driver = om.SimpleGADriver()
+        self.prob.setup()
+        self.prob.driver.options['bits'] = BITS
+        self.prob.driver.options['pop_size'] = 2
+        self.prob.driver.options['max_gen'] = 3
+        self.prob.driver.options['run_parallel'] = True
+        self.prob.run_driver()
+        return self.prob.get_val('LCOW')
+    
+    def robust_optimize(self):
+        self.create_problem()
+        self.prob.driver = RobustGADriver()
+        self.prob.setup()
+        self.prob.driver.options['bits'] = BITS
+        self.prob.driver.options['pop_size'] = 2
+        self.prob.driver.options['max_gen'] = 3
+        self.prob.driver.options['patience'] = 3
+        self.prob.driver.options['tol'] = 1e-2
+        #self.prob.driver.options['run_parallel'] = True
+        self.prob.run_driver()
         return self.prob.get_val('LCOW')
