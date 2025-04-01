@@ -133,12 +133,12 @@ BOUNDS = {                              #  (lower, upper) Bounds for the inputs 
 
 # Bits
 BITS = {
-    'width' : 8,
-    'thickness' : 8,
-    'wec_mass' : 8,
-    'hinge2joint' : 8,
-    'piston_area' : 8,
-    'accum_volume' : 8,
-    'accum_P0' : 8,
-    'capacity' : 8,
+    'width' : 4,
+    'thickness' : 4,
+    'wec_mass' : 4,
+    'hinge2joint' : 4,
+    'piston_area' : 4,
+    'accum_volume' : 4,
+    'accum_P0' : 4,
+    'capacity' : 4,
 }
