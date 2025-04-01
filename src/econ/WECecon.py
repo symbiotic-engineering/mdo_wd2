@@ -8,7 +8,7 @@ def grasberger_cost(Ax,Aref,C1ref,C2ref): # EQ 19
 
 def CAPEX(width,height,thickness):
     C1ref = PARAMS["RM5_Cflap"] + PARAMS["RM5_Cbase"] + PARAMS["RM5_Cmoor"]
-    C2ref = PARAMS["RM5_Cbear"] 
+    C2ref = PARAMS["RM5_Cpto"] 
     Aref = PARAMS["RM5_surf"]
     Asurf = 2*width*height + 2*width*thickness + 2*height*thickness
     return grasberger_cost(Asurf,Aref,C1ref,C2ref)

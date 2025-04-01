@@ -5,6 +5,7 @@ sys.path.append(parent_folder)
 import numpy as np
 import matlab.engine
 from src.params import PARAMS, INPUTS
+import openmdao.api as om
 from src.runner import RunWDDS
 
 future_eng = matlab.engine.start_matlab(background=True)
@@ -16,6 +17,5 @@ eng.initializematlab(PARAMS["nworkers"],nargout=0)
 eng.cd('..', nargout=0)
 
 Runner = RunWDDS(eng)
-Runner.create_problem()
-lcow = Runner.solve_once()
-print(lcow)
+Runner.optimize()
+print("Optimization complete.")

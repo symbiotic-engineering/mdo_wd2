@@ -37,8 +37,8 @@ PARAMS["small_wec_ratio"] = 0.2 #   [-]         ratio of the WEC length to thick
 PARAMS["RM5_surf"] = 1214.0                     #   [m^2]   surface area for RM5 float
 PARAMS["RM5_Cflap"] = 2529811*1.33              #   [2025USD]   cost of the RM5 flap
 PARAMS["RM5_Cbase"] = 1283019*1.33              #   [2025USD]   cost of the RM5 base
-PARAMS["RM5_Cbear"] = 13098*1.33                #   [2025USD]   cost of the RM5 bearings
-PARAMS["RM5_Cmoor"] = 750240*1.33               #   [2025USD]   cost of the RM5 mooring
+PARAMS["RM5_Cpto"] = 197395*1.33                #   [2025USD]   cost of the RM5 PTO
+PARAMS["RM5_Cmoor"] = 852480*1.33               #   [2025USD]   cost of the RM5 mooring
 PARAMS["RM5_Cmonitoring"] = 463519*1.33         #   [2025USD/yr]    cost of the RM5 monitoring
 PARAMS["RM5_CmarineOps"] = 76231*1.33           #   [2025USD/yr]    cost of the RM5 marine operations
 PARAMS["RM5_CshoreOps"] = 261113*1.33           #   [2025USD/yr]    cost of the RM5 shore operations
@@ -129,4 +129,16 @@ BOUNDS = {                              #  (lower, upper) Bounds for the inputs 
     'accum_volume' : (1e-2, 6),
     'accum_P0' : (3, 6),
     'capacity' : (1000, 10000),
+}
+
+# Bits
+BITS = {
+    'width' : 8,
+    'thickness' : 8,
+    'wec_mass' : 8,
+    'hinge2joint' : 8,
+    'piston_area' : 8,
+    'accum_volume' : 8,
+    'accum_P0' : 8,
+    'capacity' : 8,
 }
