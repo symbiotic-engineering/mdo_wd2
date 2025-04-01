@@ -1,11 +1,8 @@
 import numpy as np
 from src.params import PARAMS
-#from src.privateparams import PRIVATEPARAMS
 from scipy.interpolate import Rbf
 from scipy.optimize import brentq
 import openmdao.api as om
-
-
 
 def accum_cost(accum_vol):
     return 1.62124086e+05*accum_vol**9.86473502e-01

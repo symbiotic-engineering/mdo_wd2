@@ -11,7 +11,7 @@ from src.runner import RunWDDS
 future_eng = matlab.engine.start_matlab(background=True)
 eng = future_eng.result()
 
-initialization_script_path = "/home/degoede/SEA/mdo_wd2/src/"
+initialization_script_path = parent_folder + '/src'
 eng.cd(initialization_script_path, nargout=0)
 eng.initializematlab(PARAMS["nworkers"],nargout=0)
 eng.cd('..', nargout=0)
