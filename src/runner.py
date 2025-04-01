@@ -49,26 +49,26 @@ class RunWDDS:
         self.prob.run_model()
         return self.prob.get_val('LCOW')
 
-    def optimize(self):
+    def optimize(self,pop=80,generations=1e3):
         self.create_problem()
         self.prob.driver = om.SimpleGADriver()
         self.prob.setup()
         self.prob.driver.options['bits'] = BITS
-        self.prob.driver.options['pop_size'] = 2
-        self.prob.driver.options['max_gen'] = 3
+        self.prob.driver.options['pop_size'] = pop
+        self.prob.driver.options['max_gen'] = generations
         self.prob.driver.options['run_parallel'] = True
         self.prob.run_driver()
         return self.prob.get_val('LCOW')
     
-    def robust_optimize(self):
+    def robust_optimize(self,pop=80,gen_limit=1e3,patience=50,tolerence=1e-3):
         self.create_problem()
         self.prob.driver = RobustGADriver()
         self.prob.setup()
         self.prob.driver.options['bits'] = BITS
-        self.prob.driver.options['pop_size'] = 2
-        self.prob.driver.options['max_gen'] = 3
-        self.prob.driver.options['patience'] = 3
-        self.prob.driver.options['tol'] = 1e-2
-        #self.prob.driver.options['run_parallel'] = True
+        self.prob.driver.options['pop_size'] = pop
+        self.prob.driver.options['max_gen'] = gen_limit
+        self.prob.driver.options['patience'] = patience
+        self.prob.driver.options['tol'] = tolerence
+        self.prob.driver.options['run_parallel'] = True
         self.prob.run_driver()
         return self.prob.get_val('LCOW')
