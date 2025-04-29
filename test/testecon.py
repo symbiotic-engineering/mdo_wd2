@@ -19,18 +19,14 @@ class TestEcon(unittest.TestCase):
         
     def test_piston(self):
         # Test piston cost
-        piston_area = 0.028502296
-        piston_stroke = 2
-        cost = PTOecon.piston_cost(piston_area, piston_stroke)
+        bore_in = 12
+        bore_m = bore_in*0.0254
+        piston_area = np.pi*(bore_m/2)**2
+        stroke_in = 48
+        stroke_m = stroke_in*0.0254
+        piston_stroke = stroke_m
+        cost = PTOecon.piston_cost(piston_area, piston_stroke, 7e6)[0]
         print(f"piston cost : ${cost}")
-        np.testing.assert_allclose(0,0)
-
-    def test_piston2(self):
-        # Test piston cost
-        piston_area = 0.028502296
-        piston_stroke = 2
-        cost = PTOecon.piston_cost2(piston_area, piston_stroke,63e6)
-        print(f"piston2 cost : ${cost}")
         np.testing.assert_allclose(0,0)
 
     def test_accum4(self):
@@ -51,16 +47,16 @@ class TestEcon(unittest.TestCase):
 
     def test_link(self):
         # Test link cost
-        linches = 96
-        dinches = 24
+        linches = 48
+        dinches = 12
         lmeters = linches*0.0254
         dmeters = dinches*0.0254
         area = np.pi*(dmeters/2)**2
         l1 = 0
         l2 = lmeters
         l3 = 0
-        force = 6e6*area
-        cost = PTOecon.link_cost(l1,l2,l3,force)
+        force = 7e6*area
+        cost = PTOecon.link_cost(l1,l2,l3,force)[0]
         print(f"link cost : ${cost}")
         np.testing.assert_allclose(cost,cost)
 
@@ -99,6 +95,26 @@ class TestEcon(unittest.TestCase):
         capex = WECecon.OPEX(width,height,thickness)
         print(f"WEC opex : ${capex}")
         np.testing.assert_allclose(capex, 769212, rtol=0.01)
+
+    def test_ECON(self):
+        inputs = {
+            'feedflow_cap': 3100/PARAMS["recovery_ratio"],
+            'capacity': np.array(3100),
+            'feedflow': np.ones(100)*1550/PARAMS["recovery_ratio"]/(24*60*60),
+            'permflow': np.ones(100)*1550/(24*60*60),
+            'width': np.array(18),
+            'thickness': np.array(1.8),
+            'draft': np.array(11),
+            'piston_area': np.array(0.26),
+            'stroke_length': np.array(2.0),
+            'accum_volume': np.array(4.0),
+            'pressure_relief': np.array(6.0),
+            'hinge2joint': np.array(2.0)
+        }
+        outputs = {}
+        self.Econ.compute(inputs, outputs)
+        print(f"LCOW : ${outputs['LCOW']}")
+        np.testing.assert_allclose(outputs['LCOW'], 4.33556, rtol=0.01)
 
 if __name__ == '__main__':
     unittest.main()

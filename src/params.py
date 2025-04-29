@@ -46,40 +46,28 @@ PARAMS["RM5_Cparts"] = 64840*1.33               #   [2025USD/yr]    cost of the 
 PARAMS["RM5_Cconsumables"] = 13143*1.33         #   [2025USD/yr]    cost of the RM5 consumables
 
 #   RO Params
-PARAMS["feedTDS"] = np.array([40000])           #   [mg/L]  feed total dissolved solids (note mg/L = g/m^3)
-PARAMS["permTDS"] = np.array([500])             #   [mg/L]  permeate total dissolved solids
+PARAMS["feedTDS"] = np.array([35946])           #   [mg/L]  feed total dissolved solids (note mg/L = g/m^3)
+PARAMS["permTDS"] = np.array([150])             #   [mg/L]  permeate total dissolved solids
 PARAMS["vanthoff"] = np.array([2.0])            #   [#]     van't Hoff factor
 PARAMS["M_salt"] = np.array([58.44])            #   [g/mol] molecular weight of salt
 PARAMS["RO_flux"] = np.array([24.6/35])         #   [m/day] nominal flux for SW30HR-380 Dry
 PARAMS["Aw"] = np.array([2.57e-12])             #   [m^2]   permeability coefficient
 PARAMS["Bs"] = np.array([2.30e-8])              #   [m/s]   solute transport parameter
-PARAMS["recovery_ratio"] = np.array([0.515])    #   [-]     recovery ratio from WAVE with nominal flow and pressure, note that this is nominal, and not what will always be the recovery ratio, as flow/pressure drops, recovery ratio will drop as well
+PARAMS["recovery_ratio"] = np.array([0.442])    #   [-]     recovery ratio from WAVE with nominal flow and pressure, note that this is nominal, and not what will always be the recovery ratio, as flow/pressure drops, recovery ratio will drop as well
 
 #   Mechanism Params
 PARAMS["intake_x"] = np.array([4.7])            #   [m]     x-coordinate of the intake, sim with 12.
 PARAMS["intake_z"] = np.array([0.])             #   [m]     z-coordinate of the intake
-PARAMS["drivetrain_mass"] = np.array([50.])     #   [kg]    mass of the piston
+PARAMS["drivetrain_mass"] = np.array([50.])     #   [kg]    mass of the driavetrain
 PARAMS["rho316"] = np.array([0.29])             #   [lb/in^3]   density of 316 stainless steel
 PARAMS["cost316"] = np.array([2.0])             #   [$/lb]  cost of 316 stainless steel
 PARAMS["yield316"] = np.array([206e6])          #   [Pa]    yield strength of 316 stainless steel
 PARAMS["modulus316"] = np.array([164e9])        #   [Pa]    modulus of elasticity of 316 stainless steel
-PARAMS["factor_of_safety"] = np.array([1.5])    #   [-]     factor of safety for the mechanism
+PARAMS["fos_link"] = np.array([1.5])            #   [-]     factor of safety for the link
+PARAMS["fos_cylinder"] = np.array([6])          #   [-]     factor of safety for the hydraulic cylinder
 PARAMS["max_piston_stroke"] = np.array([20.])   #   [m]     maximum stroke of the piston
-PARAMS["piston_unit"] = 200                     #   [$/ft]  unscaled cost of the piston per foot stroke
-PARAMS["piston_factors"] = {                    #   [-]     factors for the piston cost based on diameter and stroke
-        (12, 16): 8,                            #   [-]     factor for the 12" diameter and 16' stroke
-        (12, 20): 8,                            #   [-]     factor for the 12" diameter and 20' stroke
-        (12, 60): 9,                            #   [-]     factor for the 12" diameter and 60' stroke
-        (12, 160): 10,                          #   [-]     factor for the 12" diameter and 160' stroke
-        (18, 16): 9,                            #   [-]     factor for the 18" diameter and 16' stroke
-        (18, 20): 9,                            #   [-]     factor for the 18" diameter and 20' stroke
-        (18, 60): 9,                            #   [-]     factor for the 18" diameter and 60' stroke
-        (18, 160): 10,                          #   [-]     factor for the 18" diameter and 160' stroke
-        (20, 16): 10,                           #   [-]     factor for the 20" diameter and 16' stroke
-        (20, 20): 11,                           #   [-]     factor for the 20" diameter and 20' stroke
-        (20, 60): 12,                           #   [-]     factor for the 20" diameter and 60' stroke
-        (20, 160): 13,                          #   [-]     factor for the 20" diameter and 160' stroke
-    }
+PARAMS["extra_stock"] = np.array([3e-3])        #   [m]     extra stock for the cylinder and cap
+PARAMS["labor_factor"] = np.array([0.70])       #   [-]     labor factor for the cost of the hydraulic cylinder and rod
 
 #   Econ Params
 PARAMS["FCR"] = 0.108  # fixed charge rate
