@@ -17,5 +17,5 @@ eng.initializematlab(PARAMS["nworkers"],nargout=0)
 eng.cd('..', nargout=0)
 
 Runner = RunWDDS(eng)
-Runner.robust_optimize(pop=2,gen_limit=1e6,patience=2,tol=0.1)
+Runner.robust_optimize(pop=80,gen_limit=800,patience=15,tol=1e-3)
 print("Optimization complete.")
