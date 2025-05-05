@@ -22,6 +22,8 @@ class Econ(om.ExplicitComponent):
         self.add_input('piston_area', val=INPUTS["piston_area"])
         self.add_input('stroke_length', val=PARAMS["max_piston_stroke"])
         self.add_input('accum_volume', val=INPUTS["accum_volume"])
+        self.add_input('pressure_relief', val=np.array(6.0)) 
+        self.add_input('hinge2joint', val=INPUTS["hinge2joint"])
 
         self.add_output('LCOW', val=1000.0)
 
@@ -40,7 +42,7 @@ class Econ(om.ExplicitComponent):
         opex.append(WEC.OPEX(inputs["width"],inputs["thickness"],inputs["draft"]))
 
         # PTO terms
-        capex.append(PTO.CAPEX(inputs["piston_area"],inputs["stroke_length"],inputs["accum_volume"]))
+        capex.append(PTO.CAPEX(inputs["piston_area"],inputs["stroke_length"],inputs["accum_volume"],inputs["hinge2joint"],PARAMS["intake_x"],PARAMS["intake_z"],inputs["pressure_relief"]))
         opex.append(PTO.OPEX(inputs["piston_area"],inputs["stroke_length"],inputs["accum_volume"]))
 
         # RO terms
