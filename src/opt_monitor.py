@@ -1,11 +1,9 @@
 import sys
 import os
-parent_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-sys.path.append(parent_folder)
 import time
-from openmdao.recorders.case_reader import CaseReader
-import os
 import numpy as np
+import matplotlib.pyplot as plt
+from openmdao.recorders.case_reader import CaseReader
 
 def monitor_optimization(casefile="robustoptrun_out/cases.sql", pop_size=80, check_interval=10):
     if not os.path.exists(casefile):
@@ -21,6 +19,7 @@ def monitor_optimization(casefile="robustoptrun_out/cases.sql", pop_size=80, che
     best_so_far = float('inf')
     patience_counter = 0
     patience = 15  # match your optimization setting
+    best_per_gen = []
 
     print("Monitoring optimization progress by generation (Ctrl+C to stop)...\n")
 
@@ -42,6 +41,8 @@ def monitor_optimization(casefile="robustoptrun_out/cases.sql", pop_size=80, che
                     val = float(val) if np.isscalar(val) else float(val[0])
                     gen_best = min(gen_best, val)
 
+                best_per_gen.append(gen_best)
+
                 if gen_best < best_so_far - 1e-3:
                     best_so_far = gen_best
                     patience_counter = 0
@@ -50,9 +51,24 @@ def monitor_optimization(casefile="robustoptrun_out/cases.sql", pop_size=80, che
                     patience_counter += 1
                     print(f"[Gen {gen:>3}] Best LCOW: {gen_best:.6f} (no improvement)")
 
+                plot_progress(best_per_gen)  # update the plot
+
             last_idx += (gen * pop_size)
 
         time.sleep(check_interval)
 
+
+def plot_progress(best_per_gen, filename="lcow_progress.png"):
+    plt.figure(figsize=(8, 5))
+    plt.plot(best_per_gen, marker='o', linestyle='-', color='blue')
+    plt.xlabel("Generation")
+    plt.ylabel("Best LCOW")
+    plt.title("LCOW Optimization Progress")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(filename)
+    plt.close()
+
+
 if __name__ == "__main__":
-    monitor_optimization(casefile="robustoptrun_out/cases.sql", pop_size=80)
+    monitor_optimization(casefile="run1_robustoptrun_out/cases.sql", pop_size=80)

@@ -17,7 +17,7 @@ class RunWDDS:
         self.prob = None
 
     def create_problem(self):
-        self.prob = om.Problem()
+        self.prob = om.Problem(reports=None)
 
         self.prob.model.add_subsystem('Mapper',dvmapper.DesignVariableMapper(),promotes_inputs=["*"],promotes_outputs=["*"])
         self.prob.model.add_subsystem('Hydro',hydro.Hydro(),promotes_inputs=["*"],promotes_outputs=["*"])
@@ -74,8 +74,9 @@ class RunWDDS:
         self.prob.driver.options['max_gen'] = gen_limit
         self.prob.driver.options['patience'] = patience
         self.prob.driver.options['tol'] = tol
-        if PARAMS["nworkers"] > 1: self.prob.driver.options['run_parallel'] = True
-        else: self.prob.driver.options['run_parallel'] = False
+        if PARAMS["nworkers"] > 1: 
+            self.prob.driver.options["threading"] = True
+            self.prob.driver.options["nworkers"] = PARAMS["nworkers"]
         recorder = om.SqliteRecorder('cases.sql')
         self.prob.driver.add_recorder(recorder)
         self.prob.driver.recording_options['record_objectives'] = True
@@ -84,3 +85,4 @@ class RunWDDS:
         self.prob.run_driver()
         opt_report(self.prob, outfile='opt_report.html')
         return self.prob.get_val('LCOW')
+    
