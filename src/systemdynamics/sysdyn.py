@@ -94,7 +94,20 @@ class SysDyn(om.ExplicitComponent):
         hydro = self.eng.struct()
         hydro = GILL.capy2struct(hydro, hydroXR, Vo, cb_vec, cg_vec)
         hydro = self.eng.normalizeBEM(hydro)
-        hydro = self.eng.solveIRFs(hydro)
+
+        key = random.randint(0, 10**16 - 1)  # Generate a random 16-digit integer
+        if PARAMS["nworkers"] == 0:
+            hydro = self.eng.solveIRFs(hydro)
+        else:
+            irfouts = self.eng.solveIRFs_par(hydro,key)
+            hydro,keyout = self.eng.fetchOutputs(irfouts,nargout=2)
+            try:
+                if key != keyout:
+                    raise ValueError(f"wrong IRF output fetched")
+            except ValueError as e:
+                print(f"Parallelization Error: {e}")
+
+
         hydro = self.eng.rebuildHydroStruct(hydro,1,0)
         
         # Initialize an array to hold inertia values
@@ -114,8 +127,6 @@ class SysDyn(om.ExplicitComponent):
         wec_inertia = matlab.double(wec_inertia_np)
 
         wecSimOptions = GILL.dict2struct(PARAMS["wecsimoptions"],self.eng)
-
-        key = random.randint(0, 10**16 - 1)  # Generate a random 16-digit integer
 
         hinge_depth = matlab.double(draft)
         joint_depth = matlab.double(draft-hinge2joint)
