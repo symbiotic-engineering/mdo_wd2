@@ -7,6 +7,10 @@ import matlab.engine
 from src.runner import RunWDDS
 from src.DEAPSEA.src.ga import DeapSeaGa as GA
 from src.params import PARAMS, BOUNDS, BITS
+from threadpoolctl import threadpool_limits
+threadpool_limits(limits=1, user_api='blas')
+threadpool_limits(limits=1, user_api='openmp')
+
 
 future_eng = matlab.engine.start_matlab(background=True)
 eng = future_eng.result()
@@ -32,6 +36,7 @@ def safe_objective(ind):
 ga = GA(safe_objective, BOUNDS, BITS, 
         NGEN=800, NPOP=256, NWORKERS=PARAMS["nworkers"],
         CXPB=0.8, MUTPB=0.02, ELITES_SIZE=3, TOURNAMENT_SIZE=4,
-        PATIENCE=20, TOL=1e-3, csv_path="results.csv")
+        PATIENCE=20, TOL=1e-3, csv_path="data/results.csv")
 print(ga.run())
 print("Optimization complete.")
+eng.quit()
