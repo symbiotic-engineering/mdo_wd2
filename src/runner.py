@@ -4,7 +4,7 @@ import matlab.engine
 from src.params import PARAMS, INPUTS, BOUNDS, BITS
 import openmdao.api as om
 from src.OpenMDAO.openmdao.drivers.robust_genetic_algorithm import RobustGADriver
-import geometry.geometry as geom
+import src.geometry.geometry as geom
 import src.hydro.hydro as hydro
 import src.systemdynamics.sysdyn as sysdyn
 import src.econ.econ as econ
