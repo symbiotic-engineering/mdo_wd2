@@ -4,7 +4,7 @@ import matlab.engine
 from src.params import PARAMS, INPUTS, BOUNDS, BITS
 import openmdao.api as om
 from src.OpenMDAO.openmdao.drivers.robust_genetic_algorithm import RobustGADriver
-import src.designvariablemapper.designvariablemapper as dvmapper
+import src.geometry.geometry as geom
 import src.hydro.hydro as hydro
 import src.systemdynamics.sysdyn as sysdyn
 import src.econ.econ as econ
@@ -19,7 +19,7 @@ class RunWDDS:
     def create_problem(self):
         self.prob = om.Problem(reports=None)
 
-        self.prob.model.add_subsystem('Mapper',dvmapper.DesignVariableMapper(),promotes_inputs=["*"],promotes_outputs=["*"])
+        self.prob.model.add_subsystem('Geom',geom.Geometry(),promotes_inputs=["*"],promotes_outputs=["*"])
         self.prob.model.add_subsystem('Hydro',hydro.Hydro(),promotes_inputs=["*"],promotes_outputs=["*"])
         self.prob.model.add_subsystem('DesalParams',desal.DesalParams(),promotes_inputs=["*"],promotes_outputs=["*"])
         self.prob.model.add_subsystem('SysDyn',sysdyn.SysDyn(self.eng),promotes_inputs=["*"],promotes_outputs=["*"])
