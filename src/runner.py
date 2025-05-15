@@ -50,39 +50,3 @@ class RunWDDS:
             self.prob.set_val(var_name, var_value)
         self.prob.run_model()
         return self.prob.get_val('LCOW')
-
-    def optimize(self,pop=80,generations=1e3):
-        self.create_problem()
-        self.prob.driver = om.SimpleGADriver()
-        self.prob.setup()
-        self.prob.driver.options['bits'] = BITS
-        self.prob.driver.options['pop_size'] = pop
-        self.prob.driver.options['max_gen'] = generations
-        self.prob.driver.options['run_parallel'] = True
-        self.prob.run_driver()
-        return self.prob.get_val('LCOW')
-    
-    def robust_optimize(self,pop=80,gen_limit=1e3,patience=50,tol=1e-3,Pc=0.8,Pm=0.03):
-        self.create_problem()
-        self.prob.driver = RobustGADriver()
-        self.prob.setup()
-
-        self.prob.driver.options['bits'] = BITS
-        self.prob.driver.options['pop_size'] = pop
-        self.prob.driver.options['Pc'] = Pc
-        self.prob.driver.options['Pm'] = Pm
-        self.prob.driver.options['max_gen'] = gen_limit
-        self.prob.driver.options['patience'] = patience
-        self.prob.driver.options['tol'] = tol
-        if PARAMS["nworkers"] > 1: 
-            self.prob.driver.options["threading"] = True
-            self.prob.driver.options["nworkers"] = PARAMS["nworkers"]
-        recorder = om.SqliteRecorder('cases.sql')
-        self.prob.driver.add_recorder(recorder)
-        self.prob.driver.recording_options['record_objectives'] = True
-        self.prob.driver.recording_options['record_constraints'] = True
-        self.prob.driver.recording_options['record_desvars'] = True
-        self.prob.run_driver()
-        opt_report(self.prob, outfile='opt_report.html')
-        return self.prob.get_val('LCOW')
-    
