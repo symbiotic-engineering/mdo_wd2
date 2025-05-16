@@ -34,9 +34,9 @@ x.add_input("geom", r"\text{draft}")
 x.add_input("desal", r"\begin{array}{c} \eta_{\text{RO}}, \mathbf{p}_{\text{seawater}}, \\ \mathbf{p}_{\text{membrane}} \end{array}")
 x.add_input("hydro", r"\begin{array}{c} \text{draft} \end{array}")
 x.add_input("sysdyn", r"\begin{array}{c} \text{draft}, \ell_2, \ell_3 \end{array}")
-x.add_input("econ", r"\begin{array}{c} C_\text{ref}, \mathbf{p}_{\text{316SS}} \end{array}")
+x.add_input("econ", r"\begin{array}{c} \text{draft}, C_\text{ref}, \\ \mathbf{p}_{\text{316SS}} \end{array}")
 
 x.add_output("opt", r"\begin{array}{c} w^*,t^*,m^*,\ell_1^*,A_p^*, \\ V_{acc}^*,P_0^*,Q_{p,max}^* \end{array}", side=LEFT)
 x.add_output("econ", r"\text{LCOW}^*", side=LEFT)
 
-x.write("mdf")
+x.write("xDSM")

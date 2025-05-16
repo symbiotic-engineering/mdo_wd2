@@ -7,6 +7,8 @@
 \usepackage[table,xcdraw]{xcolor}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
+\usepackage{float}
+\usepackage[section]{placeins}
 \special{papersize=8.5in,11in}
 
 \conffullname{the ASME 2025 \vspace{1 mm}\\ International Design Engineering Technical Conferences \vspace{1 mm}\&\\ Computers and Information in Engineering Conference\vspace{1 mm}}
@@ -38,13 +40,13 @@
 
 \begin{abstract}
 
-\textit{Seawater reverse osmosis (SWRO) desalination offers a critical solution to global water scarcity, but its high energy demand necessitates sustainable power sources. Wave energy converters (WECs) present a promising alternative, particularly wave-driven desalination systems (WDDS), where they directly pressurize seawater without the inefficiencies of converting to electricity as a middle step. Despite this potential, high costs remain a barrier to widespread adoption.} 
+\textit{Seawater reverse osmosis (SWRO) desalination offers a critical solution to global water scarcity, but its high energy demand necessitates sustainable power sources. Wave energy converters (WECs) present a promising alternative, particularly wave-driven desalination systems, where they directly pressurize seawater without the inefficiencies of converting to electricity as a middle step. Despite this potential, high costs remain a barrier to widespread adoption.} 
 
-\textit{This study introduces a multidisciplinary design optimization (MDO) framework to enhance WDDS performance and cost-effectiveness. The framework integrates hydrodynamics, system dynamics, desalination processes, and economic modeling, enabling holistic system-level optimization.  As a precursor to full MDO, a Latin hypercube sampling (LHS) design of experiments (DOE) study is conducted to explore key design trade-offs.} 
+\textit{This study introduces a multidisciplinary design optimization (MDO) framework to enhance wave-driven desalination performance and cost-effectiveness. The framework integrates hydrodynamics, system dynamics, desalination processes, and economic modeling, enabling holistic system-level optimization. A genetic algorithm (GA) is used to find the optimal design, a 58\% improvement over a nominal design from literature.} 
 
-\textit{Results highlight the importance of balancing WEC, power take-off (PTO), and desalination plant sizing and dynamics. Notably, traditional designs favoring large accumulators and small SWRO plants may benefit from smaller accumulators and increased SWRO plant capacity, reducing the levelized cost of water (LCOW). Feature importance analysis further identifies key parameters influencing performance, guiding future optimization. Optimization results are forthcoming and will be included in the final paper and presentation.}
+\textit{Results highlight the importance of balancing WEC, power take-off (PTO), and desalination plant sizing and dynamics. Notably, traditional designs favoring large accumulators and small SWRO plants may benefit from smaller accumulators and increased SWRO plant capacity, reducing the levelized cost of water (LCOW).}
 
-\textit{This study lays the groundwork for cost-effective WDDS development, demonstrating the potential of MDO methodologies to improve desalination affordability and sustainability.}
+\textit{This study provides a foundation for cost-effective wave-driven desalination system development, demonstrating the potential of MDO methodologies to improve desalination affordability and sustainability.}
 
 \end{abstract}
 
@@ -53,28 +55,28 @@
 
 The world is facing a growing water crisis, with global freshwater demand projected to grow over 40\% by 2050 \cite{watershortage2015}. This rising demand, compounded by factors such as droughts, urbanization, and uneven distribution of water resources, will put immense stress on existing freshwater supplies. Seawater reverse osmosis (SWRO) is a promising solution to mitigate this stress by providing desalinated water. However, SWRO is energy-intensive, requiring 2-4 kWh/m$^3$ \cite{Li2018}. If powered by fossil fuels, this process would further contribute to climate change, exacerbating water scarcity issues \cite{nytdrought}. Therefore, to ensure sustainability, SWRO must be powered by renewable energy sources. 
 
-Wave Energy Converters (WECs) offer a compelling solution. Both SWRO and WECs are marine-based technologies, with SWRO plants typically located on the coast and WECs deployed offshore. Beyond this natural co-location, WECs are particularly suited for SWRO \cite{blue_econ} due to their ability to directly pressurize seawater using a hydraulic style power take-off (PTO) system, forming a wave-driven desalination system (WDDS) \cite{Davies2005}. Unlike other renewable energy sources that require intermediate energy conversion steps, WECs can provide direct mechanical power, improving overall efficiency. 
+Wave Energy Converters (WECs) offer a compelling solution. Both SWRO and WECs are marine-based technologies, with SWRO plants typically located on the coast and WECs deployed offshore. Beyond this natural co-location, WECs are particularly suited for SWRO \cite{blue_econ} due to their ability to directly pressurize seawater using a hydraulic style power take-off (PTO) system, forming a wave-driven desalination system \cite{Davies2005}. Unlike other renewable energy sources that require intermediate energy conversion steps, WECs can provide direct mechanical power, improving overall efficiency. 
 
-Despite their potential, WECs face significant economic and technical challenges, with high costs being a primary barrier to widespread adoption. Design optimization is therefore essential for reducing costs and improving performance. Multidisciplinary Design Optimization (MDO) provides a systematic framework for addressing these challenges by integrating multiple interdependent subsystems into a unified design process, allowing for global optimization rather than isolated improvements \cite{Sobieski}. MDO-style approaches integrating PTO design with hydrodynamics and/or controls have successfully enhanced electricity-generating WECs, demonstrating its potential to enhance efficiency and energy output \cite{Stroefer2023,PenaSanchez2022,Rosati2023,Grasberger2024}. For instance, Michelén Ströfer et al. (2023) achieved a 22\% increase in electrical power output using control co-design (CCD), while Grasberger et al. (2024) demonstrated a 60\% improvement in normalized power output compared to traditional sequential design methods. These studies emphasize the importance of holistic modeling, which accounts for wave dynamics, WEC operation, PTO performance, and control strategies. Although these studies have showed great promise for MDO to improve WECs, these approaches have yet to be applied to WDDS, leaving a critical gap in research. 
+Despite their potential, WECs face significant economic and technical challenges, with high costs being a primary barrier to widespread adoption. Design optimization is therefore essential for reducing costs and improving performance. Multidisciplinary Design Optimization (MDO) provides a systematic framework for addressing these challenges by integrating multiple interdependent subsystems into a unified design process, allowing for global optimization rather than isolated improvements \cite{Sobieski}. MDO-style approaches integrating PTO design with hydrodynamics and/or controls have successfully enhanced electricity-generating WECs, demonstrating its potential to enhance efficiency and energy output \cite{Stroefer2023,PenaSanchez2022,Rosati2023,Grasberger2024}. For instance, Michelén Ströfer et al. (2023) achieved a 22\% increase in electrical power output using control co-design (CCD), while Grasberger et al. (2024) demonstrated a 60\% improvement in normalized power output compared to traditional sequential design methods. These studies emphasize the importance of holistic modeling, which accounts for wave dynamics, WEC operation, PTO performance, and control strategies. Although these studies have shown great promise for MDO to improve WECs, these approaches have yet to be applied to wave-driven desalination systems, leaving a critical gap in research. 
 
-This study addresses this gap by developing a holistic MDO framework for WDDS. As a precursor to full optimization, a design of experiments (DOE) study is conducted to explore key system parameters and establish a foundation for optimizing freshwater production. A simplified WDDS architecture is introduced (Fig \ref{fig:WDDS}), where an oscillating surge wave energy converter (OSWEC) drives a piston pump, pressurizing seawater and delivering it to an onshore SWRO plant. The high-pressure seawater enables freshwater production without requiring external energy input. While similar systems have been studied \cite{Yu2018,Suchithra2022,Mi2023,Simmons2024}, this study excludes an energy recovery unit (ERU)---a component known to enhance efficiency---to focus on the MDO aspects of the system. A comparison between configurations with and without the ERU will be the topic of future work.
+This study addresses this gap by developing a holistic MDO framework for wave-driven desalination. A simplified wave-driven desalination system architecture is introduced (Fig \ref{fig:WDDS}), where an oscillating surge wave energy converter (OSWEC) drives a piston pump, pressurizing seawater and delivering it to an onshore SWRO plant. The high-pressure seawater enables freshwater production without requiring external energy input. While similar systems have been studied \cite{Yu2018,Suchithra2022,Mi2023,Simmons2024}, this study excludes an energy recovery unit (ERU)---a component known to enhance efficiency---to focus on the MDO aspects of the system. A comparison between configurations with and without the ERU will be the topic of future work.
 
 \begin{figure}[b!]
     \includegraphics[width=\linewidth]{../figs/wdds.pdf}
-    \captionof{figure}{SIMPLE WAVE-DRIVEN DESALINATION SYSTEM (WDDS) CONCEPT SKETCH.}
+    \captionof{figure}{SIMPLE WAVE-DRIVEN DESALINATION SYSTEM CONCEPT SKETCH.}
     \label{fig:WDDS}
 \end{figure}
 
-The concept sketch in Fig \ref{fig:WDDS} provides an overview of the WDDS but does not depict all hydraulic components included in this study. Key elements such as the hydraulic accumulator, pressure relief valve, brine side throttle valve, and directional control valves are omitted for simplicity. A detailed hydraulic circuit diagram, including these components, is show in Fig \ref{fig:hydraulics}.
+The concept sketch in Fig \ref{fig:WDDS} provides an overview of the wave-driven desalination system but does not depict all hydraulic components included in this study. Key elements such as the hydraulic accumulator, pressure relief valve, brine side throttle valve, and directional control valves are omitted for simplicity. A detailed hydraulic circuit diagram, including these components, is shown in Fig \ref{fig:hydraulics}.
 
 \begin{figure}[t!]
     \centering
     \includegraphics[width=0.7\linewidth]{../figs/hydraulic_circuit.pdf}
-    \captionof{figure}{HYDRAULIC CIRCUIT DIAGRAM OF THE WDDS.}
+    \captionof{figure}{HYDRAULIC CIRCUIT DIAGRAM OF THE WAVE-DRIVEN DESALINATION SYSTEM.}
     \label{fig:hydraulics}
 \end{figure}
 
-The following sections present the MDO problem formulation, defining the design variables that shape the design space. A comprehensive WDDS model is then introduced, structured into key modules: desalination plant, hydrodynamics, system dynamics, and economic analysis. Finally a DOE is conducted to illustrate the potential design insights that full optimization could provide. Full optimization results are forthcoming and will be included in the final paper and presented at the conference.
+The following sections present the MDO problem formulation, defining the design variables that shape the design space. A comprehensive wave-driven desalination model is then introduced, structured into key modules: desalination plant, hydrodynamics, system dynamics, and economic analysis. Finally, the results of the optimization are presented and discussed, highlighting the impact of MDO on the design of wave-driven desalination systems.
 
 All code for this study can be accessed at the \href{https://github.com/symbiotic-engineering/mdo\_wd2}{GitHub repository}.
 
@@ -92,6 +94,19 @@ The optimization problem in this study is formally defined as:
     \label{eq:problem}
 \end{align*}
 \noindent where LCOW (levelized cost of water) is the objective function to be minimized (further discussed in section \ref{sec:econ}), $\mathbf{x}$ represents a vector of design variables, $\mathbf{p}$ represents a vector of parameters, and $\hat{u}$ is the vector of coupled variables. The constraints include inequality constraints ($\mathbf{g} \leq 0$) and equality constraints ($\mathbf{h}=0$), while $\mathbf{R}$ represents the governing equations for different disciplinary modules. The different disciplines represented in this framework are seawater desalination, hydrodynamics, system dynamics, and economics, and are discussed further in the system modeling section (Section \ref{sec:sysmodel}). Controls are not included at this time, but will be included in future work.
+
+This optimization problem is shown graphically in the 
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\linewidth]{../figs/xDSM.pdf}
+    \captionof{figure}{XDSM DIAGRAM OF THE WAVE-DRIVEN DESALINATION SYSTEM OPTIMIZATION PROBLEM.}
+    \label{fig:xdsm}
+\end{figure*} 
+ 
+\FloatBarrier
+
+\noindent xDSM diagram \cite{xdsm} in Fig. \ref{fig:xdsm}. The xDSM diagram shows the different modules and their interactions. It also shows how the modules interact with the optimizer (the genetic algorithm), with the objective LCOW calculated in the ``Economics" module and the constraints ($\mathbf{g},\mathbf{h}$) evaluated in the ``System Dynamics" module.
 
 \subsection{DESIGN SPACE}
 The design vector, $\mathbf{x}$, consists of the following variables: WEC width, $w$ [m], WEC thickness, $t$ [m], WEC mass, $m$ [kg], the distance from the WEC hinge to the PTO joint, $\ell_1$ [m], piston area, $A_p$ [m$^2$], accumulator volume, $V_{acc}$ [m$^3$], accumulator pre-charge pressure, $P_0$ [MPa], and SWRO plant capacity, $Q_{p,max}$ [m$^3$/day]. Table \ref{tab:design_space} summarizes the design variables, their bounds and nominal values. Some of the key WEC dimensions are shown in Fig. \ref{fig:dims}.
@@ -115,7 +130,7 @@ The design vector, $\mathbf{x}$, consists of the following variables: WEC width,
     \label{tab:design_space} 
 \end{table}
 
-One notable aspect of the bounds is that the upper bound of $\ell_1$ is set to the draft parameter rather than a fixed value. The draft represents the distance from the still water line to the bottom of the WEC float. The WEC width refers to the sway dimension, while the WEC thickness corresponds to the surge dimension. To reduce the dimensionality of the design space, draft and height are excluded as design variables, as the chosen variables already provide sufficient control WEC dynamics. The WEC dimensions are illustrated in Fig. \ref{fig:dims}. Additionally, to aid in the interpretation of $\ell_1$, a mechanism diagram is provided in Fig. \ref{fig:mechanism}, which also shows the intakes location defined by $\ell_2$ and $\ell_3$ (both of which are parameters rather than design variables).
+One notable aspect of the bounds is that the upper bound of $\ell_1$ is set to the draft parameter rather than a fixed value. The draft represents the distance from the still water line to the bottom of the WEC float. The WEC width refers to the sway dimension, while the WEC thickness corresponds to the surge dimension. To reduce the dimensionality of the design space, draft and height are excluded as design variables, as the chosen variables already provide sufficient control WEC dynamics. The WEC dimensions are illustrated in Fig. \ref{fig:dims}. Additionally, to aid in the interpretation of $\ell_1$, a mechanism diagram is provided in Fig. \ref{fig:mechanism}, which also shows the intake's location defined by $\ell_2$ and $\ell_3$ (both of which are parameters rather than design variables).
 
 \begin{figure}
     \centering
@@ -131,8 +146,25 @@ One notable aspect of the bounds is that the upper bound of $\ell_1$ is set to t
     \label{fig:mechanism}
 \end{figure}
 
+%\begin{figure}[h!]
+%    \centering
+%    \begin{minipage}{0.5\linewidth}
+%        \centering
+%        \includegraphics[width=\linewidth]{../figs/WECdims.pdf}
+%        %\captionof{figure}{WEC DIMENSIONS. NOTE THAT $h$ REPRESENTS THE WEC HEIGHT, WHICH IS A PARAMETER RATHER THAN A DESIGN VARIABLE.}
+%        \label{fig:dims}
+%    \end{minipage}\hfill
+%    \begin{minipage}{0.4\linewidth}
+%        \centering
+%        \includegraphics[width=\linewidth]{../figs/mechanism.pdf}
+%        %\captionof{figure}{MECHANISM DIAGRAM.}
+%        \label{fig:mechanism}
+%    \end{minipage}
+%    \captionof{figure}{WEC (LEFT) AND MECHANISM (RIGHT) DIMENSIONS. NOTE THAT $h$ REPRESENTS THE WEC HEIGHT, WHICH IS A PARAMETER RATHER THAN A DESIGN VARIABLE.}
+%\end{figure}
+
 \subsection{PARAMETERS AND CONSTRAINTS}
-Parameters were largely reflect the parameters used by Yu and Jenne (2018) \cite{Yu2018}. The subcategories of parameters include: general (parameters like gravity and wave conditions), desalination, WEC, mechanism, and solver parameters for the different submodules. Full tables of parameters can be found in Appendix \ref{app:params}.
+Parameters largely reflect the parameters used by Yu and Jenne (2018) \cite{Yu2018}. The subcategories of parameters include: general (parameters like gravity and wave conditions), desalination, WEC, mechanism, and solver parameters for the different submodules. Full tables of parameters can be found in Appendix~\ref{app:params}.
 
 Constraints are largely enforced by the system dynamics module (Section \ref{sec:sysdyn}). These constraints are applied to constrain piston motion, ensure SWRO plant is not operated above capacity, and to ensure force and energy balance within the system.
 
@@ -140,14 +172,7 @@ Constraints are largely enforced by the system dynamics module (Section \ref{sec
 A genetic algorithm (GA) is the most suitable choice for this problem due to the absence of accessible gradients in the hydrodynamics (Section \ref{sec:hydro}) and system dynamics (Section \ref{sec:sysdyn}) modules. While finite differencing these modules is theoretically possible, these modules are highly computationally expensive, making such an approach impractical. Consequently, a heuristic algorithm like a GA is the best choice. A table of the GA hyperparameters is provided in Appendix \ref{app:params} Table \ref{tab:paramsga}.
 
 \section{SYSTEM MODELING} \label{sec:sysmodel}
-The system model is depicted in the N$^2$ Diagram in Fig. \ref{fig:n2}, illustrating the relationships between different disciplinary modules. Arrows represent data flow between modules, showing interdependence across the system. The model consists of four primary modules: ``Desal", which calculates dependent variables related to the single-stage SWRO plant, ``Hydro", which calculates dependent variables related to the wave-structure interaction, ``SysDyn" which solves the system dynamics of the WDDS, and ``Econ" which evaluates the LCOW objective. Additionally, a ``Mapper" module is included to map variables and parameters to dependent variables across different modules. However, since it does not contribute to independent disciplinary calculations, it is not considered a separate discipline. The four main modules are discussed in more detail in the following subsections. 
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.7\linewidth]{../figs/n2.pdf}
-    \captionof{figure}{N$^2$ DIAGRAM OF THE WDDS MODEL.}
-    \label{fig:n2}
-\end{figure} 
+The model shown in the xDSM diagram (Fig. \ref{fig:xdsm}) consists of four primary modules: ``Desalination", which calculates dependent variables related to the single-stage SWRO plant, ``Hydrodynamics", which calculates dependent variables related to the wave-structure interaction, ``System Dynamics" which solves the system dynamics of the wave-driven desalination system, and ``Economics" which evaluates the LCOW objective. Additionally, a ``Geometry" module is included to map variables and parameters to dependent variables across different modules. However, since it does not contribute to independent disciplinary calculations, it is not considered a separate discipline. The four main modules are discussed in more detail in the following subsections. 
 
 \subsection{DESALINATION MODULE}
 The desalination module calculates key parameters for the single-stage SWRO plant, considering the system's capacity and seawater composition. The reverse osmosis process is governed by:
@@ -191,7 +216,7 @@ To avoid running the system above capacity, a pressure relief valve is included,
 
 This equation ensures that if the flow exceeds the system's capacity, the pressure relief valve will open. Notably, by combining Eqs. \ref{eq:membrane_area} \ref{eq:membrane_resistance} and \ref{eq:pressure_relief}, the dependency on $Q_{p,max}$ cancels out, making $P_{\text{relief}}$ independent of specific design parameters under the current membrane resistance model. However, this remains a dependent variable, allowing for flexibility in alternative design spaces or resistance models.
 
-For flow to pass through the membrane, resistance on the brine side is required. This can achieved using a throttle valve (as modeled in this study), or an ERU (for higher efficiency in advanced designs). In this study we implement a constant throttle valve resistance ($R_t$ [MPa-s/m$^3$]), calculated such that when the system runs at full capacity, it also runs at the recommended recovery ratio, $\eta_{RO}$, given the SW30HR-380 membrane and the specified seawater composition. The recommended recovery ratio was determined using WAVE \cite{wave}.
+For flow to pass through the membrane, resistance on the brine side is required. This can achieved using a throttle valve or an ERU (for higher efficiency in advanced designs). In this study we implement a constant throttle valve resistance ($R_t$ [MPa-s/m$^3$]), calculated such that when the system runs at full capacity, it also runs at the recommended recovery ratio, $\eta_{RO}$, given the SW30HR-380 membrane and the specified seawater composition. The recommended recovery ratio was determined using WAVE \cite{wave}.
 \begin{equation}
     R_t = \frac{P_{\text{relief}}}{Q_{p,max}(\frac{1}{\eta_{RO}} - 1)}
 \end{equation}
@@ -199,7 +224,7 @@ For flow to pass through the membrane, resistance on the brine side is required.
 \subsection{HYDRODYNAMICS} \label{sec:hydro}
 Starting from Newton's second law, Falnes and Kurniawan (2022) \cite{falnes2022} define the equation of motion for an oscillating WEC as:
 \begin{equation}
-    \label{eq:cummins}
+    \label{eq:wec}
     I\ddot{\xi} = f_e - f_r - f_b - f_v - f_f - f_u  
 \end{equation}
 \noindent where $I$ [m or kg-m$^2$] is the inertia of the WEC, dependent on WEC mass $m$ (a design variable), $\xi$ [m or rad] is the body linear or angular motion, $f_e$ [N or Nm] is the excitation force or torque due to incident waves, $f_r$ [N or Nm] is the radiation force or torque due to the WEC’s oscillations, accounting for added mass and radiation damping, $f_b$ [N or Nm] is the hydrostatic force or torque due to buoyancy and restoring effects, $f_v$ [N or Nm] is the drag force or torque which arises from nonlinear viscous effects (neglected in this study), $f_f$ [N or Nm] is the force or torque that captures friction forces (also neglected), and $f_u$ [N or Nm] is the PTO force or torque, which represents energy extraction by the WEC’s power conversion system. The PTO force is modeled in the system dynamics module, while drag and friction are omitted, assuming linear potential flow theory. These simplifications are also made by Grasberger et al. (2024) \cite{Grasberger2024} in their OSWEC study. 
@@ -226,57 +251,60 @@ For this study, the WEC flap is approximated as a rectangular prism, restricted 
 
 \subsection{SYSTEM DYNAMICS} \label{sec:sysdyn}
 
-The WDDS system dynamics are modeled in MATLAB+Simulink, capturing the interactions between the WEC and PTO system. The following sections detail the modeling of each subsystem.
+The wave-driven desalination system dynamics are modeled in MATLAB+Simulink, capturing the interactions between the WEC and PTO system. The following sections detail the modeling of each subsystem.
 
 \subsubsection{Wave Energy Converter}
 
-The WEC dynamics are modeled using WEC-Sim \cite{wecsim}, an open-source software developed by the National Renewable Energy Laboratory (NREL) and Sandia National Laboratories. Using hydrodynamic coefficients obtained from the hydrodynamics module, WEC-Sim simulates WEC system dynamics within a Simulink-based framework, enabling efficient analysis of wave-structure interactions and PTO performance. WEC-Sim offers significant advantages over other WEC simulation tools by operating in the time domain, allowing it to capture complex dynamics and nonlinearities that many alternative methods can only approximate. The WEC is modeled as a two body system, with the base fixed to the seafloor and the flap limited to a one degree of freedom (pitch). The WEC model also includes the mechanism to drive the piston. With the intake location, hinge location, and PTO joint location all defined according to Fig. \ref{fig:mechanism}. The block diagram used to model the WEC is shown in Fig. \ref{fig:wec_simscape}.
+The WEC dynamics are modeled using WEC-Sim \cite{wecsim}, an open-source software developed by the National Renewable Energy Laboratory (NREL) and Sandia National Laboratories. Using hydrodynamic coefficients obtained from the hydrodynamics module, WEC-Sim simulates WEC system dynamics within a Simulink-based framework, enabling efficient analysis of wave-structure interactions and PTO performance. WEC-Sim offers significant advantages over other WEC simulation tools by operating in the time domain, allowing it to capture complex dynamics and nonlinearities that many alternative methods can only approximate. The WEC is modeled as a two body system, with the base fixed to the seafloor and the flap limited to a one degree of freedom (pitch). The WEC model also includes the mechanism to drive the piston. With the intake location, hinge location, and PTO joint location all defined according to Fig. \ref{fig:mechanism}. 
 
-\begin{figure}[b!]
-    \includegraphics[width=\linewidth]{../figs/wecsimscape.pdf}
-    \captionof{figure}{MODEL OF THE WEC IN SIMSCAPE.}
-    \label{fig:wec_simscape}
-\end{figure}
+%The block diagram used to model the WEC is shown in Fig. \ref{fig:wec_simscape}.
+
+%\begin{figure}[b!]
+%    \includegraphics[width=\linewidth]{../figs/wecsimscape.pdf}
+%    \captionof{figure}{MODEL OF THE WEC IN SIMSCAPE.}
+%    \label{fig:wec_simscape}
+%\end{figure}
 
 \subsubsection{Power Take-Off}
 
-The desalination hydraulic circuit (Fig \ref{fig:hydraulics}) is modeled using the isothermal liquid domain from the Simscape fluids toolbox. This domain is specialized for modeling hydraulic systems, and is a good fit for modeling the dynamics of the hydraulic circuit presented. The high level Simscape PTO model is shown in Fig. \ref{fig:hydraulic_simscape}.
-
-\begin{figure*}[t]  % The [t] option places the figure at the top of the page
+\begin{figure*}  % The [t] option places the figure at the top of the page
     \centering
-    \includegraphics[width=0.8\linewidth]{../figs/hydraulic_simscape.pdf}
+    \includegraphics[width=0.8\linewidth]{../figs/simscape_hydraulics.pdf}
     \captionof{figure}{MODEL OF THE HYDRAULIC CIRCUIT IN SIMSCAPE.}
     \label{fig:hydraulic_simscape}
 \end{figure*}
 
-From this high level view, we can see the main components of the hydraulic circuit. The ``piston\_cylinder" block contains the piston and directional valves, followed by the accumulator and pressure relief valve, as well as the reverse osmosis membrane, modeled in the ``simple\_ro" block, and finally the throttle valve on the brine side.
+The desalination hydraulic circuit (Fig \ref{fig:hydraulics}) is modeled using the isothermal liquid domain from the Simscape Fluids Toolbox. This domain is specialized for modeling hydraulic systems and is a good fit for modeling the dynamics of the hydraulic circuit presented. The high level Simscape PTO model is shown in Fig. \ref{fig:hydraulic_simscape}.
 
-The ``piston\_cylinder" subsystem is further broken down in Fig. \ref{fig:piston_simscape}. This model features a single double-acting piston, though the system dynamics would remain largely unchanged if the piston area variable was distributed across multiple smaller pistons instead of a single large one. Another feature of note is the use of three-way controlled directional valves instead of check valves to simplify computations for the solver while maintaining the overall system dynamics.
+From this high level view, we can see the main components of the hydraulic circuit. The ''Piston Cylinder" block contains the piston and directional valves, followed by the accumulator and pressure relief valve, as well as the reverse osmosis membrane, modeled in the ``RO Subsystem" block, and finally the throttle valve on the brine side.
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{../figs/pistonsimscape.pdf}
-    \captionof{figure}{MODEL OF THE PISTON AND DIRECTIONAL VALVES IN SIMSCAPE.}
-    \label{fig:piston_simscape}
-\end{figure}
+The ``Piston Cylinder" is modeled similarly to Yu and Jenne's \cite{Yu2018} . This model features a single double-acting piston, though the system dynamics would remain largely unchanged if the piston area variable was distributed across multiple smaller pistons instead of a single large one. It also uses three-way controlled directional valves instead of check valves to simplify computations for the solver while maintaining the overall system dynamics.
 
-The ``simple\_ro" subsystem is broken down in Fig. \ref{fig:ro_simscape}. This subsystem includes a check valve to prevent forward osmosis in low energy waves, followed by the membrane resistance and osmotic pressure blocks which allow for a Simscape representation of eq \ref{eq:ro}. The membrane resistance block is a linear resistance on the volumetric flow rate, and the osmotic pressure block applies a pressure on the permeate side equal to the osmotic pressure difference as calculated in Equation \ref{eq:osmotic_pressure}.
+%\begin{figure}
+%    \includegraphics[width=\linewidth]{../figs/pistonsimscape.pdf}
+%    \captionof{figure}{MODEL OF THE PISTON AND DIRECTIONAL VALVES IN SIMSCAPE.}
+%    \label{fig:piston_simscape}
+%\end{figure}
 
-\begin{figure}
+The ``RO Subsystem" is broken down in Fig. \ref{fig:ro_simscape}. This subsystem includes a check valve to prevent forward osmosis in low energy waves, followed by the membrane resistance and osmotic pressure blocks which allow for a Simscape representation of eq \ref{eq:ro}. The membrane resistance block is a linear resistance on the volumetric flow rate, and the osmotic pressure block applies a pressure on the permeate side equal to the osmotic pressure difference as calculated in Equation \ref{eq:osmotic_pressure}.
+
+\begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\linewidth]{../figs/desalsimscape.pdf}
+    \includegraphics[width=0.7\linewidth]{../figs/simscape_ro.pdf}
     \captionof{figure}{MODEL OF THE REVERSE OSMOSIS MEMBRANE IN SIMSCAPE.}
     \label{fig:ro_simscape}
 \end{figure}
 
 \subsubsection{Coupled Solver}
 
-The two subsystems of the WEC and PTO are then coupled through as shown in Fig. \ref{fig:coupled_system}. The velocity and acceleration signals are fed as inputs to the PTO from the WEC, and the force is fed back from the PTO to the WEC. WEC-Sim uses this coupled system to simulate the system dynamics of the WDDS. MATLAB's ode4 solver, a fourth order Runge-Kutta solver, with a 0.1~s time step is used to solve the system dynamics. 
+%The two subsystems of the WEC and PTO are then coupled through as shown in Fig. \ref{fig:coupled_system}. The velocity and acceleration signals are fed as inputs to the PTO from the WEC, and the force is fed back from the PTO to the WEC.
+The PTO model (Fig. \ref{fig:hydraulic_simscape}) calculates the force on the piston given the WEC motion solved by WEC-Sim. This force ($f_u$) is then fed back to WEC-Sim to couple the WEC and PTO dynamics, completing Equation \ref{eq:wec}. MATLAB's ode4 solver, a fourth order Runge-Kutta solver, with a 0.1~s time step is used to solve the system dynamics. 
 
-\begin{figure}
-    \includegraphics[width=0.8\linewidth]{../figs/coupledsimscape.pdf}
-    \captionof{figure}{MODEL OF THE COUPLED WEC AND PTO IN SIMSCAPE.}
-    \label{fig:coupled_system}
-\end{figure}
+%\begin{figure}
+%    \includegraphics[width=0.8\linewidth]{../figs/coupledsimscape.pdf}
+%    \captionof{figure}{MODEL OF THE COUPLED WEC AND PTO IN SIMSCAPE.}
+%    \label{fig:coupled_system}
+%\end{figure}
 
 \subsection{ECONOMICS} \label{sec:econ}
 
@@ -295,7 +323,7 @@ Cost modeling for WECs is inherently uncertain due to limited real world data, m
 \end{equation}
 \noindent where $A_{x}$ [m$^2$] is the surface area of the float, $A_{ref}$ [m$^2$] is the surface area of the reference float, and $C_{1,ref}$ [\$] and $C_{2,ref}$ [\$] are the costs of the reference float associated with the two terms.The linear term captures cost associated with the structural components (the flap, base, and mooring), while the logarithmic term captures other expenses (PTO, monitoring, other OPEX) which are less dependent on the size of the float. This cost model relies on an accurate reference WEC for meaningful comparisons.
 
-Given the importance of a reliable reference WEC, we utilize NREL’s Reference Model 5 (RM5) \cite{rm5}, a well-documented OSWEC. Its similarity to the WEC design in this study makes it an appropriate benchmark for cost comparison and performance evaluation. To tailor the cost model to this study’s specific WEC design, we exclude certain cost components that are not relevant or do not scale directly with WEC size. In particular, since this design replaces an electricity-generating PTO with the a SWRO PTO, the electrical PTO costs from the initial RM5 cost model are not include. Instead, we determine SWRO PTO specific costs, detailed in the next section. Additionally, because this study considers a nearshore fixed-bottom WEC, many mooring-related expenses from the reference RM5 are not included. Finally, many transit and other overhead design costs are excluded as they are unlikely to scale proportionally with the size of the WEC. 
+Given the importance of a reliable reference WEC, we utilize NREL’s Reference Model 5 (RM5) \cite{rm5}, a well-documented OSWEC. Its similarity to the WEC design in this study makes it an appropriate benchmark for cost comparison and performance evaluation. To tailor the cost model to this study’s specific WEC design, we exclude certain cost components that are not relevant or do not scale directly with WEC size. In particular, since this design replaces an electricity-generating PTO with the SWRO PTO, the electrical PTO costs from the initial RM5 cost model are not included. Instead, we determine SWRO PTO specific costs, detailed in the next section. Additionally, because this study considers a nearshore fixed-bottom WEC, many mooring-related expenses from RM5 are not included. Finally, many transit and other overhead design costs are excluded as they are unlikely to scale proportionally with the size of the WEC. 
 
 \subsubsection{Power Take-Off}
 
@@ -303,17 +331,17 @@ The PTO cost model covers the costs associated with the accumulator and the pist
 \begin{equation}
     \text{Cost} = 1.621 \times 10^5 V_{acc} ^{0.986}
 \end{equation}
-where the two constants are tuned to approximate quotes from a supplier \cite{reasontek}. 
+\noindent where the two constants are tuned to approximate quotes from a supplier \cite{reasontek}. 
 
 The piston cylinder cost is modeled as a function of the required volume of steel ($V_{\text{316}}$). 
 \begin{equation}
     \text{Cost} = C_{\text{316}} \rho_{\text{316}} V_{\text{316}} (1+L)
 \end{equation}
-where $C_{\text{316}}$ [\$/lb] is the unit cost of 316 stainless steel, $\rho_{\text{316}}$ [lb/in$^3$] is the density of 316 stainless steel, and $L$ is a cost multiplier to account for labor. The volume of steel is calculated as:
+\noindent where $C_{\text{316}}$ [\$/lb] is the unit cost of 316 stainless steel, $\rho_{\text{316}}$ [lb/in$^3$] is the density of 316 stainless steel, and $L$ is a cost multiplier to account for labor. The volume of steel is calculated as:
 \begin{equation}
     V_{\text{316}} = V_{\text{cylinder}} + 2V_{cap} + V_{\text{piston}} + V_{text{rod}}
 \end{equation}
-where $V_{\text{cylinder}}$ [in$^3$] is the volume of the cylinder, $V_{\text{piston}}$ [in$^3$] is the volume of the piston, $V_{cap}$ [in$^3$] is the volume of the end caps, and $V_{rod}$ [in$^3$] is the volume of the rod. The thicknesses of the cylinder and end caps are calculated using the ASME Boiler and Pressure Vessel Code \cite{ASME_BPVC}. The piston volume uses the same thickness as the end caps. The required rod diameter is calculated to prevent buckling failure and tensile/compressive failure. Required stroke length, which is a factor for the length of the cylinder is determined by the system dynamics solver. The various coefficients used in the piston cylinder cost model can be found in Appendix \ref{app:params} Table \ref{tab:paramspto}.
+\noindent where $V_{\text{cylinder}}$ [in$^3$] is the volume of the cylinder, $V_{\text{piston}}$ [in$^3$] is the volume of the piston, $V_{cap}$ [in$^3$] is the volume of the end caps, and $V_{rod}$ [in$^3$] is the volume of the rod. The thicknesses of the cylinder and end caps are calculated using the ASME Boiler and Pressure Vessel Code \cite{ASME_BPVC}. The piston volume uses the same thickness as the end caps. The required rod diameter is calculated to prevent buckling failure and tensile/compressive failure. Required stroke length, which is a factor for the length of the cylinder is determined by the system dynamics solver. The various coefficients used in the piston cylinder cost model can be found in Appendix \ref{app:params} Table \ref{tab:paramspto}.
 
 \subsubsection{Desalination Plant}
 The costs associated with the desalination plant are divided into two categories: capital costs and operational costs. The capital costs includes all expenses related to the construction and installation of the plant, while the operational costs over the recurring costs associated with its annual operation and maintenance.
@@ -327,69 +355,110 @@ Given these limitations, this study adopts a cost estimation methodology based o
 
 This form was chosen because to avoid unrealistic behaviors at the lower end of the scale. Unlike polynomial fits, which can produce unrealistic negative costs, a power-law fit ensures a monotonic and physically meaningful cost relationship.
 
-\section{DESIGN OF EXPERIMENTS}
-A preliminary DOE study provides valuable insights into the relative importance of design variables and relations between them and performance objectives. Additionally, DOE can help identify high-performance design configurations and establish general trends within the design space. 
+%\section{DESIGN OF EXPERIMENTS}
+%A preliminary DOE study provides valuable insights into the relative importance of design variables and relations between them and performance objectives. Additionally, DOE can help identify high-performance design configurations and establish general trends within the design space. 
 
-For this study, we use a Latin Hypercube sampling method with 508 samples to explore the design space. The designs corresponding to minimum and maximum LCOW are presented in Table \ref{tab:doe}.
-\begin{table}
+%For this study, we use a Latin Hypercube sampling method with 508 samples to explore the design space. The designs corresponding to minimum and maximum LCOW are presented in Table \ref{tab:doe}.
+%\begin{table}
+%    \centering
+%    \caption{DESIGNS WITH MINIMUM AND MAXIMUM LCOW}
+%    \begin{tabular}{ccc}
+%        \hline
+%        \textbf{Variable} & \textbf{Min LCOW case} & \textbf{Max LCOW case} \\
+%        \hline
+%        $w$ & 11.5 m & 24.5 m \\
+%        $t$ & 4.35 m & 1.23 m \\
+%        $m$ & 490 $\times10^3$ kg & 139 $\times10^3$ kg \\
+%        $\ell_1$ & 3.11 m & 0.276 m \\
+%        $A_p$ & 0.932 m$^2$ & 0.394 m$^2$ \\
+%        $V_{acc}$ & 1.51 m$^3$ & 0.237 m$^3$ \\
+%        $P_0$ & 4.51 MPa & 3.92 MPa \\
+%        $Q_{p,max}$ & 7467 m$^3$/day & 9681 m$^3$/day \\
+%        \hline
+%        \textbf{LCOW} & 2.29 \$/m$^3$ & 7547 \$/m$^3$ \\
+%        \hline
+%    \end{tabular}
+%    \label{tab:doe}
+%\end{table}
+
+%To quantify the importance of each design variable, we employ feature importance analysis using a random forests regression model trained on the DOE dataset \cite{Rogers2006}. We compute feature importance using both mean decrease in impurity and permutation importance. These metrics indicate how much each variable contributes to predicting LCOW, helping identify potential reductions in design space complexity. The feature importance results are  shown in Fig. \ref{fig:importance}.
+
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=0.6\linewidth]{../figs/importance.pdf}
+%    \captionof{figure}{FEATURE IMPORTANCE OF DESIGN VARIABLES. TOP: SHOWS THE IMPORTANCE WHEN USING THE FULL DATASET, BOTTOM: SHOWS THE IMPORTANCE WHEN USING A FILTERED DATASET WITH ONLY DESIGN WITH AN LCOW $<$ 10 \$/m$^3$ INCLUDED, 338 OUT OF 508 DESIGNS MET THIS CRITERIA. THIS ALLOWS US TO COMPARE IMPORTANCE FOR CREATING REASONABLE DESIGNS (a) AS WELL AS MAKING REASONABLE DESIGNS BETTER (b).}
+%    \label{fig:importance}
+%\end{figure}
+
+\section{OPTIMIZATION RESULTS}
+The optimizer converges successfully after 323 generations. The convergence plot is shown in Fig. \ref{fig:convergence}. The minimum LCOW design is shown in Table \ref{tab:opt}. A nominal design selected from literature is also shown for comparison \cite{YJecon2017}. It is important to note that the nominal design's LCOW is as evaluated using the model presented in this study and is therefore different than the value reported in the literature. It is also worth noting that none of the variables are at the bounds of the design space, indicating that the bounds are not overly restrictive.
+
+\begin{figure}[h]
     \centering
-    \caption{DESIGNS WITH MINIMUM AND MAXIMUM LCOW}
-    \begin{tabular}{ccc}
-        \hline
-        \textbf{Variable} & \textbf{Min LCOW case} & \textbf{Max LCOW case} \\
-        \hline
-        $w$ & 11.5 m & 24.5 m \\
-        $t$ & 4.35 m & 1.23 m \\
-        $m$ & 490 $\times10^3$ kg & 139 $\times10^3$ kg \\
-        $\ell_1$ & 3.11 m & 0.276 m \\
-        $A_p$ & 0.932 m$^2$ & 0.394 m$^2$ \\
-        $V_{acc}$ & 1.51 m$^3$ & 0.237 m$^3$ \\
-        $P_0$ & 4.51 MPa & 3.92 MPa \\
-        $Q_{p,max}$ & 7467 m$^3$/day & 9681 m$^3$/day \\
-        \hline
-        \textbf{LCOW} & 2.29 \$/m$^3$ & 7547 \$/m$^3$ \\
-        \hline
-    \end{tabular}
-    \label{tab:doe}
-\end{table}
-
-To quantify the importance of each design variable, we employ feature importance analysis using a random forests regression model trained on the DOE dataset \cite{Rogers2006}. We compute feature importance using both mean decrease in impurity and permutation importance. These metrics indicate how much each variable contributes to predicting LCOW, helping identify potential reductions in design space complexity. The feature importance results are  shown in Fig. \ref{fig:importance}.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.6\linewidth]{../figs/importance.pdf}
-    \captionof{figure}{FEATURE IMPORTANCE OF DESIGN VARIABLES. TOP: SHOWS THE IMPORTANCE WHEN USING THE FULL DATASET, BOTTOM: SHOWS THE IMPORTANCE WHEN USING A FILTERED DATASET WITH ONLY DESIGN WITH AN LCOW $<$ 10 \$/m$^3$ INCLUDED, 338 OUT OF 508 DESIGNS MET THIS CRITERIA. THIS ALLOWS US TO COMPARE IMPORTANCE FOR CREATING REASONABLE DESIGNS (a) AS WELL AS MAKING REASONABLE DESIGNS BETTER (b).}
-    \label{fig:importance}
+    \includegraphics[width=\linewidth]{../figs/optimization_progress.pdf}
+    \captionof{figure}{CONVERGENCE PLOT OF THE GENETIC ALGORITHM.}
+    \label{fig:convergence}
 \end{figure}
 
+\begin{table}[h]
+    \centering
+    \caption{OPTIMIZED DESIGN VARIABLES}
+    \begin{tabular}{ccc}
+        \hline
+        \textbf{Variable} & \textbf{MDO Suggestion} & \textbf{Nominal Design} \cite{YJecon2017}\\
+        \hline
+        $w$ & 11.3 m & 18 m \\
+        $t$ & 1.99 m & 1.8 m \\
+        $m$ & 396$\times10^3$ kg & 127$\times10^3$ \\
+        $\ell_1$ & 3.25 m & 1.9 m \\
+        $A_p$ & 0.859 m$^2$ & 0.26 m$^2$ \\
+        $V_{acc}$ & 4.57 m$^3$ & 6 m$^3$ \\
+        $P_0$ & 5.95 MPa & 3.00 MPa \\
+        $Q_{p,max}$ & 4882 m$^3$/day & 3100 m$^3$/day \\
+        \hline
+        \textbf{LCOW} & 1.68 \$/m$^3$ & 3.97 m$^3$/day \\
+        \hline
+    \end{tabular}
+    \label{tab:opt}
+\end{table}
+
 \section{DISCUSSION}
-The DOE study reveals several key takeaways. The first takeaway is that the large disparity in LCOW values between the best and worst designs suggest substantial opportunities for optimization.  The minimum LCOW case (2.29~\$/m$^3$) is orders of magnitude lower than the maximum LCOW case (7547~\$/m$^3$), emphasizing the importance of design space exploration and optimization. 
 
-The second takeaway is that poor system design can occur when WEC, PTO, and desalination plant capacities are mismatched. For example, the maximum LCOW case has a large WEC (24.5~m wide) and a large desalination plant capacity (9681~m$^3$/day), but an extremely small $\ell_1$ value (0.276~m). A small $\ell_1$ reduces the PTO's mechanical advantage, requiring excessive WEC motion to generate sufficient feedflow. A large WEC captures a high excitation torque from the waves and a large desalination plant requires significant feedwater flow to be cost-effective, making larger $\ell_1$ values essential. 
+The result of the optimization reveal several key takeaways. The first takeaway is the large improvement in LCOW from the nominal design to the optimized design. The optimized design has an LCOW of 1.68 \$/m$^3$, a 58\% reduction from the nominal design's LCOW of 3.97 \$/m$^3$. This suggests that the MDO framework is effective in improving system performance and reducing costs.
 
-Other inefficient configurations could arise such as a large WEC and large PTO paired with a small desalination plant, leading to excess feedwater being wasted through the pressure relief valve, or a large PTO and desalination plant with a small WEC which lacks the wave capture potential necessary to drive the system efficiently. These findings reinforce the necessity of a holistic model approach---optimizing only one subsystem (e.g., WEC, PTO, or desalination plant) in insolation is insufficient.
+The second takeaway is that the optimized design suggests a departure from conventional design trends in the literature. Specifically, the design features a smaller accumulator volume (4.57 m$^3$) and a larger desalination capacity (4882 m$^3$/day). In contrast, previous studies have favored larger accumulators to smooth fluctuations in feedwater flow. In their economic assessment of wave-driven desalination, Yu and Jenne used an accumulator volume of 6 m$^3$ (2017) for a 3100 m$^3$/day plant \cite{YJecon2017}. Brodersen et al. (2022) used a 6 m$^3$ accumulator for a 1700-2400 m$^3$/day desalination plant \cite{Brodersen2022}. These studies assumed that large accumulators improve feedwater regulation, allowing smaller desalination plants to capture a higher percentage of the flow. While this logic holds when ignoring accumulator costs, the optimization suggests that reducing accumulator volume and increasing desalination plant capacity can lead to a lower LCOW, further reinforcing the need for a holistic model when designing a wave-driven desalination system.
 
-The third takeaway is that the minimum LCOW case suggests a departure from conventional design trends in the literature. Specifically, the minimum LCOW design features a smaller accumulator volume (1.51 m$^3$) and a larger desalination capacity (7467 m$^3$/day). In contrast, previous studies have favored larger accumulators to smooth fluctuations in feedwater flow. Yu and Jenne used accumulator volumes of 4 m$^3$ (2018) and 6 m$^3$ (2017) for a 3150 m$^3$/day plant \cite{YJecon2017,Yu2018}. Brodersen et al. (2022) used a 6 m$^3$ accumulator for a 1700-2400 m$^3$/day desalination plant \cite{Brodersen2022}. These studies assumed that large accumulators improve feedwater regulation, allowing smaller desalination plants to capture a higher percentage of the flow. While this logic holds when ignoring accumulator costs, the DOE suggests that reducing accumulator volume and increasing desalination plant capacity can lead to a lower LCOW, further reinforcing the need for a holistic model when designing a WDDS.
+The third takeaway is the vast difference in WEC design and mechanism between the design from literature and the optimized design. The optimized design features a smaller WEC and a smaller effective "gear ratio" (the combination of $\ell_1$ and $A_p$ which together define the mechanical advantage from WEC motion to feedwater flow). This suggests that the WEC and mechanism design from literature is more suited for high pressure hydraulic systems. This makes sense when we consider that the design from literature \cite{YJecon2017} is a slightly modified RM5 \cite{rm5} design, which was designed to reach ~28 MPa while SWRO only requires ~5 MPa. Although the design from literature is modified slightly to reflect this lower pressure (smaller flap, larger piston area), the optimizer suggests that the design is still not optimal for the lower pressure system. The heavier WEC likely improves impedance matching between the WEC and the wave spectrum. Therefore, an uncertainty analysis would be useful to determine a robust performance metric. 
 
-Beyond cost savings, a smaller accumulator may also enhance system performance. Michelén Ströfer et al. (2022) demonstrated that a negative-stiffness PTO improves energy transfer for electricity-generating WECs  \cite{Stroefer2023}. The accumulator acts as a spring, where larger volumes correspond to higher effective stiffness. Therefore, a smaller accumulator (i.e., lower positive stiffness) may enhance energy transfer efficiency in the WDDS PTO.
+%The DOE study reveals several key takeaways. The first takeaway is that the large disparity in LCOW values between the best and worst designs suggest substantial opportunities for optimization.  The minimum LCOW case (2.29~\$/m$^3$) is orders of magnitude lower than the maximum LCOW case (7547~\$/m$^3$), emphasizing the importance of design space exploration and optimization. 
 
-The feature importance results indicate that all design variables have contribute significantly to LCOW prediction, suggesting that reducing design space dimensionality is not advisable. However, WEC mass and accumulator pre-charge pressure appear more important for ensuring reasonable designs than for refining optimal designs. Their importance decreases in the filtered dataset (Fig. \ref{fig:importance}b), suggesting that while they influence feasibility, they are less critical for improving already viable designs. This suggests that their bounds could be tightened, restricting low-performance regions while preserving design flexibility in promising designs. 
+%The second takeaway is that poor system design can occur when WEC, PTO, and desalination plant capacities are mismatched. For example, the maximum LCOW case has a large WEC (24.5~m wide) and a large desalination plant capacity (9681~m$^3$/day), but an extremely small $\ell_1$ value (0.276~m). A small $\ell_1$ reduces the PTO's mechanical advantage, requiring excessive WEC motion to generate sufficient feedflow. A large WEC captures a high excitation torque from the waves and a large desalination plant requires significant feedwater flow to be cost-effective, making larger $\ell_1$ values essential. 
+
+%Other inefficient configurations could arise such as a large WEC and large PTO paired with a small desalination plant, leading to excess feedwater being wasted through the pressure relief valve, or a large PTO and desalination plant with a small WEC which lacks the wave capture potential necessary to drive the system efficiently. These findings reinforce the necessity of a holistic model approach---optimizing only one subsystem (e.g., WEC, PTO, or desalination plant) in insolation is insufficient.
+
+%The third takeaway is that the minimum LCOW case suggests a departure from conventional design trends in the literature. Specifically, the minimum LCOW design features a smaller accumulator volume (1.51 m$^3$) and a larger desalination capacity (7467 m$^3$/day). In contrast, previous studies have favored larger accumulators to smooth fluctuations in feedwater flow. Yu and Jenne used accumulator volumes of 4 m$^3$ (2018) and 6 m$^3$ (2017) for a 3150 m$^3$/day plant \cite{YJecon2017,Yu2018}. Brodersen et al. (2022) used a 6 m$^3$ accumulator for a 1700-2400 m$^3$/day desalination plant \cite{Brodersen2022}. These studies assumed that large accumulators improve feedwater regulation, allowing smaller desalination plants to capture a higher percentage of the flow. While this logic holds when ignoring accumulator costs, the DOE suggests that reducing accumulator volume and increasing desalination plant capacity can lead to a lower LCOW, further reinforcing the need for a holistic model when designing a wave-driven desalination system.
+
+%Beyond cost savings, a smaller accumulator may also enhance system performance. Michelén Ströfer et al. (2022) demonstrated that a negative-stiffness PTO improves energy transfer for electricity-generating WECs  \cite{Stroefer2023}. The accumulator acts as a spring, where larger volumes correspond to higher effective stiffness. Therefore, a smaller accumulator (i.e., lower positive stiffness) may enhance energy transfer efficiency in the wave-driven desalination PTO.
+
+%The feature importance results indicate that all design variables have contribute significantly to LCOW prediction, suggesting that reducing design space dimensionality is not advisable. However, WEC mass and accumulator pre-charge pressure appear more important for ensuring reasonable designs than for refining optimal designs. Their importance decreases in the filtered dataset (Fig. \ref{fig:importance}b), suggesting that while they influence feasibility, they are less critical for improving already viable designs. This suggests that their bounds could be tightened, restricting low-performance regions while preserving design flexibility in promising designs. 
 
 \section{CONCLUSION}
-This study introduces an MDO framework for WDDS design. Preliminary DOE results suggest that MDO not only enhances system performance and but also influences  conventional design trends. Notably, our findings suggest that reducing accumulator sizes and increasing SWRO plant capacities can yield lower LCOE, a departure from prior WDDS assumptions.
+%This study introduces an MDO framework for wave-driven desalination system design. Preliminary DOE results suggest that MDO not only enhances system performance and but also influences  conventional design trends. Notably, our findings suggest that reducing accumulator sizes and increasing SWRO plant capacities can yield lower LCOE, a departure from prior wave-driven desalination assumptions.
 
-The insights gained from this study underscore the importance of holistic optimization, as poor subsystem coordination---such as mismatched WEC, PTO, and desalination capacities---can result in inefficient and costly designs. The feature importance analysis further highlights the key design parameters that influence performance, paving the way for targeted refinements in future optimization studies.
+%The insights gained from this study underscore the importance of holistic optimization, as poor subsystem coordination---such as mismatched WEC, PTO, and desalination capacities---can result in inefficient and costly designs. The feature importance analysis further highlights the key design parameters that influence performance, paving the way for targeted refinements in future optimization studies.
+
+This study introduces an MDO framework for wave-driven desalination system design. Optimization results demonstrate that the MDO framework effectively reduces the levelized cost of water (LCOW) by 58\% compared to a nominal design from literature. The optimized design suggests a departure from conventional design trends, indicating that smaller accumulator sizes and larger desalination plant capacities can lead to lower LCOW. This finding emphasizes the importance of holistic optimization, as inadequate coordination between subsystems may result in inefficiencies and increased costs.
 
 Future work should focus on:
 \begin{enumerate}
     \item Fully developing the PTO cost model by including piston and mechanism costs.
-    \item Adding control to the system dynamics model, with de-clutching control \cite{Ringwood2014} identified as a particularly promising approach for WDDS.
+    \item Adding control to the system dynamics model, with de-clutching control \cite{Ringwood2014} identified as a particularly promising approach for wave-driven desalination.
     \item Comparing MDO results to those obtained through traditional sequential design optimization.
     \item Developing gradient-compatible models for the hydrodynamics and system dynamics modules to enable gradient-based optimization.
-    \item Investigating different WDDS PTO architectures, such as incorporating an ERU, within this framework.
+    \item Investigating different wave-driven desalination PTO architectures, such as incorporating an ERU, within this framework.
 \end{enumerate}
 
-The MDO framework presented in this study provides a systematic approach to optimizing WDDS, offering new pathways for improving desalination affordability and sustainability. Future advancements in control strategies, economic modeling, and real-world implementation will further strengthen the feasibility of wave-powered desalination as a scalable solution to global freshwater challenges.
+The MDO framework presented in this study provides a systematic approach to optimizing wave-driven desalination systems, offering new pathways for improving desalination affordability and sustainability. Future advancements in control strategies, economic modeling, and real-world implementation will further strengthen the feasibility of wave-powered desalination as a scalable solution to global freshwater challenges.
 
 \bibliographystyle{asmems4}
 \bibliography{biblio}
@@ -397,6 +466,27 @@ The MDO framework presented in this study provides a systematic approach to opti
 \appendix
 \newpage
 \section{TABLES OF PARAMETERS} \label{app:params}
+
+\begin{table}[h]
+    \centering
+    \caption{GENETIC ALGORITHM HYPERPARAMETERS}
+    \begin{tabular}{ccc}
+        \hline
+        \textbf{Parameter} & \textbf{Value} & \textbf{Units} \\
+        \hline
+        population size & 256 & - \\
+        number of generations & 300 & - \\
+        mutation rate & 0.02 & - \\
+        crossover rate & 0.8 & - \\
+        number of elites kept & 3 & - \\
+        tournament size & 4 & - \\
+        bits per variable & 8 & - \\ 
+        \hline
+    \end{tabular}
+    \label{tab:paramsga}
+\end{table}
+
+
 \begin{table}[h]
     \centering
     \caption{GENERAL PARAMETERS}
@@ -421,6 +511,7 @@ The MDO framework presented in this study provides a systematic approach to opti
     \label{tab:paramsgeneral}
 \end{table}
 
+
 \begin{table}[h]
     \centering
     \caption{SWRO PARAMETERS}
@@ -428,8 +519,8 @@ The MDO framework presented in this study provides a systematic approach to opti
         \hline
         \textbf{Parameter} & \textbf{Value} & \textbf{Units} \\
         \hline
-        feed flow total dissolved solids & 35946 \cite{Yu2018} & mg/L \\
-        permeate flow total dissolved solids & 150 \cite{Yu2018} & mg/L \\
+        feedflow total dissolved solids & 35946 \cite{Yu2018} & mg/L \\
+        permeate total dissolved solids & 150 \cite{Yu2018} & mg/L \\
         salt molar weight & 58.44 & g/mol \\
         water permeability coefficient & $2.57\times10^{-12}$ \cite{Yu2018} & m$^3$/N-s \\
         recovery ratio & 44.2 \cite{wave} & \% \\
@@ -504,24 +595,5 @@ The MDO framework presented in this study provides a systematic approach to opti
     \end{tabular}
     \label{tab:paramssolve}
 \end{table}
-
-\begin{table}[h]
-    \centering
-    \caption{GENETIC ALGORITHM HYPERPARAMETERS}
-    \begin{tabular}{ccc}
-        \hline
-        \textbf{Parameter} & \textbf{Value} & \textbf{Units} \\
-        \hline
-        population size & 256 & - \\
-        number of generations & 300 & - \\
-        mutation rate & 0.02 & - \\
-        crossover rate & 0.8 & - \\
-        number of elites kept & 3 & - \\
-        tournament size & 4 & - \\ 
-        \hline
-    \end{tabular}
-    \label{tab:paramsga}
-\end{table}
-
 
 \end{document}

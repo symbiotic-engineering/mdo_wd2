@@ -87,6 +87,13 @@ Simmons, J., 2024.
   wave-powered reverse osmosis desalination''.
 \newblock PhD thesis, University of Minnesota, 4.
 
+\bibitem{xdsm}
+Lambe, A.~B., and Martins, J. R. R.~A., 2012.
+\newblock ``Extensions to the design structure matrix for the description of
+  multidisciplinary design, analysis, and optimization processes''.
+\newblock {\em Structural and Multidisciplinary Optimization, \textbf{ 46}}(2),
+  pp.~273--284.
+
 \bibitem{separationprocesses}
 Seader, J.~D., Henley, E.~J., and Roper, D.~K., 2011.
 \newblock {\em SEPARATION PROCESS PRINCIPLES: Chemical and Biochemical
@@ -198,12 +205,6 @@ Agency, I. A.~E., 2013.
 Voutchkov, N., 2019.
 \newblock {\em Desalination project cost estimating and management}.
 \newblock CRC Press.
-
-\bibitem{Rogers2006}
-Rogers, J., and Gunn, S., 2006.
-\newblock ``Identifying feature relevance using a random forest''.
-\newblock In SLSFS 2005, C.~Saunders et~al., eds., Vol.~3940 of {\em LNCS},
-  Springer, p.~173–184.
 
 \bibitem{YJecon2017}
 Yi-Hsiang~Yu, D.~J., 2017.

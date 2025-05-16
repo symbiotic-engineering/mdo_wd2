@@ -8,7 +8,7 @@ Repeated entry---line 316 of file biblio.bib
  :                      ,
 I'm skipping whatever remains of this entry
 Warning--entry type for "316ss" isn't style-file defined
---line 1317 of file biblio.bib
+--line 1330 of file biblio.bib
 Warning--empty year in wave
 Warning--empty year in wecsim
 Name 1 in "Y.-H. Yu, D.S. Jenne, and R. Thresher, A. Copping, S. Geerlofs, and L.A. Hanna" has a comma at the end for entry rm5
@@ -19,43 +19,43 @@ Warning--empty institution in rm5
 Warning--empty booktitle in DEEP5manual
 You've used 39 entries,
             1984 wiz_defined-function locations,
-            730 strings with 10339 characters,
-and the built_in function-call counts, 9546 in all, are:
-= -- 818
-> -- 389
+            726 strings with 10411 characters,
+and the built_in function-call counts, 9452 in all, are:
+= -- 810
+> -- 381
 < -- 1
-+ -- 155
-- -- 116
-* -- 587
-:= -- 1318
++ -- 153
+- -- 114
+* -- 592
+:= -- 1308
 add.period$ -- 112
 call.type$ -- 39
 change.case$ -- 37
 chr.to.int$ -- 0
 cite$ -- 43
-duplicate$ -- 535
-empty$ -- 955
-format.name$ -- 116
-if$ -- 2289
+duplicate$ -- 520
+empty$ -- 951
+format.name$ -- 114
+if$ -- 2260
 int.to.chr$ -- 0
 int.to.str$ -- 39
 missing$ -- 35
 newline$ -- 193
-num.names$ -- 40
-pop$ -- 191
+num.names$ -- 38
+pop$ -- 187
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 371
+skip$ -- 356
 stack$ -- 0
-substring$ -- 373
-swap$ -- 257
+substring$ -- 387
+swap$ -- 247
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 4
-while$ -- 75
+while$ -- 76
 width$ -- 41
-write$ -- 415
+write$ -- 412
 (There were 3 error messages)
