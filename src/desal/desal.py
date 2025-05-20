@@ -37,10 +37,13 @@ class DesalParams(om.ExplicitComponent):
         self.add_output('pressure_relief', val=6.0) # [MPa] maximum RO pressure
         self.add_output('throt_resist', val=60.23)  # [MPa*s/m^3] throttle resistance
         self.add_output('osmotic_pressure', val=3.0)# [MPa] osmotic pressure
+        self.add_output('feedflow_cap', val=INPUTS["capacity"]/PARAMS["recovery_ratio"])
 
-        self.declare_partials(of = ['mem_resist','throt_resist'], wrt = '*')
+        self.declare_partials(of = ['mem_resist','throt_resist','feedflow_cap'], wrt = '*')
 
     def compute(self,inputs,outputs):
+        outputs["feedflow_cap"] = inputs["capacity"]/PARAMS["recovery_ratio"]
+
         cf = PARAMS["feedTDS"]/PARAMS["M_salt"]
         cp = PARAMS["permTDS"]/PARAMS["M_salt"]
         pif = osmotic_pressure(PARAMS["vanthoff"],cf,PARAMS["R"],PARAMS["temperature"])

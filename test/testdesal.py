@@ -54,14 +54,14 @@ class TestDesal(unittest.TestCase):
 
     def test_full_desal(self):
         inputs = {
-            "capacity": np.array([3150])
+            "capacity": np.array([3100])
         }
         outputs = {}
         self.Desal.compute(inputs,outputs)
-        expected_mem_resist = np.array([[86.820721]])
-        expected_pressure_relief = np.array([[6.516241]])
-        expected_throt_resist = np.array([[189.78671]])
-        expected_osmotic_pressure = np.array([[3.350902]])
+        expected_mem_resist = np.array([[88.221055]])
+        expected_pressure_relief = np.array([[6.202019]])
+        expected_throt_resist = np.array([[136.922002]])
+        expected_osmotic_pressure = np.array([[3.036681]])
         np.testing.assert_allclose(outputs["mem_resist"],expected_mem_resist,rtol=1e-5)
         np.testing.assert_allclose(outputs["pressure_relief"],expected_pressure_relief,rtol=1e-5)
         np.testing.assert_allclose(outputs["throt_resist"],expected_throt_resist,rtol=1e-5)
