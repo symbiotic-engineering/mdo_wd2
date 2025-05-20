@@ -23,3 +23,5 @@ def randomtrees(df):
     plt.title("Feature Importance from Random Forest")
     plt.xticks(rotation=45)
     plt.show()
+    plt.savefig("importance_plot.png", bbox_inches='tight')
+    plt.close()

@@ -7,3 +7,9 @@
 [submodule "src/GILL"]
 	path = src/GILL
 	url = git@github.com:symbiotic-engineering/GILL.git
+[submodule "src/OpenMDAO"]
+	path = src/OpenMDAO
+	url = git@github.com:degoeden/OpenMDAO.git
+[submodule "src/DEAPSEA"]
+	path = src/DEAPSEA
+	url = git@github.com:degoeden/DEAPSEA.git

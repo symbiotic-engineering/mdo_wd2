@@ -89,13 +89,26 @@ class SysDyn(om.ExplicitComponent):
         mem_resist = inputs["mem_resist"].item()
         osmotic_pressure = inputs["osmotic_pressure"].item()
 
-        cb_vec = np.array([0.0,0.0,0.5*draft])
-        cg_vec = np.array([0.0,0.0,cg])
+        cb_vec = np.array([[0.0],[0.0],[0.5*draft]])
+        cg_vec = np.array([[0.0],[0.0],[cg]])
         hydro = self.eng.struct()
         hydro = GILL.capy2struct(hydro, hydroXR, Vo, cb_vec, cg_vec)
         hydro = self.eng.normalizeBEM(hydro)
-        hydro = self.eng.solveIRFs(hydro)
-        hydro = self.eng.rebuildhydrostruct(hydro)
+
+        key = random.randint(0, 10**16 - 1)  # Generate a random 16-digit integer
+        if PARAMS["nworkers"] == 0:
+            hydro = self.eng.solveIRFs(hydro)
+        else:
+            irfouts = self.eng.solveIRFs_par(hydro,key)
+            hydro,keyout = self.eng.fetchOutputs(irfouts,nargout=2)
+            try:
+                if key != keyout:
+                    raise ValueError(f"wrong IRF output fetched")
+            except ValueError as e:
+                print(f"Parallelization Error: {e}")
+
+
+        hydro = self.eng.rebuildHydroStruct(hydro,1,0)
         
         # Initialize an array to hold inertia values
         wec_inertia_np= np.zeros(3)
@@ -114,8 +127,6 @@ class SysDyn(om.ExplicitComponent):
         wec_inertia = matlab.double(wec_inertia_np)
 
         wecSimOptions = GILL.dict2struct(PARAMS["wecsimoptions"],self.eng)
-
-        key = random.randint(0, 10**16 - 1)  # Generate a random 16-digit integer
 
         hinge_depth = matlab.double(draft)
         joint_depth = matlab.double(draft-hinge2joint)

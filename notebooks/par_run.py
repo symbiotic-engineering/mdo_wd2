@@ -4,7 +4,6 @@ import os
 parent_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(parent_folder)
 import numpy as np
-import src.model as model
 import matlab.engine
 from src.params import PARAMS, INPUTS
 from matplotlib import pyplot as plt
