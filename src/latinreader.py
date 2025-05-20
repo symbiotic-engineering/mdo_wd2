@@ -16,7 +16,7 @@ obj_values = {case:cr.get_case(case).outputs["LCOW"] for case in cases }
 
 # Filter cases 
 cases = {case: value for case, value in obj_values.items() if value != np.nan}
-valid_cases = {case: value for case, value in obj_values.items() if value < np.inf}
+valid_cases = {case: value for case, value in obj_values.items() if value < 10}
 print(f"there are {len(valid_cases)} valid cases out of {len(cases)} total cases")
 
 # Use the filtered cases to create a new var_values dictionary
