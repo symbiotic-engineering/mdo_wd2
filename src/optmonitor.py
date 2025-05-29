@@ -80,4 +80,4 @@ def plot_progress(best_per_gen, filename="optimization_progress.png"):
     plt.close()
 
 if __name__ == "__main__":
-    monitor_csv(csv_path="data/results.csv", check_interval=5)
+    monitor_csv(csv_path="data/newresults_pto.csv", check_interval=5)

@@ -23,6 +23,7 @@ class TestDesal(unittest.TestCase):
         pressure = desal.osmotic_pressure(i,c,R,T)
         expected_pressure = np.array([3.393318])
         np.testing.assert_allclose(pressure,expected_pressure,rtol=1e-5)
+        print(f"Osmotic pressure: {pressure}")
 
     def test_mem_resistance(self):
         # Test membrane resistance
@@ -37,10 +38,11 @@ class TestDesal(unittest.TestCase):
         # Test max pressure
         capacity = 3150
         resistance = 86.820721
-        dpi = 3
+        dpi = 3.39331841
         pressure = desal.max_pressure(capacity,resistance,dpi)
-        expected_pressure = np.array(6.165339)
+        expected_pressure = np.array(6.558657)
         np.testing.assert_allclose(pressure,expected_pressure,rtol=1e-5)
+        print(f"Max pressure: {pressure}")
 
     def test_throt_resistance(self):
         # Test throttle resistance
