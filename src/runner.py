@@ -50,3 +50,86 @@ class RunWDDS:
             self.prob.set_val(var_name, var_value)
         self.prob.run_model()
         return self.prob.get_val('LCOW')
+
+    ### SDO related functions
+
+    def hydro(self, design_variables):
+        prob = om.Problem(reports=None)
+        prob.model.add_subsystem('Geom', geom.Geometry(), promotes_inputs=["*"], promotes_outputs=["*"])
+        prob.model.add_subsystem('Hydro', hydro.Hydro(), promotes_inputs=["*"], promotes_outputs=["*"])
+
+        for key, val in design_variables.items():
+            lower, upper = BOUNDS.get(key, (None, None))
+            prob.model.add_design_var(key, lower=lower, upper=upper)
+
+        prob.driver = om.SimpleGADriver()
+        prob.setup()
+
+        for var_name, var_value in design_variables.items():
+            prob.set_val(var_name, var_value)
+        
+        prob.run_model()
+        out = {
+            'f_e': prob.get_val('ex_re') - 1j * prob.get_val('ex_im'),
+            'K_hs': prob.get_val('hydrostatic_stiffness'),
+            'A': prob.get_val('added_mass'),
+            'B': prob.get_val('radiation_damping'),
+            'I': prob.get_val('inertia_matrix'),
+            'cg': prob.get_val('cg'),
+        }
+        
+        return out
+
+    def desalandpto(self, design_variables, hydro_results):
+        prob = om.Problem(reports=None)
+        prob.model.add_subsystem('DesalParams', desal.DesalParams(), promotes_inputs=["*"], promotes_outputs=["*"])
+        prob.model.add_subsystem('SysDyn', sysdyn.SysDyn(self.eng), promotes_inputs=["*"], promotes_outputs=["*"])
+        prob.model.add_subsystem('Econ', econ.Econ(), promotes_inputs=["*"], promotes_outputs=["*"])
+
+        for key, val in design_variables.items():
+            lower, upper = BOUNDS.get(key, (None, None))
+            prob.model.add_design_var(key, lower=lower, upper=upper)
+        
+        prob.driver = om.SimpleGADriver()
+        prob.setup()
+
+        for key, val in hydro_results.items():
+            prob.model.set_val(key, val)
+
+        for var_name, var_value in design_variables.items():
+            prob.set_val(var_name, var_value)
+        
+        prob.run_model()
+        out = {
+            'LCOW': prob.get_val('LCOW'),
+        }
+        
+        return out
+    
+    def pto1(self, design_variables, hydro_results, load_settings):
+        prob = om.Problem(reports=None)
+        prob.model.add_subsystem('SysDyn', sysdyn.SysDyn(self.eng), promotes_inputs=["*"], promotes_outputs=["*"])
+
+        for key, val in design_variables.items():
+            lower, upper = BOUNDS.get(key, (None, None))
+            prob.model.add_design_var(key, lower=lower, upper=upper)
+
+        prob.driver = om.SimpleGADriver()
+        prob.setup()
+
+        for key, val in hydro_results.items():
+            prob.model.set_val(key, val)
+
+        for key, val in load_settings.items():
+            prob.model.set_val(key, val)
+
+        for var_name, var_value in design_variables.items():
+            prob.set_val(var_name, var_value)
+        
+        prob.run_model()
+
+        out = {
+            'Q_p': prob.get_val('permflow'),
+            'stroke_length': prob.get_val('stroke_length')
+        }
+        return out
