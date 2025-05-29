@@ -17,45 +17,45 @@ Name 2 in "Y.-H. Yu, D.S. Jenne, and R. Thresher, A. Copping, S. Geerlofs, and L
 while executing---line 1268 of file asmems4.bst
 Warning--empty institution in rm5
 Warning--empty booktitle in DEEP5manual
-You've used 39 entries,
+You've used 40 entries,
             1984 wiz_defined-function locations,
-            726 strings with 10411 characters,
-and the built_in function-call counts, 9452 in all, are:
-= -- 810
-> -- 381
+            737 strings with 10571 characters,
+and the built_in function-call counts, 9873 in all, are:
+= -- 853
+> -- 396
 < -- 1
-+ -- 153
-- -- 114
-* -- 592
-:= -- 1308
-add.period$ -- 112
-call.type$ -- 39
-change.case$ -- 37
++ -- 158
+- -- 118
+* -- 611
+:= -- 1359
+add.period$ -- 115
+call.type$ -- 40
+change.case$ -- 38
 chr.to.int$ -- 0
-cite$ -- 43
-duplicate$ -- 520
-empty$ -- 951
-format.name$ -- 114
-if$ -- 2260
+cite$ -- 44
+duplicate$ -- 551
+empty$ -- 985
+format.name$ -- 118
+if$ -- 2368
 int.to.chr$ -- 0
-int.to.str$ -- 39
-missing$ -- 35
-newline$ -- 193
-num.names$ -- 38
-pop$ -- 187
+int.to.str$ -- 40
+missing$ -- 36
+newline$ -- 198
+num.names$ -- 41
+pop$ -- 193
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 356
+skip$ -- 385
 stack$ -- 0
-substring$ -- 387
-swap$ -- 247
+substring$ -- 405
+swap$ -- 267
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 4
-while$ -- 76
-width$ -- 41
-write$ -- 412
+while$ -- 79
+width$ -- 42
+write$ -- 426
 (There were 3 error messages)
