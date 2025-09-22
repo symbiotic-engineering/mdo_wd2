@@ -51,6 +51,7 @@ class RunWDDS:
         self.prob.run_model()
         return self.prob.get_val('LCOW')
 
+####################################################################################################################
     ### SDO related functions
 
     def hydro(self, design_variables):

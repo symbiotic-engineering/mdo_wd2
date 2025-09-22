@@ -1,8 +1,14 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
+import os
+parent_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+sys.path.append(parent_folder)
+from src.seastate_sampling.kmeans_clustering import build_clusters
+import csv
 
-def get_Hm0_Te_from_ndbc(file_path):
+def get_Hs_Tp_from_ndbc(file_path):
     """
     Reads an NDBC-style buoy file and returns significant wave height (WVHT)
     and peak period (DPD) as pandas Series indexed by datetime.
@@ -31,11 +37,11 @@ def get_Hm0_Te_from_ndbc(file_path):
     # Create datetime column
     df['datetime'] = pd.to_datetime(df[['year','month','day','hour','minute']])
 
-    # Set datetime as index and extract Hm0 and Te
-    Hm0 = df.set_index('datetime')['WVHT']
-    Te = df.set_index('datetime')['DPD']
+    # Set datetime as index and extract Hs and Tp
+    Hs = df.set_index('datetime')['WVHT']
+    Tp = df.set_index('datetime')['DPD']
 
-    return Hm0, Te
+    return Hs, Tp
 
 buoys = ['guam', 'gbma', 'smca', 'hilo', 'sjpr']
 years = ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']
@@ -43,70 +49,77 @@ years = ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023',
 wave_data = {buoy:{} for buoy in buoys}
 
 for buoy in buoys:
-    hm0_list = []
-    te_list = []
+    hs_list = []
+    tp_list = []
     for year in years:
         file_path = f'data/NDBC_data/{buoy}_{year}.txt'
         try:
-            Hm0, Te = get_Hm0_Te_from_ndbc(file_path)
-            hm0_list.append(Hm0)
-            te_list.append(Te)
-            print(f'Loaded {len(Hm0)} records for {buoy} in {year}')
+            Hs, Tp = get_Hs_Tp_from_ndbc(file_path)
+            hs_list.append(Hs)
+            tp_list.append(Tp)
+            print(f'Loaded {len(Hs)} records for {buoy} in {year}')
         except FileNotFoundError:
             print(f'File not found: {file_path}')
         except Exception as e:
             print(f'Error processing {file_path}: {e}')
 
-    # Filter out Hm0 > 20 and Te > 40
-    Hm0 = pd.concat(hm0_list)
-    Te = pd.concat(te_list)
-    mask = (Hm0 <= 20) & (Te <= 40)
-    Hm0 = Hm0[mask]
-    Te = Te[mask]
+    # Filter out Hs > 20 and Tp > 40
+    Hs = pd.concat(hs_list)
+    Tp = pd.concat(tp_list)
+    mask = (Hs <= 20) & (Tp <= 40)
+    Hs = Hs[mask]
+    Tp = Tp[mask]
 
     # Concatenate and convert to NumPy arrays
-    wave_data[buoy]['Hm0'] = Hm0.values
-    wave_data[buoy]['Te'] = Te.values
-    
+    wave_data[buoy]['Hs'] = Hs.values
+    wave_data[buoy]['Tp'] = Tp.values
 
 # Quick check
 for buoy in buoys:
-    if 'Hm0' in wave_data[buoy]:
-        print(buoy, wave_data[buoy]['Hm0'].shape, wave_data[buoy]['Te'].shape)
+    if 'Hs' in wave_data[buoy]:
+        print(buoy, wave_data[buoy]['Hs'].shape, wave_data[buoy]['Tp'].shape)
 
 # Plots of data
-plt.figure(figsize=(10, 5))
-plt.scatter(wave_data['guam']['Te'], wave_data['guam']['Hm0'], alpha=0.5)
-plt.xlabel('Peak Period (Te)')
-plt.ylabel('Significant Wave Height (Hm0)')
-plt.title('Wave Data for Guam Buoy')
-plt.grid()
-plt.savefig('guam_wave_data.png')
-plt.figure(figsize=(10, 5))
-plt.scatter(wave_data['gbma']['Te'], wave_data['gbma']['Hm0'], alpha=0.5)
-plt.xlabel('Peak Period (Te)')
-plt.ylabel('Significant Wave Height (Hm0)')
-plt.title('Wave Data for GBMA Buoy')
-plt.grid()
-plt.savefig('gbma_wave_data.png')
-plt.figure(figsize=(10, 5))
-plt.scatter(wave_data['smca']['Te'], wave_data['smca']['Hm0'], alpha=0.5)
-plt.xlabel('Peak Period (Te)')
-plt.ylabel('Significant Wave Height (Hm0)')
-plt.title('Wave Data for SMCA Buoy')
-plt.grid()
-plt.savefig('smca_wave_data.png')
-plt.figure(figsize=(10, 5))
-plt.scatter(wave_data['hilo']['Te'], wave_data['hilo']['Hm0'], alpha=0.5)
-plt.xlabel('Peak Period (Te)')
-plt.ylabel('Significant Wave Height (Hm0)')
-plt.title('Wave Data for Hilo Buoy')
-plt.grid()
-plt.savefig('hilo_wave_data.png')
-plt.figure(figsize=(10, 5))
-plt.scatter(wave_data['sjpr']['Te'], wave_data['sjpr']['Hm0'], alpha=0.5)
-plt.xlabel('Peak Period (Te)')
-plt.ylabel('Significant Wave Height (Hm0)')
-plt.title('Wave Data for SJPR Buoy')
-plt.grid()
-plt.savefig('sjpr_wave_data.png')
+'''def plot_wave_data(wave_data, buoy):
+    plt.figure(figsize=(10, 5))
+    plt.scatter(wave_data[buoy]['Tp'], wave_data[buoy]['Hs'], alpha=0.5)
+    plt.xlabel('Peak Period (Tp)')
+    plt.ylabel('Significant Wave Height (Hs)')
+    plt.title(f'Wave Data for {buoy.upper()} Buoy')
+    plt.grid()
+    plt.savefig(f'{buoy}_wave_data.png')
+    plt.close()
+for buoy in buoys:
+    plot_wave_data(wave_data, buoy)'''
+   
+k = 15
+iterations = 100
+for buoy in buoys:
+    print(f'Clustering for {buoy} buoy...')
+    X = np.vstack((wave_data[buoy]['Tp'], wave_data[buoy]['Hs'])).T
+    wave_data[buoy]['clusters'],pred = build_clusters(X,k,iterations)
+    print(f'Clustering complete for {buoy} buoy')
+
+    # write clusters to csv
+    os.makedirs('data/seastate_clusters', exist_ok=True)
+    csv_path = f'data/seastate_clusters/{buoy}.csv'
+    with open(csv_path, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['cluster_id', 'center_Tp', 'center_Hs', 'count'])
+        for cluster_id, info in wave_data[buoy]['clusters'].items():
+            center_Tp, center_Hs = info['center']
+            count = len(info['points'])
+            writer.writerow([cluster_id, center_Tp, center_Hs, count])
+
+    plt.figure(figsize=(10, 5))
+    plt.scatter(X[:,0],X[:,1],c = pred)
+    plt.xlabel('Peak Period (Tp)')
+    plt.ylabel('Significant Wave Height (Hs)')
+    plt.title(f'Wave Data Clustering for {buoy.upper()} Buoy')
+    plt.grid()
+    for i in wave_data[buoy]['clusters']:
+        center = wave_data[buoy]['clusters'][i]['center']
+        plt.scatter(center[0],center[1],marker = '^',c = 'red')
+    plt.savefig(f'data/seastate_clusters/{buoy}_clusters.pdf')
+    plt.close()
+
