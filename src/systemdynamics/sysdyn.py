@@ -10,7 +10,7 @@ import time as timer
 from matplotlib import pyplot as plt
 
 class SysDyn(om.ExplicitComponent):
-    def __init__(self,eng, significant_wave_height=2.64, peak_period=9.86):
+    def __init__(self,eng, significant_wave_height=PARAMS["significant_wave_height"], peak_period=PARAMS["peak_period"]):
         super(SysDyn, self).__init__()
         # MATLAB Engine
         self.eng = eng

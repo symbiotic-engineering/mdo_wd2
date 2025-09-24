@@ -9,6 +9,8 @@ PARAMS["days_in_year"] = np.array([365.0])      #   [days/yr]   days in a year
 PARAMS["distance_to_shore"] = np.array([500.0]) #   [m]     distance from WEC to shore, also length of pipe from WEC to SWRO plant
 PARAMS["R"] = np.array([8.314])                 #   [J/K*mol]   ideal gas constant
 PARAMS["temperature"] = np.array([298.15])      #   [K]     temperature
+PARAMS["significant_wave_height"] = np.array([2.64])  #   [m]     significant wave height, nominal
+PARAMS["peak_period"] = np.array([9.86])        #   [s]     peak period, nominal
 
 #   Hydro Params
 PARAMS["water_depth"] = np.array([12.])         #   [m]     depth of the water

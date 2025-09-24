@@ -16,7 +16,7 @@ class RunWDDS:
         self.eng = eng
         self.prob = None
 
-    def create_problem(self, significant_wave_height=2.64, peak_period=9.86):
+    def create_problem(self, significant_wave_height=PARAMS["significant_wave_height"], peak_period=PARAMS["peak_period"]):
         self.prob = om.Problem(reports=None)
 
         self.prob.model.add_subsystem('Geom',geom.Geometry(),promotes_inputs=["*"],promotes_outputs=["*"])
