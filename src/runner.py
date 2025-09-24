@@ -16,13 +16,13 @@ class RunWDDS:
         self.eng = eng
         self.prob = None
 
-    def create_problem(self):
+    def create_problem(self, significant_wave_height=2.64, peak_period=9.86):
         self.prob = om.Problem(reports=None)
 
         self.prob.model.add_subsystem('Geom',geom.Geometry(),promotes_inputs=["*"],promotes_outputs=["*"])
         self.prob.model.add_subsystem('Hydro',hydro.Hydro(),promotes_inputs=["*"],promotes_outputs=["*"])
         self.prob.model.add_subsystem('DesalParams',desal.DesalParams(),promotes_inputs=["*"],promotes_outputs=["*"])
-        self.prob.model.add_subsystem('SysDyn',sysdyn.SysDyn(self.eng),promotes_inputs=["*"],promotes_outputs=["*"])
+        self.prob.model.add_subsystem('SysDyn',sysdyn.SysDyn(self.eng,significant_wave_height,peak_period),promotes_inputs=["*"],promotes_outputs=["*"])
         self.prob.model.add_subsystem('Econ',econ.Econ(),promotes_inputs=["*"],promotes_outputs=["*"])
 
         for key, val in INPUTS.items():
