@@ -40,8 +40,8 @@ switch wave_type
         waves.phaseSeed = 1;
     otherwise
         waves = waveClass('irregular');         % Initialize Wave Class and Specify Type
-        waves.height = 2.64;                     % Significant Wave Height [m]
-        waves.period = 9.86;                       % Peak Period [s]
+        waves.height = significant_wave_height;                     % Significant Wave Height [m]
+        waves.period = peak_period;                       % Peak Period [s]
         waves.spectrumType = 'PM';              % Specify Spectrum Type
         waves.phaseSeed = 1;
 end

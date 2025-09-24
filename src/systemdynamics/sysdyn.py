@@ -10,11 +10,13 @@ import time as timer
 from matplotlib import pyplot as plt
 
 class SysDyn(om.ExplicitComponent):
-    def __init__(self,eng):
+    def __init__(self,eng, significant_wave_height=2.64, peak_period=9.86):
         super(SysDyn, self).__init__()
         # MATLAB Engine
         self.eng = eng
-    
+        self.significant_wave_height = significant_wave_height
+        self.peak_period = peak_period
+
     def setup(self):
         # Hydrodynamics
         self.add_input('added_mass', val=np.zeros((len(PARAMS["omega"])+1,1,1)))
@@ -138,6 +140,7 @@ class SysDyn(om.ExplicitComponent):
                                             accum_volume,accum_P0,pressure_relief,
                                             throt_resist,mem_resist,osmotic_pressure,
                                             PARAMS["drivetrain_mass"],
+                                            self.significant_wave_height,self.peak_period,
                                             wecSimOptions,key, nargout=6)
             else:
                 simouts = self.eng.wdds_par(hydro,wec_mass,wec_inertia,
@@ -146,6 +149,7 @@ class SysDyn(om.ExplicitComponent):
                                             accum_volume,accum_P0,pressure_relief,
                                             throt_resist,mem_resist,osmotic_pressure,
                                             PARAMS["drivetrain_mass"],
+                                            self.significant_wave_height,self.peak_period,
                                             wecSimOptions,key, nargout=1)
                 Qf,Qp,t,P,stroke,keyout = self.eng.fetchOutputs(simouts,nargout=6)
         except matlab.engine.MatlabExecutionError as e:
