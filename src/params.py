@@ -132,3 +132,15 @@ BITS = {
     'accum_P0' : 8,
     'capacity' : 8,
 }
+
+# Optimal Design Found from Initial Study (IDETC 2025 Conference Paper)
+OPTIMAL = {
+    'width': 11.254901960784313,
+    'thickness': 1.988235294117647,
+    'wec_mass': 395882.35294117645,
+    'hinge2joint': 3.2505882352941176,
+    'piston_area': 0.8588235294117647,
+    'accum_volume': 4.5670980392156855,
+    'accum_P0': 5.952941176470588,
+    'capacity': 4882.35294117647
+}
