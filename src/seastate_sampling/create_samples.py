@@ -92,7 +92,7 @@ for buoy in buoys:
 for buoy in buoys:
     plot_wave_data(wave_data, buoy)'''
    
-k = 15
+k = 10
 iterations = 100
 for buoy in buoys:
     print(f'Clustering for {buoy} buoy...')
