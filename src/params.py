@@ -83,7 +83,7 @@ PARAMS["wecsimoptions"] = {
 }
 
 # Optimization Params
-PARAMS["nworkers"] = 14
+PARAMS["nworkers"] = 0
 
 #   Dependant Params
 PARAMS["period"] = 2*np.pi/PARAMS["omega"]              #   [s]     wave period

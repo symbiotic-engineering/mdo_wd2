@@ -39,4 +39,4 @@ key=3;
 wec_mass = 127000;
 wec_inertia = [1.85e6 1.85e6 1.85e6];
 intake_z =0;
-[feed,perm,t,key] = wdds_sim(hydro,wec_mass,wec_inertia,hinge_depth,joint_depth,intake_x,0,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,osmotic_pressure,drivetrain_mass,significant_wave_height,peak_period,wecSimOptions,key);
+[feed,perm,t,pressure,stroke_length,key] = wdds_sim(hydro,wec_mass,wec_inertia,hinge_depth,joint_depth,intake_x,0,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,osmotic_pressure,drivetrain_mass,significant_wave_height,peak_period,wecSimOptions,key);
