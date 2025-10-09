@@ -10,11 +10,24 @@ from src.params import PARAMS, BOUNDS, BITS, OPTIMAL
 from threadpoolctl import threadpool_limits
 threadpool_limits(limits=1, user_api='blas')
 threadpool_limits(limits=1, user_api='openmp')
+import csv
 
 future_eng = matlab.engine.start_matlab(background=True)
 eng = future_eng.result()
 
-seastates = [{"Hs": 2.5, "Tp": 10.0}]
+def read_tp_hs(filename):
+    data = []
+    with open(filename, newline='') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            data.append({
+                "Tp": float(row["Tp"]),
+                "Hs": float(row["Hs"])
+            })
+    return data
+seastate = read_tp_hs('data/sensitivity/seastates.csv')
+
+seastates = [{"Hs": 2.64, "Tp": 9.83}]
 
 initialization_script_path = parent_folder + '/src'
 eng.cd(initialization_script_path, nargout=0)
@@ -36,8 +49,8 @@ def run_optimization(Hs, Tp, initial_design=None):
             return (np.inf,)  # Return a large value to indicate failure
 
     ga = GA(safe_objective, BOUNDS, BITS, 
-            NGEN=800, NPOP=256, NWORKERS=PARAMS["nworkers"],
-            CXPB=0.8, MUTPB=0.02, ELITES_SIZE=3, TOURNAMENT_SIZE=4,
+            NGEN=2, NPOP=3, NWORKERS=PARAMS["nworkers"],
+            CXPB=0.8, MUTPB=0.02, ELITES_SIZE=1, TOURNAMENT_SIZE=3,
             PATIENCE=20, TOL=1e-3, csv_path=f"data/sensitivity/results_{Hs:.2f}m_{Tp:.2f}s.csv")
     design, lcow = ga.run(initial_design=initial_design)
     return design, lcow

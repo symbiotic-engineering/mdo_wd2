@@ -79,7 +79,7 @@ PARAMS["insurance_rate"] = 0.02  # insurance rate
 PARAMS["wecsimoptions"] = {
     'model' : 'src/systemdynamics/basic_wd2',
     'dt'    : 0.1,
-    'tend'  : 300.0,
+    'tend'  : 20000.0,
 }
 
 # Optimization Params

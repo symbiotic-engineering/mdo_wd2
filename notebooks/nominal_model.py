@@ -4,7 +4,7 @@ parent_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(parent_folder)
 import numpy as np
 import matlab.engine
-from src.params import PARAMS, INPUTS
+from src.params import PARAMS, INPUTS, OPTIMAL
 from src.runner import RunWDDS
 
 future_eng = matlab.engine.start_matlab(background=True)
@@ -17,5 +17,5 @@ eng.cd('..', nargout=0)
 
 Runner = RunWDDS(eng)
 Runner.create_problem()
-lcow = Runner.solve_once()
+lcow = Runner.solve_once(design_variables=OPTIMAL)
 print(lcow)
