@@ -3,6 +3,9 @@ clear;clc;close all;
 model = 'basic_wd2';
 
 %% Define Parameters
+% Seastate
+significant_wave_height = 2.64;
+peak_period = 9.86;
 % Drivetrain
 drivetrain_mass = 50;   % [kg]      Effective Mass of Drivetrain (before fluid)
 
@@ -23,7 +26,7 @@ osmotic_pressure = 3;   % [MPa]         Osmotic Pressure Differential
 throt_resist = 60.23;   % [MPa*s/m^3]   Throttle Valve Hydraulic Resistance
 
 load('/home/degoede/SEA/SEAmdo_wd2/degoede_ignore/nominal_struct.mat')
-hydro = rebuildhydrostruct(nominal_hydro);
+hydro = rebuildHydroStruct(nominal_hydro,1,0);
 thick = 1;
 hinge_depth = 8.9;
 joint_depth = 7;
@@ -36,4 +39,4 @@ key=3;
 wec_mass = 127000;
 wec_inertia = [1.85e6 1.85e6 1.85e6];
 intake_z =0;
-[feed,perm,t,key] = wdds_sim(hydro,wec_mass,wec_inertia,hinge_depth,joint_depth,intake_x,0,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,osmotic_pressure,drivetrain_mass,wecSimOptions,key);
+[feed,perm,t,key] = wdds_sim(hydro,wec_mass,wec_inertia,hinge_depth,joint_depth,intake_x,0,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,osmotic_pressure,drivetrain_mass,significant_wave_height,peak_period,wecSimOptions,key);
