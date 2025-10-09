@@ -126,3 +126,4 @@ ptoupperbound = piston_stroke/2;                    % Upper Limit [m]
 boundstiffness = 1e9;                             % Limit Stiffness [N/m]
 bounddamping = 1e6;                               % Limit Damping [Ns/m]
 hardstopwidth = 5e-3;                               % Limit Transition Width [m]
+piston_stroke_buffer = piston_stroke + 2;
