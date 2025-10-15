@@ -79,11 +79,11 @@ PARAMS["insurance_rate"] = 0.02  # insurance rate
 PARAMS["wecsimoptions"] = {
     'model' : 'src/systemdynamics/basic_wd2',
     'dt'    : 0.1,
-    'tend'  : 20000.0,
+    'tend'  : 300.0,
 }
 
 # Optimization Params
-PARAMS["nworkers"] = 0
+PARAMS["nworkers"] = 2
 
 #   Dependant Params
 PARAMS["period"] = 2*np.pi/PARAMS["omega"]              #   [s]     wave period
@@ -135,12 +135,12 @@ BITS = {
 
 # Optimal Design Found from Initial Study (IDETC 2025 Conference Paper)
 OPTIMAL = {
-    'width': 11.254901960784313,
-    'thickness': 1.988235294117647,
-    'wec_mass': 395882.35294117645,
-    'hinge2joint': 3.2505882352941176,
-    'piston_area': 0.8588235294117647,
-    'accum_volume': 4.5670980392156855,
-    'accum_P0': 5.952941176470588,
-    'capacity': 4882.35294117647
+    'width': np.array([11.254901960784313]),
+    'thickness': np.array([1.988235294117647]),
+    'wec_mass': np.array([395882.35294117645]),
+    'hinge2joint': np.array([3.2505882352941176]),
+    'piston_area': np.array([0.8588235294117647]),
+    'accum_volume': np.array([4.5670980392156855]),
+    'accum_P0': np.array([5.952941176470588]),
+    'capacity': np.array([4882.35294117647])
 }
