@@ -127,3 +127,6 @@ boundstiffness = 1e9;                             % Limit Stiffness [N/m]
 bounddamping = 1e6;                               % Limit Damping [Ns/m]
 hardstopwidth = 5e-3;                               % Limit Transition Width [m]
 piston_stroke_buffer = piston_stroke + 2;
+
+% Ocean Pressure
+P_ocean = (1025*intake_depth*9.81 + 101325)/1e6;
