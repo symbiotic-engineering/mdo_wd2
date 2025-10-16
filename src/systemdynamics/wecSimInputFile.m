@@ -129,4 +129,4 @@ hardstopwidth = 5e-3;                               % Limit Transition Width [m]
 piston_stroke_buffer = piston_stroke + 2;
 
 % Ocean Pressure
-P_ocean = (1025*intake_depth*9.81 + 101325)/1e6;
+P_ocean = (rho*intake_depth*g + 101325)/1e6;

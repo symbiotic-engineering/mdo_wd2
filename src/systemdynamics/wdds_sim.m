@@ -1,4 +1,4 @@
-function [feedflow,permflow,time,pressure,stroke_length,key] = wdds_sim(hydro,wec_mass,wec_inertia,hinge_depth,joint_depth,intake_x,intake_z,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,osmotic_pressure,drivetrain_mass,significant_wave_height,peak_period,wecSimOptions,key)
+function [feedflow,permflow,time,pressure,stroke_length,key] = wdds_sim(hydro,wec_mass,wec_inertia,hinge_depth,joint_depth,intake_x,intake_z,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,osmotic_pressure,drivetrain_mass,significant_wave_height,peak_period,rho,g,wecSimOptions,key)
 wave_type = 'defined';
 %profile on;
 wecSim
