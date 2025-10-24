@@ -179,7 +179,6 @@ dependencies:
       - numexpr==2.12.1
       - numpy==2.2.1
       - numpydoc==1.6.0
-      - omxdsm==1.2
       - openmdao==3.36.0
       - opt-einsum==3.4.0
       - overrides==7.7.0
