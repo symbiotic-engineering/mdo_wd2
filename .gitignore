@@ -5,6 +5,8 @@ degoede_ignore/
 .vscode/
 src/privateparams.py
 data/NDBC_data/
+*.sbat
+*.out
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
