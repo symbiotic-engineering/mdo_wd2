@@ -6,7 +6,7 @@ import numpy as np
 import matlab.engine
 from src.runner import RunWDDS
 from src.DEAPSEA.src.ga import DeapSeaGa as GA
-from src.params import PARAMS, BOUNDS, BITS, OPTIMAL
+from src.params import PARAMS, BOUNDS, BITS, IDETC
 from threadpoolctl import threadpool_limits
 threadpool_limits(limits=1, user_api='blas')
 threadpool_limits(limits=1, user_api='openmp')
@@ -73,7 +73,7 @@ def find_nearest_design(seastate, completed):
 
     return nearest_design
 
-completed = [{"Hs": 2.64, "Tp": 9.86, "design": OPTIMAL}]
+completed = [{"Hs": 2.64, "Tp": 9.86, "design": IDETC}]
 for seastate in seastates:
     print(f"Running optimization for Hs={seastate['Hs']} m, Tp={seastate['Tp']} s")
     nearest_result = find_nearest_design(seastate, completed)

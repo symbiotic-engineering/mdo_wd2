@@ -6,7 +6,7 @@ import numpy as np
 import matlab.engine
 from src.runner import RunWDDS
 from src.DEAPSEA.src.ga import DeapSeaGa as GA
-from src.params import PARAMS, BOUNDS, BITS
+from src.params import PARAMS, BOUNDS, BITS, IDETC
 from threadpoolctl import threadpool_limits
 threadpool_limits(limits=1, user_api='blas')
 threadpool_limits(limits=1, user_api='openmp')
@@ -37,6 +37,6 @@ ga = GA(safe_objective, BOUNDS, BITS,
         NGEN=800, NPOP=256, NWORKERS=PARAMS["nworkers"],
         CXPB=0.8, MUTPB=0.02, ELITES_SIZE=3, TOURNAMENT_SIZE=4,
         PATIENCE=20, TOL=1e-3, csv_path="data/newresults.csv")
-print(ga.run())
+print(ga.run(initial_design=IDETC))
 print("Optimization complete.")
 eng.quit()

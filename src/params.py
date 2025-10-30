@@ -83,7 +83,7 @@ PARAMS["wecsimoptions"] = {
 }
 
 # Optimization Params
-PARAMS["nworkers"] = 2
+PARAMS["nworkers"] = 36
 
 #   Dependant Params
 PARAMS["period"] = 2*np.pi/PARAMS["omega"]              #   [s]     wave period
@@ -134,7 +134,7 @@ BITS = {
 }
 
 # Optimal Design Found from Initial Study (IDETC 2025 Conference Paper)
-OPTIMAL = {
+IDETC = {
     'width': np.array([11.254901960784313]),
     'thickness': np.array([1.988235294117647]),
     'wec_mass': np.array([395882.35294117645]),
@@ -143,4 +143,15 @@ OPTIMAL = {
     'accum_volume': np.array([4.5670980392156855]),
     'accum_P0': np.array([5.952941176470588]),
     'capacity': np.array([4882.35294117647])
+}
+
+OPTIMAL = {
+    'width': np.array([10.0]),
+    'thickness': np.array([1.0]),
+    'wec_mass': np.array([140000.0]),
+    'hinge2joint': np.array([3.388235294117647]),
+    'piston_area': np.array([0.8058823529411765]),
+    'accum_volume': np.array([3.0167450980392156]),
+    'accum_P0': np.array([5.952941176470588]),
+    'capacity': np.array([6011.764705882353])
 }
