@@ -111,8 +111,8 @@ INPUTS = {
 
 # Bounds
 BOUNDS = {                              #  (lower, upper) Bounds for the inputs above
-    'width' : (10., 30.),
-    'thickness' : (1., 5.),
+    'width' : (4., 24.),
+    'thickness' : (0.8, 3.),
     'wec_mass' : (50e3, 500e3),
     'hinge2joint' : (0.1, 4.),
     'piston_area' : (1e-1, 1),
