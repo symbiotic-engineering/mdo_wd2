@@ -1,0 +1,134 @@
+\documentclass[a4paper,12pt]{elsarticle}
+\usepackage{graphicx}
+\usepackage{hologo}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{verbatim} % for comments
+\usepackage[table,xcdraw]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage[section]{placeins}
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Importance of Multidisciplinary Design Optimization for Wave-Driven Desalination Systems}
+
+\author{Nate DeGoede$^a$, Maha Haji$^a$}
+
+\affiliation[a]{Department of Mechanical Engineering, University of Michigan, Ann Arbor, MI, USA}
+
+\begin{abstract}
+This is the abstract. Summarize your problem, approach, and key results concisely. You can include equations and references if needed.
+\end{abstract}
+
+\end{frontmatter}
+
+\section{Introduction}
+The global freshwater crisis necessitates innovative solutions for clean water production. Demand for freshwater is anticipated to grow by over 40\% by 2050 \cite{watershortage2015}, while droughts, urbanization, and uneven distribution of water resources add to the pressure on our existing freshwater supplies. Seawater reverse osmosis (SWRO) is a proven technology for creating freshwater from seawater, but is quite energy intensive, requiring 2-4 kWh/m$^3$ \cite{Li2018}. This cost associated with this high energy demand make up 25\%-40\% of the total cost of water \cite{blue_econ}, and when supplied through fossil fuels, this energy consumption further exacerbates water scarcity challenges \cite{nytdrought}. To ensure sustainability, it is therefore crucial to power SWRO efficiently through renewable energy sources.
+
+Wave energy converters (WECs) are an intriguing solution. SWRO and WECs have natural co-location, with SWRO plants typically situated near the coast while WECs are deployed offshore. Beyond both being marine-based technologies, WECs and SWRO plants share complementary operational characteristics \cite{blue_econ}. SWRO requires high pressure seawater, and WECs can provide this directly using a hydraulic style power take-off (PTO) system, forming a wave driven desalination system \cite{Davies2005}. This direct drive approach eliminates the need for conversion to an intermediate form of energy, potentially improving overall system efficiency and reducing system complexity. This has the potential to give WECs a significant advantage over other renewable energy sources for powering SWRO desalination.
+
+Despite their potential, WECs face significant challenges limiting their widespread adoption. Notably, their high costs pose a major barrier. Therefore, design optimization is essential to improve economic viability. Multidisciplinary Design Optimization (MDO) provides a systematic framework to address this challenge by simultaneously considering the designs and interactions of multiple subsystems and optimizing overall performance rather than isolated improvements \cite{Sobieski}. MDO approaches integrating PTO design with hydrodynamics and/or controls has been demonstrated to significantly improve the design of electricity producing WECs \cite{Stroefer2023,PenaSanchez2022,Rosati2023,Grasberger2024}. Michelén Ströfer et al. (2023) see a 22\% increase in electrical power output through PTO and control co-design (CCD) \cite{Stroefer2023}, while Grasberger et al. (2024) report a 60\% improvement in performance using MDO when compared to traditional design methods \cite{Grasberger2024}. These studies emphasize the importance of utilizing holistic models that account for wave dynamics, PTO performance, and control strategies in WEC optimization. These studies show great promise for MDO to improve electricity-generating WEC design, however, these approaches have yet to be applied to wave-driven desalination systems, leaving a critical gap in research.
+
+This paper addresses this gap through the development of a holistic MDO framework for wave-driven desalination system design. A simplified wave-driven desalination schematic is shown in Figure \ref{fig:WDDS}, where an oscillating surge wave energy converter (OSWEC) drives a hydraulic cylinder, pressurizing seawater and delivering it to an onshore SWRO desalination plant. This system enables freshwater production without the need for major external energy input. While similar systems have been studies in literature \cite{Yu2018,Suchithra2022,Mi2023,Simmons2024}, this study has a notable difference in that it lacks an energy recovery unit (ERU).
+
+\begin{figure}[]
+    \includegraphics[width=\linewidth]{../figs/wdds.pdf}
+    \captionof{figure}{Simple wave-driven desalination system concept sketch.}
+    \label{fig:WDDS}
+\end{figure}
+
+The concept sketch (Figure \ref{fig:WDDS}) depicts a high level overview of the wave-driven desalination system but does not capture all the hydraulic components included in this design study. A detailed hydraulic circuit diagram is shown in Figure \ref{fig:hydraulics}, which includes an accumulator to smooth the pressure delivered to the SWRO plant, a pressure relief valve to avoid operating the SWRO plant beyond its rated capacity, a brine side throttle valve set to control the recovery ratio of the SWRO plant, as well as directional valves.
+
+\begin{figure}[]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../figs/hydraulic_circuit.pdf}
+    \captionof{figure}{Hydraulic circuit diagram of the wave-driven desalination system.}
+    \label{fig:hydraulics}
+\end{figure}
+
+One of the important design trade-offs to consider for these systems is the size of the accumulator vs the capacity of the SWRO plant. A larger accumulator offers more smoothing of the flow delivered to the SWRO plant. Since the SWRO plant can not operate above a certain capacity, a larger accumulator therefore allows for a smaller SWRO plant to be used without losing water through the pressure relief valve. Since the SWRO plant a major cost driver for the system \cite{YJecon2017}, investing in larger more expensive accumulators appears to be a massive cost saving strategy. However, as Michelén Ströfer et al. (2023) show, changing the impedance of the PTO system has a significant impact on the performance of a WEC \cite{Stroefer2023}. Therefore, it is important to consider the impact changing the accumulator size has on the system dynamics while making these economic trade-offs.
+
+This paper demonstrates the importance of wholistic modeling and co-design for wave-driven desalination systems. In Section \ref{sec:problem}, our formal MDO problem formulation is presented, defining our design space and an overview of the wholistic model. Section \ref{sec:model} goes into detail on the models for the various disciplines considered. Section \ref{sec:results} presents the results of our optimization studies which are then discussed in Section \ref{sec:discussion}. Finally, conclusions and future work are presented in Section \ref{sec:conclusion}.
+
+\section{Problem Formulation} \label{sec:problem}
+\subsection{Multidisciplinary Design Optimization Framework}
+The optimization problem in this study is formally defined as:
+\begin{align*} 
+    \text{Minimize} \quad & \text{LCOW}(\mathbf{x},\mathbf{p}; \hat{u})  \\
+    \text{by varying} \quad & \mathbf{x}\\
+    \text{subject to } \quad &  \mathbf{g} \leq 0 \\
+                             &  \mathbf{h} = 0 \\
+                            % &  C_1 = |\mathbb{E}(j\omega)| - (A + \frac{h}{2})  \leq 0 \\
+    \text{while solving} \quad & \mathbf{R}(\mathbf{x},\mathbf{p};\hat{u}) = 0\\
+    \text{for } \quad & \hat{u}
+    \label{eq:problem}
+\end{align*}
+\noindent LCOW (levelized cost of water) is the objective function (discussed further in Section \ref{sec:econ}). The design vector, $\mathbf{x}$, contains variables related to WEC, PTO, and SWRO plant, summarized in Table \ref{tab:design_space}. The vector, $\mathbf{p}$, contains parameters related to environmental conditions and fixed design choices (shown in Appendix \ref{app:params}). $\hat{u}$ represents the coupled variables solved for by $\mathbf{R}$, the governing equations of the various disciplinary modules: geometry, seawater desalination, hydrodynamics, system dynamics, and economics. The problem is subject to inequality constraints ($\mathbf{g} \leq 0$) and equality constraints ($\mathbf{h}=0$) which are enforced in the system dynamics module, Section \ref{sec:sysdyn}.
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=0.8\linewidth]{../figs/xDSM.pdf}
+    \captionof{figure}{xDSM diagram of the wave-driven desalination system optimization problem. Note $\mathbf{p}_\text{seawater}$, $\mathbf{p}_\text{membrane}$, and $\mathbf{p}_\text{316SS}$ represent vectors of parameters related to the membrane, seawater, and 316 stainless steel, respectively.}
+    \label{fig:xdsm}
+\end{figure*}
+
+Figure \ref{fig:xdsm} presents a graphical representation of the MDO problem using an Extended Design Structure Matrix (xDSM) \cite{xdsm}. The diagram uses gray line to illustrate the flow of information between the disciplinary modules and optimizer, while gray parallelograms indicate module inputs and outputs. The white parallelograms show optimizer level inputs and outputs. 
+
+\subsection{Design Space} 
+
+\begin{table}[h]
+    \centering
+    \caption{Design Variables}
+    \begin{tabular}{cccc}
+        \hline
+        Variable & Nominal Value & Lower Bound & Upper Bound\\
+        \hline
+        $w$ & 18 m & 10 m & 30 m \\
+        $t$ & 2 m & 1 m & 5 m \\
+        $m$ & 127$\times10^3$ kg & 50$\times10^3$ kg & 500$\times10^3$ kg \\
+        $\ell_1$ & 2 m & 0.1 m & draft \\
+        $A_p$ & 0.26 m$^2$ & 0.01 m$^2$ & 1 m$^2$ \\
+        $V_{acc}$ & 4 m$^3$ & 0.01 m$^3$ & 6 m$^3$ \\
+        $P_0$ & 3 MPa & 1 MPa & 7 MPa \\
+        $Q_{p,max}$ & 3150 m$^3$/day & 1000 m$^3$/day & 10000 m$^3$/day\\
+        \hline
+    \end{tabular}
+    \label{tab:design_space} 
+\end{table}
+
+A summary of the design space is shown in Table \ref{tab:design_space}. WEC variables consist of the width, $w$ [m], thickness, $t$ [m], and mass, $m$ [kg], of the OSWEC. PTO variables include the OSWEC hinge to PTO joint length, $\ell_1$ [m], piston area, $A_p$ [m$^2$], accumulator volume, $V_{acc}$ [m$^3$], and accumulator pre-charge pressure, $P_0$ [MPa]. Finally, the SWRO plant variable is the maximum plant production rate, $Q_{p,max}$ [m$^3$/day]. Many of these variables can be visualized in Figure \ref{fig:dvs}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{../figs/dvs.pdf}
+    \captionof{figure}{WEC (a) and mechanism (b) dimensions. Note that $h$ represents the WEC height, which is a parameter rather than a design variable.}
+    \label{fig:dvs}
+\end{figure}
+
+It is important to note that some design parameters are not included in the design space. WEC height and draft is set to fixed value, as are mechanism variables $\ell_2$ and $\ell_3$. These were fixed to reduce design space dimensionality, as the other variables included provide sufficient control of the system dynamic characteristics (notably hydrodynamic stiffness, inertia, and excitation force, as well as the mechanical advantage of the mechanism). 
+
+\subsection{Parameters and Constraints}
+This study largely uses parameters similar to those used by Yu and Jenne (2018) \cite{Yu2018}. Full tables of parameters can be found in Appendix~\ref{app:params}. Constraints are applied to device stroke length, maximum pressure in the hydraulic circuit, and minimum pressure in the piston cylinder. These are all enforced in the system dynamics module, Section \ref{sec:sysdyn}.
+
+\subsection{Optimization Algorithm}
+Due to the absence of accessible gradients in the hydrodynamics and system dynamics modules, a genetic algorithm (GA) is utilized. A table of GA hyperparameters is provided in Appendix \ref{app:params}.
+
+%% Add some info on change for SDO approach...
+
+\section{System Modeling} \label{sec:model}
+The xDSM in Figure \ref{fig:xdsm} shows the 5 primary disciplinary modules: ``Geometry", which maps WEC design variables to geometric properties, ``Desalination", which calculates the system dynamic properties of the SWRO plant, ``Hydrodynamics", which determines various hydrodynamic coefficients, ``System Dynamics", which solves the coupled dynamics of the wave-driven desalination system, and ``Economics", which calculates the LCOW of the system. The ``Geometry" module is straightforward and will not be discussed further. The remaining four modules are discussed in detail in the following subsections.
+
+\section{Results} \label{sec:results}
+
+\section{Discussion} \label{sec:discussion}
+
+\section{Conclusion and Future Work} \label{sec:conclusion}
+
+\bibliographystyle{elsarticle-num}  % choose a style
+\bibliography{refs}                 % points to refs.bib
+
+\end{document}
+
