@@ -17,5 +17,8 @@ eng.cd('..', nargout=0)
 
 Runner = RunWDDS(eng)
 Runner.create_problem()
-lcow = Runner.solve_once(design_variables=OPTIMAL)
+design = OPTIMAL
+#design["width"] = 9.5
+#design["thickness"] = 0.95
+lcow = Runner.solve_once(design_variables=design)
 print(lcow)

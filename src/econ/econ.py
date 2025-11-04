@@ -53,3 +53,18 @@ class Econ(om.ExplicitComponent):
         awp = permflow_bar*PARAMS["days_in_year"]
         outputs['LCOW'] = LCOW(awp, sum(capex), sum(opex), PARAMS["FCR"])
 
+        # Print LCOW composition. Ensure values are Python scalars before
+        # formatting because some CAPEX/OPEX functions may return
+        # zero-dimension numpy arrays which don't accept the float format
+        # specifier directly.
+        print("LCOW composition:")
+        w_capex_ann = np.asarray(PARAMS['FCR'] * capex[0]).item()
+        w_opex = np.asarray(opex[0]).item()
+        p_capex_ann = np.asarray(PARAMS['FCR'] * capex[1]).item()
+        p_opex = np.asarray(opex[1]).item()
+        r_capex_ann = np.asarray(PARAMS['FCR'] * capex[2]).item()
+        r_opex = np.asarray(opex[2]).item()
+        print(f"Annualized WEC CAPEX: ${w_capex_ann:.2f} OPEX: ${w_opex:.2f}")
+        print(f"Annualized PTO CAPEX: ${p_capex_ann:.2f} OPEX: ${p_opex:.2f}")
+        print(f"Annualized RO CAPEX: ${r_capex_ann:.2f} OPEX: ${r_opex:.2f}")
+        print(f"Annual water production (m^3/year): {np.asarray(awp).item():.2f}")
