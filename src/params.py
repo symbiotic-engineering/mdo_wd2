@@ -46,6 +46,8 @@ PARAMS["RM5_CmarineOps"] = 76231*1.33           #   [2025USD/yr]    cost of the 
 PARAMS["RM5_CshoreOps"] = 261113*1.33           #   [2025USD/yr]    cost of the RM5 shore operations
 PARAMS["RM5_Cparts"] = 64840*1.33               #   [2025USD/yr]    cost of the RM5 parts
 PARAMS["RM5_Cconsumables"] = 13143*1.33         #   [2025USD/yr]    cost of the RM5 consumables
+PARAMS["C2min_CAPEX"] = 0.0                     #   [2025USD]   minimum C2 value for CAPEX calculation
+PARAMS["C2min_OPEX"] = 0.0                      #   [2025USD/yr]   minimum C2 value for OPEX calculation
 
 #   RO Params
 PARAMS["feedTDS"] = np.array([35946])           #   [mg/L]  feed total dissolved solids (note mg/L = g/m^3)
