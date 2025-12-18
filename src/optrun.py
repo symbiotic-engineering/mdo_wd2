@@ -10,7 +10,18 @@ from src.params import PARAMS, BOUNDS, BITS, IDETC, OPTIMAL
 from threadpoolctl import threadpool_limits
 threadpool_limits(limits=1, user_api='blas')
 threadpool_limits(limits=1, user_api='openmp')
+import argparse
 
+parser = argparse.ArgumentParser(description="Run optimization with wave parameters.")
+parser.add_argument("--wave_height", type=float, default=PARAMS["significant_wave_height"],
+                    help="Significant wave height (default uses value from params.py)")
+parser.add_argument("--peak_period", type=float, default=PARAMS["peak_period"],
+                    help="Peak period (default uses value from params.py)")
+args = parser.parse_args()
+
+# Update PARAMS
+PARAMS["significant_wave_height"] = args.wave_height
+PARAMS["peak_period"] = args.peak_period
 
 future_eng = matlab.engine.start_matlab(background=True)
 eng = future_eng.result()
@@ -22,7 +33,7 @@ eng.cd('..', nargout=0)
 
 def objective(ind):
     Runner = RunWDDS(eng)
-    Runner.create_problem()
+    Runner.create_problem(significant_wave_height=PARAMS["significant_wave_height"], peak_period=PARAMS["peak_period"])
     LCOW = Runner.solve_once(ind)
     return (LCOW,)
 
