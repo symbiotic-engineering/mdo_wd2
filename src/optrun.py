@@ -6,6 +6,7 @@ import numpy as np
 import matlab.engine
 from src.runner import RunWDDS
 from src.DEAPSEA.src.ga import DeapSeaGa as GA
+from src.cleaning import start_cleanup_thread
 from src.params import PARAMS, BOUNDS, BITS, IDETC, OPTIMAL
 from threadpoolctl import threadpool_limits
 threadpool_limits(limits=1, user_api='blas')
@@ -22,6 +23,11 @@ args = parser.parse_args()
 # Update PARAMS
 PARAMS["significant_wave_height"] = args.wave_height
 PARAMS["peak_period"] = args.peak_period
+
+os.environ["TMPDIR"] = "~/scratch/matlab_tmp"
+os.makedirs("~/scratch/matlab_tmp", exist_ok=True)
+
+start_cleanup_thread()
 
 future_eng = matlab.engine.start_matlab(background=True)
 eng = future_eng.result()
@@ -45,9 +51,13 @@ def safe_objective(ind):
         return (np.inf,)  # Return a large value to indicate failure
 
 ga = GA(safe_objective, BOUNDS, BITS, 
-        NGEN=800, NPOP=256, NWORKERS=PARAMS["nworkers"],
-        CXPB=0.8, MUTPB=0.02, ELITES_SIZE=3, TOURNAMENT_SIZE=4,
-        PATIENCE=20, TOL=1e-3, csv_path="data/newresults.csv")
-print(ga.run(initial_design=OPTIMAL))
+        NGEN=800, NPOP=400, NWORKERS=PARAMS["nworkers"],
+        CXPB=0.8, MUTPB=0.20, ELITES_SIZE=1, TOURNAMENT_SIZE=2,
+        NIMMIGRANTS=300, IMMIGRATION_INTERVAL=50,
+        PATIENCE=100, TOL=1e-3, csv_path="data/newresults_apocalypse.csv")
+design,lcow = ga.run(initial_design=IDETC)
+print("Best design:", design)
+print("Best LCOW:", lcow)
+
 print("Optimization complete.")
 eng.quit()
