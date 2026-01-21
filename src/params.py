@@ -60,9 +60,9 @@ PARAMS["Bs"] = np.array([2.30e-8])              #   [m/s]   solute transport par
 PARAMS["recovery_ratio"] = np.array([0.442])    #   [-]     recovery ratio from WAVE with nominal flow and pressure, note that this is nominal, and not what will always be the recovery ratio, as flow/pressure drops, recovery ratio will drop as well
 
 #   Mechanism Params
-PARAMS["intake_x"] = np.array([4.7])            #   [m]     x-coordinate of the intake, sim with 12.
+PARAMS["intake_x"] = np.array([4.7])            #   [m]     x-coordinate of the intake
 PARAMS["intake_z"] = np.array([0.])             #   [m]     z-coordinate of the intake
-PARAMS["drivetrain_mass"] = np.array([50.])     #   [kg]    mass of the driavetrain
+PARAMS["drivetrain_mass"] = np.array([50.])     #   [kg]    mass of the drivetrain
 PARAMS["rho316"] = np.array([0.29])             #   [lb/in^3]   density of 316 stainless steel
 PARAMS["cost316"] = np.array([2.0])             #   [$/lb]  cost of 316 stainless steel
 PARAMS["yield316"] = np.array([206e6])          #   [Pa]    yield strength of 316 stainless steel
@@ -85,7 +85,7 @@ PARAMS["wecsimoptions"] = {
 }
 
 # Optimization Params
-PARAMS["nworkers"] = 24
+PARAMS["nworkers"] = 36
 
 #   Dependant Params
 PARAMS["period"] = 2*np.pi/PARAMS["omega"]              #   [s]     wave period

@@ -23,11 +23,14 @@ args = parser.parse_args()
 # Update PARAMS
 PARAMS["significant_wave_height"] = args.wave_height
 PARAMS["peak_period"] = args.peak_period
+hs_str = f"{PARAMS['significant_wave_height']:.2f}".replace('.', '_')
+tp_str = f"{PARAMS['peak_period']:.2f}".replace('.', '_')
 
-os.environ["TMPDIR"] = "~/scratch/matlab_tmp"
-os.makedirs("~/scratch/matlab_tmp", exist_ok=True)
+tmpfolder = "/scratch/mhaji_root/mhaji0/degoeden/matlab_tmp_hs{}_tp{}".format(hs_str=hs_str,tp_str=tp_str)
+os.environ["TMPDIR"] = tmpfolder
+os.makedirs(tmpfolder, exist_ok=True)
 
-start_cleanup_thread()
+start_cleanup_thread(folder = tmpfolder)
 
 future_eng = matlab.engine.start_matlab(background=True)
 eng = future_eng.result()
@@ -50,11 +53,13 @@ def safe_objective(ind):
         print(f"Error in objective function: {e}")
         return (np.inf,)  # Return a large value to indicate failure
 
+csv_path = f"data/results_Hs{hs_str}_Tp{tp_str}.csv"
+
 ga = GA(safe_objective, BOUNDS, BITS, 
         NGEN=800, NPOP=400, NWORKERS=PARAMS["nworkers"],
         CXPB=0.8, MUTPB=0.20, ELITES_SIZE=1, TOURNAMENT_SIZE=2,
         NIMMIGRANTS=300, IMMIGRATION_INTERVAL=50,
-        PATIENCE=100, TOL=1e-3, csv_path="data/newresults_apocalypse.csv")
+        PATIENCE=100, TOL=1e-3, csv_path=csv_path)
 design,lcow = ga.run(initial_design=IDETC)
 print("Best design:", design)
 print("Best LCOW:", lcow)

@@ -3,10 +3,7 @@ import shutil
 import time
 import threading
 
-# Use the same TMPDIR that MATLAB sees
-TMP = os.path.expanduser(os.environ.get("TMPDIR", "~/scratch/matlab_tmp"))
-
-def clean_simscape_tmp(threshold_gb=50, interval=30):
+def clean_simscape_tmp(TMP, threshold_gb=50, interval=30):
     """
     Auto-clean MATLAB/Simscape temporary files in TMPDIR while optimization runs.
     threshold_gb: clean when TMPDIR exceeds this size.
@@ -58,6 +55,8 @@ def clean_simscape_tmp(threshold_gb=50, interval=30):
             print(f"[CLEANUP ERROR] {e}")
             time.sleep(interval)
 
-def start_cleanup_thread():
-    t = threading.Thread(target=clean_simscape_tmp, daemon=True)
+def start_cleanup_thread(folder):
+    # Use the same TMPDIR that MATLAB sees
+    TMP = os.path.expanduser(os.environ.get("TMPDIR",folder))
+    t = threading.Thread(target=clean_simscape_tmp, args=(TMP,), daemon=True)
     t.start()
