@@ -54,8 +54,6 @@ def safe_objective(ind):
         print(f"Error in objective function: {e}")
         return (np.inf,)  # Return a large value to indicate failure
 
-hs_str = f"{PARAMS['significant_wave_height']:.2f}".replace('.', '_')
-tp_str = f"{PARAMS['peak_period']:.2f}".replace('.', '_')
 csv_path = f"data/results_Hs{hs_str}_Tp{tp_str}.csv"
 
 ga = GA(safe_objective, BOUNDS, BITS, 
