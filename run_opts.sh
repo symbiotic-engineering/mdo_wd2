@@ -1,7 +1,7 @@
 #!/bin/bash
 
-wave_heights=(1.4757467428690545)
-peak_periods=(10.234793700202095)
+wave_heights=(1.1146362808579522)
+peak_periods=(22.584459732902232)
 
 for i in "${!wave_heights[@]}"; do
   wave_height="${wave_heights[$i]}"
