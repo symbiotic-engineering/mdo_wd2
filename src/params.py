@@ -9,6 +9,8 @@ PARAMS["days_in_year"] = np.array([365.0])      #   [days/yr]   days in a year
 PARAMS["distance_to_shore"] = np.array([500.0]) #   [m]     distance from WEC to shore, also length of pipe from WEC to SWRO plant
 PARAMS["R"] = np.array([8.314])                 #   [J/K*mol]   ideal gas constant
 PARAMS["temperature"] = np.array([298.15])      #   [K]     temperature
+PARAMS["significant_wave_height"] = np.array([2.64])  #   [m]     significant wave height, nominal
+PARAMS["peak_period"] = np.array([9.86])        #   [s]     peak period, nominal
 
 #   Hydro Params
 PARAMS["water_depth"] = np.array([12.])         #   [m]     depth of the water
@@ -44,6 +46,8 @@ PARAMS["RM5_CmarineOps"] = 76231*1.33           #   [2025USD/yr]    cost of the 
 PARAMS["RM5_CshoreOps"] = 261113*1.33           #   [2025USD/yr]    cost of the RM5 shore operations
 PARAMS["RM5_Cparts"] = 64840*1.33               #   [2025USD/yr]    cost of the RM5 parts
 PARAMS["RM5_Cconsumables"] = 13143*1.33         #   [2025USD/yr]    cost of the RM5 consumables
+PARAMS["C2min_CAPEX"] = 0.0                     #   [2025USD]   minimum C2 value for CAPEX calculation
+PARAMS["C2min_OPEX"] = 0.0                      #   [2025USD/yr]   minimum C2 value for OPEX calculation
 
 #   RO Params
 PARAMS["feedTDS"] = np.array([35946])           #   [mg/L]  feed total dissolved solids (note mg/L = g/m^3)
@@ -56,9 +60,9 @@ PARAMS["Bs"] = np.array([2.30e-8])              #   [m/s]   solute transport par
 PARAMS["recovery_ratio"] = np.array([0.442])    #   [-]     recovery ratio from WAVE with nominal flow and pressure, note that this is nominal, and not what will always be the recovery ratio, as flow/pressure drops, recovery ratio will drop as well
 
 #   Mechanism Params
-PARAMS["intake_x"] = np.array([4.7])            #   [m]     x-coordinate of the intake, sim with 12.
+PARAMS["intake_x"] = np.array([4.7])            #   [m]     x-coordinate of the intake
 PARAMS["intake_z"] = np.array([0.])             #   [m]     z-coordinate of the intake
-PARAMS["drivetrain_mass"] = np.array([50.])     #   [kg]    mass of the driavetrain
+PARAMS["drivetrain_mass"] = np.array([50.])     #   [kg]    mass of the drivetrain
 PARAMS["rho316"] = np.array([0.29])             #   [lb/in^3]   density of 316 stainless steel
 PARAMS["cost316"] = np.array([2.0])             #   [$/lb]  cost of 316 stainless steel
 PARAMS["yield316"] = np.array([206e6])          #   [Pa]    yield strength of 316 stainless steel
@@ -77,11 +81,11 @@ PARAMS["insurance_rate"] = 0.02  # insurance rate
 PARAMS["wecsimoptions"] = {
     'model' : 'src/systemdynamics/basic_wd2',
     'dt'    : 0.1,
-    'tend'  : 300.0,
+    'tend'  : 1800.0,
 }
 
 # Optimization Params
-PARAMS["nworkers"] = 14
+PARAMS["nworkers"] = 36
 
 #   Dependant Params
 PARAMS["period"] = 2*np.pi/PARAMS["omega"]              #   [s]     wave period
@@ -109,8 +113,8 @@ INPUTS = {
 
 # Bounds
 BOUNDS = {                              #  (lower, upper) Bounds for the inputs above
-    'width' : (10., 30.),
-    'thickness' : (1., 5.),
+    'width' : (4., 24.),
+    'thickness' : (0.8, 3.),
     'wec_mass' : (50e3, 500e3),
     'hinge2joint' : (0.1, 4.),
     'piston_area' : (1e-1, 1),
@@ -130,3 +134,77 @@ BITS = {
     'accum_P0' : 8,
     'capacity' : 8,
 }
+
+# Optimal Design Found from Initial Study (IDETC 2025 Conference Paper)
+IDETC = {
+    'width': np.array([11.254901960784313]),
+    'thickness': np.array([1.988235294117647]),
+    'wec_mass': np.array([395882.35294117645]),
+    'hinge2joint': np.array([3.2505882352941176]),
+    'piston_area': np.array([0.8588235294117647]),
+    'accum_volume': np.array([4.5670980392156855]),
+    'accum_P0': np.array([5.952941176470588]),
+    'capacity': np.array([4882.35294117647])
+}
+
+OPTIMAL = { # 900 s run
+    'width': np.array([4.705882352941177]),
+    'thickness': np.array([0.9466666666666668]),
+    'wec_mass': np.array([64117.64705882353]),
+    'hinge2joint': np.array([2.0270588235294116]),
+    'piston_area': np.array([0.7352941176470588]),
+    'accum_volume': np.array([3.040235294117647]),
+    'accum_P0': np.array([4.470588235294118]),
+    'capacity': np.array([5482.35294117647])
+}
+
+OPTIMAL_2 = { # 1200 s run
+    'width': np.array([6.509803921568627]),
+    'thickness': np.array([1.9301960784313728]),
+    'wec_mass': np.array([198235.29411764705]),
+    'hinge2joint': np.array([2.8376470588235296]),
+    'piston_area': np.array([0.7741176470588236]),
+    'accum_volume': np.array([3.0167450980392156]),
+    'accum_P0': np.array([5.670588235294117]),
+    'capacity': np.array([5447.058823529412])
+}
+
+OPTIMAL_3 = { # 1800 s run ***
+    'width': np.array([4.0]),
+    'thickness': np.array([0.9380392156862746]),
+    'wec_mass': np.array([275882.3529411765]),
+    'hinge2joint': np.array([2.3635294117647057]),
+    'piston_area': np.array([0.8235294117647058]),
+    'accum_volume': np.array([2.7583529411764705]),
+    'accum_P0': np.array([4.8352941176470585]),
+    'capacity': np.array([5447.058823529412])
+}
+
+OPTIMAL_4 = { # 1600 s run
+    'width': np.array([4.313725490196078]),
+    'thickness': np.array([0.8862745098039216]),
+    'wec_mass': np.array([235294.11764705883]),
+    'hinge2joint': np.array([3.6023529411764708]),
+    'piston_area': np.array([0.6152941176470588]),
+    'accum_volume': np.array([2.664392156862745]),
+    'accum_P0': np.array([5.647058823529411]),
+    'capacity': np.array([4988.235294117647])
+}
+
+OPTIMAL_5 = { # 2000 s run
+    'width': np.array([7.921568627450981]),
+    'thickness': np.array([2.2666666666666666]),
+    'wec_mass': np.array([272352.9411764706]),
+    'hinge2joint': np.array([2.8223529411764705]),
+    'piston_area': np.array([0.8764705882352941]),
+    'accum_volume': np.array([4.7550196078431375]),
+    'accum_P0': np.array([5.764705882352941]),
+    'capacity': np.array([5694.117647058823])
+}
+
+OPTIMAL_6 = {'width': 4.313725490196078, 'thickness': 1.0674509803921568, 'wec_mass': 74705.88235294117, 'hinge2joint': 1.6600000000000001, 'piston_area': 0.8411764705882353, 'accum_volume': 2.6878823529411764, 'accum_P0': 5.8, 'capacity': 5482.35294117647}
+
+OPTIMAL_7 = {'width': 4.0, 'thickness': 0.9035294117647059, 'wec_mass': 291764.70588235295, 'hinge2joint': 1.9505882352941177, 'piston_area': 0.9682352941176471, 'accum_volume': 3.0167450980392156, 'accum_P0': 4.211764705882353, 'capacity': 5482.35294117647}
+OPTIMAL_8 = {'width': 4.627450980392156, 'thickness': 0.9984313725490197, 'wec_mass': 335882.35294117645, 'hinge2joint': 2.96, 'piston_area': 0.8129411764705883, 'accum_volume': 2.429490196078431, 'accum_P0': 5.847058823529412, 'capacity': 5482.35294117647}
+
+OPTIMAL_9 = {'width': 5.254901960784314, 'thickness': 0.8862745098039216, 'wec_mass': 51764.705882352944, 'hinge2joint': 1.6752941176470588, 'piston_area': 0.8870588235294118, 'accum_volume': 3.040235294117647, 'accum_P0': 5.023529411764706, 'capacity': 5482.35294117647} # Best LCOW: [1.2589459]

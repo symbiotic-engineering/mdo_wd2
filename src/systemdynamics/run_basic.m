@@ -1,39 +1,34 @@
 clear;clc;close all;
-%% Select Model
-model = 'basic_wd2';
+%% Load Inputs
+load('degoede_ignore/saved_workspace.mat');
 
-%% Define Parameters
-% Drivetrain
-drivetrain_mass = 50;   % [kg]      Effective Mass of Drivetrain (before fluid)
-
-%  Piston
-piston_area = 0.26;     % [m^2]     Piston Area
-piston_stroke = 12;     % [m]       Piston Stroke Length
-
-%  Hydraulic Smoothing
-accum_volume = 4;       % [m^3]     Accumulator Volume
-accum_P0 = 3;           % [MPa]     Accumulator Precharge
-pressure_relief = 6;    % [MPa]     Pressure Relief
-
-%  Membrane
-mem_resist = 60.23;     % [MPa*s/m^3]   Membrane Hydraulic Resistance
-osmotic_pressure = 3;   % [MPa]         Osmotic Pressure Differential
-
-%  Brine Disposal
-throt_resist = 60.23;   % [MPa*s/m^3]   Throttle Valve Hydraulic Resistance
-
-load('/home/degoede/SEA/SEAmdo_wd2/degoede_ignore/nominal_struct.mat')
-hydro = rebuildhydrostruct(nominal_hydro);
-thick = 1;
-hinge_depth = 8.9;
-joint_depth = 7;
-intake_x = 4.7;
-wecSimOptions = struct();
-wecSimOptions.model = model;
-wecSimOptions.dt = 0.1;
+wecSimOptions.model = 'src/systemdynamics/basic_wd2';
 wecSimOptions.tend = 300;
-key=3;
-wec_mass = 127000;
-wec_inertia = [1.85e6 1.85e6 1.85e6];
-intake_z =0;
-[feed,perm,t,key] = wdds_sim(hydro,wec_mass,wec_inertia,hinge_depth,joint_depth,intake_x,0,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,osmotic_pressure,drivetrain_mass,wecSimOptions,key);
+
+disp('Inputs to wdds_par:');
+disp('hydro:'); disp(hydro);
+disp(['wec_mass: ', num2str(wec_mass)]);
+disp(['wec_inertia: ', mat2str(wec_inertia)]);
+disp(['hinge_depth: ', num2str(hinge_depth)]);
+disp(['joint_depth: ', num2str(joint_depth)]);
+disp(['intake_x: ', num2str(intake_x)]);
+disp(['intake_z: ', num2str(intake_z)]);
+disp(['piston_area: ', num2str(piston_area)]);
+disp(['piston_stroke: ', num2str(piston_stroke)]);
+disp(['accum_volume: ', num2str(accum_volume)]);
+disp(['accum_P0: ', num2str(accum_P0)]);
+disp(['pressure_relief: ', num2str(pressure_relief)]);
+disp(['throt_resist: ', num2str(throt_resist)]);
+disp(['mem_resist: ', num2str(mem_resist)]);
+disp(['osmotic_pressure: ', num2str(osmotic_pressure)]);
+disp(['drivetrain_mass: ', num2str(drivetrain_mass)]);
+disp(['significant_wave_height: ', num2str(significant_wave_height)]);
+disp(['peak_period: ', num2str(peak_period)]);
+disp(['Density of water: ', num2str(rho)]);
+disp(['Gravity: ', num2str(g)]);
+disp('wecSimOptions:'); disp(wecSimOptions);
+disp(['key: ', num2str(key)]);
+
+result = wdds_par(hydro,wec_mass,wec_inertia,hinge_depth,joint_depth,intake_x,intake_z,piston_area,piston_stroke,accum_volume,accum_P0,pressure_relief,throt_resist,mem_resist,osmotic_pressure,drivetrain_mass,significant_wave_height,peak_period,rho,g,wecSimOptions,key);
+[Qf,Qp,t,P,stroke,keyout] = fetchOutputs(result);
+disp(keyout)

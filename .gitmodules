@@ -3,7 +3,7 @@
 	url = git@github.com:symbiotic-engineering/sea-lab-utils.git
 [submodule "src/WEC-Sim"]
 	path = src/WEC-Sim
-	url = https://github.com/WEC-Sim/WEC-Sim
+	url = git@github.com:WEC-Sim/WEC-Sim.git
 [submodule "src/GILL"]
 	path = src/GILL
 	url = git@github.com:symbiotic-engineering/GILL.git
