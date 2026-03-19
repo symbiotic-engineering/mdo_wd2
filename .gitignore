@@ -8,6 +8,11 @@ data/NDBC_data/
 *.sbat
 *.out
 submit_all.sh
+*.aux
+*.spl
+*.bbl
+*.blg
+*.out
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
