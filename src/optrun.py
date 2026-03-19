@@ -26,11 +26,12 @@ PARAMS["peak_period"] = args.peak_period
 hs_str = f"{PARAMS['significant_wave_height']:.2f}".replace('.', '_')
 tp_str = f"{PARAMS['peak_period']:.2f}".replace('.', '_')
 
-tmpfolder = "/scratch/mhaji_root/mhaji98/degoeden/matlab_tmp_hs{hs_str}_tp{tp_str}".format(hs_str=hs_str, tp_str=tp_str)
+tmpfolder = f"/mnt/drive2/matlab_temp/hs{hs_str}_tp{tp_str}"
 os.environ["TMPDIR"] = tmpfolder
 os.makedirs(tmpfolder, exist_ok=True)
 
 start_cleanup_thread(folder = tmpfolder)
+
 
 future_eng = matlab.engine.start_matlab(background=True)
 eng = future_eng.result()
