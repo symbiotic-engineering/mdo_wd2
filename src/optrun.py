@@ -26,7 +26,7 @@ PARAMS["peak_period"] = args.peak_period
 hs_str = f"{PARAMS['significant_wave_height']:.2f}".replace('.', '_')
 tp_str = f"{PARAMS['peak_period']:.2f}".replace('.', '_')
 
-tmpfolder = "/scratch/mhaji_root/mhaji0/degoeden/matlab_tmp_hs{}_tp{}".format(hs_str=hs_str,tp_str=tp_str)
+tmpfolder = "/scratch/mhaji_root/mhaji98/degoeden/matlab_tmp_hs{hs_str}_tp{tp_str}".format(hs_str=hs_str, tp_str=tp_str)
 os.environ["TMPDIR"] = tmpfolder
 os.makedirs(tmpfolder, exist_ok=True)
 
@@ -59,7 +59,7 @@ ga = GA(safe_objective, BOUNDS, BITS,
         NGEN=800, NPOP=400, NWORKERS=PARAMS["nworkers"],
         CXPB=0.8, MUTPB=0.20, ELITES_SIZE=1, TOURNAMENT_SIZE=2,
         NIMMIGRANTS=300, IMMIGRATION_INTERVAL=50,
-        PATIENCE=100, TOL=1e-3, csv_path=csv_path)
+        PATIENCE=150, TOL=1e-3, csv_path=csv_path)
 design,lcow = ga.run(initial_design=IDETC)
 print("Best design:", design)
 print("Best LCOW:", lcow)
