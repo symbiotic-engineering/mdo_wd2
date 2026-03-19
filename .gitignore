@@ -5,6 +5,9 @@ degoede_ignore/
 .vscode/
 src/privateparams.py
 data/NDBC_data/
+*.sbat
+*.out
+submit_all.sh
 *.aux
 *.spl
 *.bbl
