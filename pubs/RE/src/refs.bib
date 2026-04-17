@@ -79,7 +79,7 @@ readstatus = {skimmed},
 }
 
 @Article{Stroefer2023,
-  author     = {Ströfer, Carlos A. Michelén and Gaebele, Daniel T. and Coe, Ryan G. and Bacelli, Giorgio},
+  author     = {Michelén-Ströfer, Carlos A. and Gaebele, Daniel T. and Coe, Ryan G. and Bacelli, Giorgio},
   journal    = {IEEE Transactions on Sustainable Energy},
   title      = {Control Co-Design of Power Take-Off Systems for Wave Energy Converters Using WecOptTool},
   year       = {2023},
@@ -298,7 +298,7 @@ url         = {https://www.nrel.gov/docs/fy22osti/83621.pdf},
   readstatus = {read},
 }
 
-@InProceedings{Yu2018,
+@InProceedings{Yu2018smoothing,
 author     = {Yu, Yi-Hsiang and Tom, Nathan and Jenne, Dale},
 booktitle  = {International Conference on Ocean, Offshore and Arctic Engineering},
 title      = {NUMERICAL ANALYSIS ON HYDRAULIC POWER TAKE-OFF FOR WAVE ENERGY CONVERTER AND POWER SMOOTHING METHODS},
@@ -691,7 +691,7 @@ readstatus = {skimmed},
 }
 
 @Misc{blue_econ,
-author     = {U.S. Department of Energy},
+author     = {{U.S. Department of Energy}},
 month      = {4},
 title      = {Powering the Blue Economy: Exploring Opportunities for Marine Renewable Energy in Maritime Markets},
 year       = {2019},
@@ -821,6 +821,12 @@ HPQ = "efficiency"},
   groups     = {Energy Systems},
   readstatus = {skimmed},
 }
+
+@Misc{jit_industries,
+  title = {JIT Industries: Hydraulic Cylinder Quotes},
+  year  = {2025},
+}
+
 
 @Article{Davies2005,
   author     = {Davies, P.A.},
@@ -1020,7 +1026,7 @@ Chapter 2 proposes some PTO options and compares performace given a set of desig
 }
 
 @InProceedings{YJecon2017,
-  author    = {Yi-Hsiang Yu, Dale Jenne},
+  author    = {Yu, Yi-Hsiang and Jenne, Dale},
   booktitle = {Proceedings of the ASME 2017 36th International Conference on Ocean, Offshore and Arctic Engineering OMAE2017},
   title     = {Analysis of a Wave-Powered, Reverse-Osmosis System and its Economic Availability in the United States},
   year      = {2017},
@@ -1097,11 +1103,49 @@ Chapter 2 proposes some PTO options and compares performace given a set of desig
 }
 
 @InProceedings{DEEP5manual,
-  author = {International Atomic Energy Agency},
+  author = {{International Atomic Energy Agency}},
   title  = {DEEP 5 User Manual},
   year   = {2013},
   file   = {:/home/degoede/Documents/Research/Lit Libraries/Lit/deep5-manual.pdf:PDF},
   groups = {Desal System},
+}
+
+@InProceedings{Kurby2025,
+  author   = {Kurban A. Sitterley, and Zachary Binger, and Dale Scott Jenne},
+  title    = {Comparing Constant and Transient Membrane Transport Parameters for Use in Wave Desalination Models},
+  year     = {2025},
+  abstract = {Directly pressurizing seawater for desalination with reverse osmosis membranes via wave motion is a promising and sustainable method for producing freshwater in coastal regions. However, such a system could result in significant pressure fluctuations and a departure from conventional steady-state desalination operations. This study sought to assess if membrane transport parameters (apparent water and salt permeability) should be modeled as transient or constant in solution–diffusion-based modeling efforts of dynamically operated desalination systems, such as those coupled to wave power. Two approaches were used to model membrane transport parameters: one considered each parameter to be a function of the net driving pressure of the system, and the other assumed they were constant across all conditions. A pilot-scale system was used to conduct steady-state and controlled ramping experiments. Data from steady-state experiments were used to calculate transient and constant transport parameters. Parameter combinations were used in a simulation model to predict water flux and effective permeate salinity, and simulation outcomes were compared against experimental ramping results. The transient relationships for both water and salt permeability produced the most accurate results for water flux and comparable results for effective permeate salinity. Development of such relationships would be unique to a specific system but could be valuable in modeling wave-driven desalination systems across the wide range of operating conditions they experience.},
+  doi      = {.org/10.3390/membranes15080243},
+  file     = {:/home/degoede/Documents/Research/Lit Libraries/Lit/Comparing_Constant_and_Transient_Membrane_Transpor.pdf:PDF},
+  groups   = {Reverse Osmosis},
+  keywords = {desalination; reverse osmosis; wave energy; sustainability},
+}
+
+@Article{Bilton2011,
+  author    = {Bilton, Amy M. and Wiesman, Richard and Arif, A.F.M. and Zubair, Syed M. and Dubowsky, Steven},
+  journal   = {Renewable Energy},
+  title     = {On the feasibility of community-scale photovoltaic-powered reverse osmosis desalination systems for remote locations},
+  year      = {2011},
+  issn      = {0960-1481},
+  month     = dec,
+  number    = {12},
+  pages     = {3246--3256},
+  volume    = {36},
+  abstract  = {Renewable Energy, 36 (2011) 3246-3256. doi:10.1016/j.renene.2011.03.040},
+  doi       = {10.1016/j.renene.2011.03.040},
+  file      = {:/home/degoede/Documents/Research/Lit Libraries/Lit/bilton.pdf:PDF},
+  groups    = {Desal Systems},
+  keywords  = {Photovoltaic, Reverse osmosis, Feasibility, Small-scale, Rural},
+  publisher = {Elsevier BV},
+}
+
+
+@misc{ssc_IL,
+  author       = {{MathWorks}},
+  title        = {Advantages of Using Isothermal Liquid Blocks},
+  year         = {2025},
+  url          = {https://www.mathworks.com/help/simscape/ug/advantages-of-using-isothermal-liquid-blocks.html},
+  note         = {Accessed: 2026-04-11}
 }
 
 @InProceedings{LCOE_DOE,
@@ -1129,7 +1173,7 @@ Chapter 2 proposes some PTO options and compares performace given a set of desig
 }
 
 @TechReport{rm5,
-  author   = {Y.-H. Yu, D.S. Jenne, and R. Thresher, A. Copping, S. Geerlofs, and L.A. Hanna},
+  author   = {Y.-H. Yu, and D.S. Jenne, and R. Thresher, and A. Copping, and S. Geerlofs, and L.A. Hanna},
   title    = {Reference Model 5 (RM5): Oscillating Surge Wave Energy Converter},
   year     = {2015},
   month    = jan,
