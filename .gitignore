@@ -13,7 +13,7 @@ submit_all.sh
 *.bbl
 *.blg
 *.out
-
+*feedback
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
