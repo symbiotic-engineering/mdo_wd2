@@ -40,7 +40,7 @@ x.add_system("econ", FUNC, r"\text{Economics}")
 x.connect("opt", "geom", r"w,t,m")
 x.connect("opt", "desal", r"Q_{p,max}")
 x.connect("opt", "hydro", r"w,t")
-x.connect("opt", "econ", r"Q_{p,max}")
+x.connect("opt", "econ", r"\begin{array}{c} w,t,\ell_1,A_p, \\ V_{acc}, Q_{p,max} \end{array}")
 
 # Map optimizer outputs previously going to sysdyn -> now to rigidbody/hydraulics
 x.connect("opt", "rigidbody", r"m,\ell_1")

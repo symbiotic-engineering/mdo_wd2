@@ -1,6 +1,25 @@
+import sys
+import os
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+parent_folder = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "../..")
+)
+sys.path.append(parent_folder)
+
+# -----------------------------
+# DESIGN SPACE BOUNDS
+# -----------------------------
+BOUNDS = {
+    'w': (4., 24.),
+    't': (0.8, 3.),
+    'm': (50e3, 500e3),
+    'l1': (0.1, 4.),
+    'Ap': (1e-1, 1),
+    'Vacc': (1e-2, 6),
+    'P0': (3.00, 6.0),
+    'Qpmax': (1000, 10000),
+}
 
 # -----------------------------
 # DATA
@@ -13,95 +32,71 @@ df = pd.DataFrame({
     "l1": [1.9, 1.38, 3.83, 2.68],
     "Ap": [0.26, 0.855, 0.404, 0.746],
     "Vacc": [6, 0.29, 2.41, 2.45],
+    "P0": [3.00, 5.92, 5.91, 5.73],
     "Qpmax": [3100, 6753, 1000, 6612],
-}).set_index("Design")
-
-# -----------------------------
-# BASELINE (Nominal design)
-# -----------------------------
-baseline = df.loc["Nominal"]
-
-# -----------------------------
-# LCOW
-# -----------------------------
-lcow = pd.Series({
-    "Nominal": 3.97,
-    "SDO 1": 2.39,
-    "SDO 2": 2.17,
-    "MDO": 1.21,
 })
 
-# -----------------------------
-# NORMALIZE ABOUT BASELINE
-# -----------------------------
-df_dev = df.copy()
-
-for col in df.columns:
-    df_dev[col] = (df[col] - baseline[col]) / baseline[col]
+# LCOW (performance metric)
+df["LCOW"] = [3.97, 2.39, 2.17, 1.21]
 
 # -----------------------------
-# ADD LCOW (normalized separately)
+# VARIABLES
 # -----------------------------
-lcow_norm = (lcow - lcow["Nominal"]) / (lcow["Nominal"])
-df_dev["LCOW"] = lcow_norm
+variables = ["w", "t", "m", "l1", "Ap", "Vacc", "P0", "Qpmax"]
 
 # -----------------------------
-# ORDER AXES
+# DESIGN ENCODING (IMPORTANT)
 # -----------------------------
-variables = ["w", "t", "m", "l1", "Ap", "Vacc", "Qpmax", "LCOW"]
-df_dev = df_dev[variables]
+design_order = ["Nominal", "SDO 1", "SDO 2", "MDO"]
 
-# -----------------------------
-# PLOTTING SETUP
-# -----------------------------
-df_plot = df_dev.reset_index()
-x = np.arange(len(variables))
+design_code = {d: i for i, d in enumerate(design_order)}
+df["code"] = df["Design"].map(design_code)
 
-colors = {
-    "Nominal": "red",
-    "SDO 1": "gray",
-    "SDO 2": "gray",
-    "MDO": "tab:green",
-}
-
-linestyles = {
-    "Nominal": "--",
-    "SDO 1": "--",
-    "SDO 2": ":",
-    "MDO": "-",
-}
+colorscale = [
+    [0.00, "gray"],
+    [0.33, "blue"],
+    [0.66, "purple"], 
+    [1.00, "crimson"] 
+]
 
 # -----------------------------
-# PLOT
+# DIMENSIONS (FULL DESIGN SPACE)
 # -----------------------------
-fig, ax = plt.subplots(figsize=(10, 5))
-
-for design in df_plot["Design"]:
-    y = df_plot[df_plot["Design"] == design][variables].values.flatten()
-
-    ax.plot(
-        x,
-        y,
-        label=design,
-        color=colors.get(design, "black"),
-        linestyle=linestyles.get(design, "-"),
-        linewidth=2,
-        alpha=0.9
+dimensions = [
+    dict(
+        label=v,
+        values=df[v],
+        range=BOUNDS[v]
     )
+    for v in variables
+]
+
+dimensions.append(
+    dict(
+        label="LCOW",
+        values=df["LCOW"]
+    )
+)
 
 # -----------------------------
-# FORMATTING
+# PARALLEL COORDINATES
 # -----------------------------
-ax.set_xticks(x)
-ax.set_xticklabels(variables, rotation=45)
+fig = go.Figure(
+    go.Parcoords(
+        line=dict(
+            color=df["code"],
+            colorscale=colorscale,
+            cmin=0,
+            cmax=len(design_order) - 1,
+            showscale=False
+        ),
+        dimensions=dimensions,
 
-#ax.axhline(0, color="black", linewidth=1, linestyle=":", alpha=0.6)
+        labelfont=dict(size=16, color="black"),
+        tickfont=dict(size=16, color="black"),
+        rangefont=dict(size=16, color="black"),
 
-ax.set_ylabel("Fractional Change from Nominal")
-#ax.set_title("Parallel Coordinates (Normalized about Nominal)")
+    )
+)
 
-ax.grid(True, alpha=0.3)
-ax.legend()
-
-plt.tight_layout()
-plt.show()
+fig.show()
