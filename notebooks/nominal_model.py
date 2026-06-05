@@ -14,7 +14,8 @@ eng = future_eng.result()
 
 initialization_script_path = parent_folder + '/src'
 eng.cd(initialization_script_path, nargout=0)
-eng.initializematlab(PARAMS["nworkers"],nargout=0)
+#eng.initializematlab(PARAMS["nworkers"],nargout=0)
+eng.initializematlab(0,nargout=0)
 eng.cd('..', nargout=0)
 
 Runner = RunWDDS(eng)
